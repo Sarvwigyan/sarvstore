@@ -48,7 +48,5 @@ Sarv Store is built using modern web technologies to ensure high performance and
 
 We welcome contributors to improve and expand **Sarv Store**! Follow these steps:  
 
-1. **Fork the Repository** – Click on the `Fork` button at the top.  
-2. **Clone the Repository** – Use:  
-   ```sh
-   git clone https://github.com/Sarvwigyan/SarvStore.git
+1. **Fork the Repository** 
+2. **Clone the Repository**
