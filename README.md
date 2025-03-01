@@ -1,6 +1,5 @@
 # 🌍 Sarv Store - The Digital Marketplace by Sarvwigyan
-
-![Sarv Store Banner](https://yourimageurl.com/banner.png)  
+ 
 
 ## 🚀 Introduction  
 
