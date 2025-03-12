@@ -4,8 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sarv Store</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --background: #0a0a0a;
+            --card-bg: #2c2c2c;
+            --text: #e0e0e0;
+            --secondary-text: #bdc1c6;
+            --primary: #1a73e8;
+            --highlight: #00ffcc;
+            --shadow: rgba(0, 0, 0, 0.2);
+        }
+
+        [data-theme="light"] {
+            --background: #f0f0f0;
+            --card-bg: #ffffff;
+            --text: #333333;
+            --secondary-text: #666666;
+            --primary: #1a73e8;
+            --highlight: #00cc99;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -14,32 +34,32 @@
         }
 
         body {
-            background-color: #f5f5f5;
-            color: #202124;
+            background-color: var(--background);
+            color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
-            overflow-y: auto; /* Main scrollbar visible by default */
+            overflow-y: auto;
+            transition: all 0.3s ease;
+            font-size: 16px; /* Base font size for rem scaling */
         }
 
-        /* Custom Scrollbar for Main View */
         body::-webkit-scrollbar {
-            width: 8px; /* Reduced width */
+            width: 8px;
         }
 
         body::-webkit-scrollbar-thumb {
-            background-color: #bdc1c6;
+            background-color: var(--primary);
             border-radius: 4px;
         }
 
         body::-webkit-scrollbar-track {
-            background-color: #f5f5f5;
+            background-color: var(--card-bg);
         }
 
-        /* Header */
         .header {
-            background: linear-gradient(135deg, #ffffff, #f8f9fa);
-            padding: 16px 24px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            background: linear-gradient(135deg, var(--card-bg), var(--card-bg));
+            padding: 1rem 1.5rem;
+            box-shadow: 0 2px 10px var(--shadow);
             display: flex;
             align-items: center;
             position: sticky;
@@ -48,11 +68,13 @@
         }
 
         .header-logo {
-            font-size: 24px;
+            font-size: 1.5rem;
             font-weight: 700;
-            color: #1a73e8;
-            margin-right: 24px;
+            color: var(--primary);
+            margin-right: 1.5rem;
             letter-spacing: 1px;
+            font-family: 'Orbitron', sans-serif;
+
         }
 
         .search-bar {
@@ -65,56 +87,63 @@
 
         .search-bar input {
             width: 100%;
-            padding: 12px 16px;
+            padding: 0.75rem 1rem;
+            padding-right: 2.5rem;
             border: none;
             border-radius: 24px;
-            background-color: #f1f3f4;
-            font-size: 16px;
+            background-color: var(--card-bg);
+            font-size: 1rem;
             outline: none;
+            color: var(--text);
             transition: all 0.3s ease;
         }
 
         .search-bar input:focus {
-            background-color: #fff;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            transform: scale(1.02);
+            box-shadow: 0 0 10px var(--primary);
         }
 
-        /* Tabs */
+        .settings-icon {
+            font-size: 1.5rem;
+            color: var(--primary);
+            cursor: pointer;
+            margin-left: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .settings-icon:hover {
+            transform: rotate(90deg);
+        }
+
         .tabs {
-            background-color: #fff;
-            padding: 8px 24px;
-            border-bottom: 1px solid #e0e0e0;
+            background-color: var(--card-bg);
+            padding: 0.5rem 1.5rem;
+            border-bottom: 1px solid var(--shadow);
             overflow-x: auto;
             white-space: nowrap;
         }
 
         .tab-list {
             display: inline-flex;
-            gap: 32px;
+            gap: 2rem;
         }
 
         .tab {
-            padding: 10px 0;
-            font-size: 14px;
+            padding: 0.625rem 0;
+            font-size: 0.875rem;
             font-weight: 500;
-            color: #5f6368;
+            color: var(--secondary-text);
             cursor: pointer;
             transition: all 0.3s ease;
-        }
-
-        .tab:hover {
-            color: #1a73e8;
+            position: relative;
         }
 
         .tab.active {
-            color: #1a73e8;
-            border-bottom: 3px solid #1a73e8;
+            color: var(--highlight);
+            border-bottom: 3px solid var(--highlight);
         }
 
-        /* Content */
         .content {
-            padding: 24px;
+            padding: 1.5rem;
             max-width: 1280px;
             margin: 0 auto;
         }
@@ -128,162 +157,158 @@
         }
 
         .section-title {
-            font-size: 26px;
+            font-size: 1.625rem;
             font-weight: 500;
-            margin-bottom: 20px;
-            color: #3c4043;
+            margin-bottom: 1.25rem;
+            color: var(--text);
         }
 
         .card-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 1.25rem;
         }
 
         .card {
-            background: #fff;
+            background: var(--card-bg);
             border-radius: 12px;
-            padding: 16px;
+            padding: 1rem;
             text-align: center;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 6px var(--shadow);
+            transition: transform 0.3s ease;
             cursor: pointer;
+            position: relative;
+            overflow: hidden;
         }
 
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
         }
 
         .card-logo {
-            width: 64px;
-            height: 64px;
+            width: 4rem;
+            height: 4rem;
             border-radius: 16px;
             object-fit: cover;
-            margin-bottom: 12px;
+            margin-bottom: 0.75rem;
         }
 
         .card-title {
-            font-size: 14px;
+            font-size: 1rem;
             font-weight: 500;
-            margin-bottom: 6px;
+            margin-bottom: 0.375rem;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            color: var(--text);
         }
 
         .card-type {
-            font-size: 12px;
-            color: #bdc1c6;
-            margin-bottom: 12px;
+            font-size: 0.875rem;
+            color: var(--secondary-text);
+            margin-bottom: 0.75rem;
         }
 
         .card-download {
-            padding: 8px 20px;
-            background: #1a73e8;
+            padding: 0.5rem 1.25rem;
+            background: var(--primary);
             color: #fff;
             border: none;
             border-radius: 20px;
-            font-size: 12px;
+            font-size: 0.75rem;
             font-weight: 500;
             cursor: pointer;
-            transition: background 0.3s ease;
+            transition: transform 0.3s ease;
         }
 
         .card-download:hover {
-            background: #135cc5;
+            transform: scale(1.05);
         }
 
         .no-results {
             text-align: center;
-            color: #5f6368;
-            font-size: 16px;
-            margin-top: 24px;
+            color: var(--secondary-text);
+            font-size: 1rem;
+            margin-top: 1.5rem;
             display: none;
         }
 
-        /* Detail View */
         .detail-view {
-            display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #fff;
-            padding: 24px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90vw;
+            max-width: 600px;
+            max-height: 90vh;
             overflow-y: auto;
-            overflow-x: hidden; /* Ensure no horizontal scroll in detail view */
+            background: var(--background);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px var(--shadow);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: none;
             z-index: 1001;
-            animation: slideIn 0.3s ease;
         }
 
         .detail-view.active {
             display: block;
+            opacity: 1;
         }
 
-        /* Custom Scrollbar for Detail View */
         .detail-view::-webkit-scrollbar {
-            width: 8px; /* Reduced width */
+            width: 8px;
         }
 
         .detail-view::-webkit-scrollbar-thumb {
-            background-color: #bdc1c6;
+            background-color: var(--primary);
             border-radius: 4px;
         }
 
         .detail-view::-webkit-scrollbar-track {
-            background-color: #f5f5f5;
+            background-color: var(--card-bg);
         }
 
-        @keyframes slideIn {
-            from { transform: translateY(100%); }
-            to { transform: translateY(0); }
-        }
-
-        .back-btn {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background: #fff;
+        .close-btn {
+            position: absolute;
+            top: 0.625rem;
+            right: 0.625rem;
+            background: var(--card-bg);
             border: none;
-            font-size: 28px;
-            color: #5f6368;
+            font-size: 1.5rem;
+            color: var(--text);
             cursor: pointer;
-            width: 40px;
-            height: 40px;
+            width: 1.875rem;
+            height: 1.875rem;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            z-index: 1002;
+            box-shadow: 0 2px 6px var(--shadow);
+            transition: transform 0.3s ease;
         }
 
-        .back-btn:hover {
-            color: #1a73e8;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        .close-btn:hover {
+            transform: scale(1.1);
         }
 
         .detail-container {
-            max-width: 800px;
-            margin: 60px auto 40px;
+            margin: 1.25rem auto;
         }
 
         .detail-header {
             display: flex;
-            gap: 24px;
+            gap: 1.5rem;
             align-items: flex-start;
         }
 
         .detail-logo {
-            width: 100px;
-            height: 100px;
+            width: 6.25rem;
+            height: 6.25rem;
             border-radius: 20px;
             object-fit: cover;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 8px var(--shadow);
         }
 
         .detail-info {
@@ -291,81 +316,80 @@
         }
 
         .detail-title {
-            font-size: 28px;
+            font-size: 1.75rem;
             font-weight: 500;
-            margin-bottom: 8px;
-            color: #202124;
+            margin-bottom: 0.5rem;
+            color: var(--text);
         }
 
         .detail-type {
-            font-size: 14px;
-            color: #bdc1c6;
-            margin-bottom: 10px;
+            font-size: 0.875rem;
+            color: var(--secondary-text);
+            margin-bottom: 0.625rem;
         }
 
         .detail-verified {
-            font-size: 14px;
-            color: #1a73e8;
-            margin-bottom: 20px;
+            font-size: 0.875rem;
+            color: var(--highlight);
+            margin-bottom: 1.25rem;
             display: flex;
             align-items: center;
         }
 
         .detail-verified::before {
             content: "✔";
-            margin-right: 6px;
-            font-size: 16px;
+            margin-right: 0.375rem;
+            font-size: 1rem;
         }
 
         .detail-download {
-            padding: 12px 32px;
-            background: #1a73e8;
+            padding: 0.75rem 2rem;
+            background: var(--primary);
             color: #fff;
             border: none;
             border-radius: 24px;
-            font-size: 14px;
+            font-size: 0.875rem;
             font-weight: 500;
             cursor: pointer;
-            transition: background 0.3s ease, transform 0.2s ease;
+            transition: transform 0.3s ease;
         }
 
         .detail-download:hover {
-            background: #135cc5;
             transform: scale(1.05);
         }
 
         .detail-description {
-            margin-top: 24px;
+            margin-top: 1.5rem;
         }
 
         .detail-short-desc {
-            font-size: 16px;
-            color: #3c4043;
-            margin-bottom: 20px;
+            font-size: 1rem;
+            color: var(--text);
+            margin-bottom: 1.25rem;
         }
 
         .detail-long-desc {
-            font-size: 14px;
-            color: #5f6368;
+            font-size: 0.875rem;
+            color: var(--secondary-text);
             line-height: 1.8;
         }
 
         .detail-images {
-            margin-top: 32px;
+            margin-top: 2rem;
             display: flex;
-            gap: 16px;
+            gap: 1rem;
             overflow-x: auto;
-            padding: 16px;
-            background: #fff;
-            border: 1px solid #e0e0e0; /* Very thin border */
+            padding: 1rem;
+            background: var(--card-bg);
+            border: 1px solid var(--primary);
             border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Lifted effect */
-            -ms-overflow-style: none; /* IE and Edge */
-            scrollbar-width: none; /* Firefox */
+            box-shadow: 0 4px 12px var(--shadow);
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
 
         .detail-images::-webkit-scrollbar {
-            display: none; /* Chrome, Safari, and Opera */
+            display: none;
         }
 
         .detail-images img {
@@ -374,34 +398,251 @@
             border-radius: 12px;
             object-fit: cover;
             transition: transform 0.3s ease;
+            box-shadow: 0 2px 6px var(--shadow);
         }
 
         .detail-images img:hover {
             transform: scale(1.05);
         }
+
         .clear-btn {
             position: absolute;
-            right: 8px;
-            width: 24px;
-            height: 24px;
+            right: 0.3125rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1.875rem;
+            height: 1.875rem;
             border: none;
             border-radius: 50%;
-            background-color: #bdc1c6;
+            background-color: var(--primary);
             color: #fff;
-            font-size: 14px;
-            line-height: 24px;
+            font-size: 1.125rem;
+            line-height: 1.875rem;
             text-align: center;
             cursor: pointer;
             display: none;
-            transition: background-color 0.3s ease;
+            transition: transform 0.3s ease;
         }
 
         .clear-btn:hover {
-            background-color: #a0a5aa;
+            transform: translateY(-50%) scale(1.1);
         }
 
         .clear-btn.active {
             display: block;
+        }
+
+        .settings-window {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px var(--shadow);
+            z-index: 1002;
+            width: 90vw;
+            max-width: 400px;
+        }
+
+        .settings-window.active {
+            display: block;
+        }
+
+        .settings-window h2 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 1.25rem;
+            color: var(--text);
+            text-shadow: 0 0 10px var(--primary);
+        }
+
+        .settings-window label {
+            display: block;
+            font-size: 0.875rem;
+            color: var(--secondary-text);
+            margin-bottom: 0.5rem;
+        }
+
+        .settings-window select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--primary);
+            border-radius: 8px;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            outline: none;
+            background: var(--background);
+            color: var(--text);
+        }
+
+        .settings-window button {
+            padding: 0.75rem 1.5rem;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .settings-window button:hover {
+            transform: scale(1.05);
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 900px) {
+            .header {
+                padding: 0.75rem 1rem;
+            }
+            .header-logo {
+                font-size: 1.25rem;
+                margin-right: 1rem;
+            }
+            .search-bar {
+                max-width: 60%;
+            }
+            .settings-icon {
+                font-size: 1.25rem;
+                margin-left: 0.75rem;
+            }
+            .tabs {
+                padding: 0.5rem 1rem;
+            }
+            .tab-list {
+                gap: 1.5rem;
+            }
+            .tab {
+                font-size: 0.75rem;
+            }
+            .card-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+            .card-logo {
+                width: 3.5rem;
+                height: 3.5rem;
+            }
+            .detail-logo {
+                width: 5rem;
+                height: 5rem;
+            }
+            .detail-title {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .header {
+                flex-wrap: wrap;
+                padding: 0.5rem;
+            }
+            .header-logo {
+                font-size: 1rem;
+                margin-right: 0.5rem;
+            }
+            .search-bar {
+                max-width: 100%;
+                margin: 0.5rem 0;
+            }
+            .search-bar input {
+                font-size: 0.875rem;
+            }
+            .settings-icon {
+                font-size: 1rem;
+                margin-left: 0.5rem;
+            }
+            .tabs {
+                padding: 0.25rem 0.5rem;
+            }
+            .tab-list {
+                gap: 1rem;
+            }
+            .tab {
+                font-size: 0.6875rem;
+            }
+            .content {
+                padding: 1rem;
+            }
+            .section-title {
+                font-size: 1.25rem;
+            }
+            .card-grid {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+                gap: 1rem;
+            }
+            .card {
+                padding: 0.75rem;
+            }
+            .card-logo {
+                width: 3rem;
+                height: 3rem;
+            }
+            .card-title {
+                font-size: 0.875rem;
+            }
+            .card-type {
+                font-size: 0.75rem;
+            }
+            .card-download {
+                padding: 0.375rem 1rem;
+                font-size: 0.6875rem;
+            }
+            .detail-view {
+                padding: 1rem;
+            }
+            .detail-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .detail-logo {
+                width: 4rem;
+                height: 4rem;
+            }
+            .detail-title {
+                font-size: 1.25rem;
+            }
+            .detail-type, .detail-verified, .detail-short-desc, .detail-long-desc {
+                font-size: 0.75rem;
+            }
+            .detail-download {
+                padding: 0.5rem 1.5rem;
+                font-size: 0.75rem;
+            }
+            .detail-images img {
+                width: 150px;
+                height: 90px;
+            }
+            .settings-window {
+                padding: 1rem;
+            }
+            .settings-window h2 {
+                font-size: 1.25rem;
+            }
+            .settings-window label, .settings-window select, .settings-window button {
+                font-size: 0.75rem;
+            }
         }
     </style>
 </head>
@@ -412,42 +653,31 @@
             <input type="text" placeholder="Search apps..." id="searchInput">
             <button class="clear-btn" id="clearBtn">×</button>
         </div>
+        <div class="settings-icon" id="settingsIcon">⚙️</div>
     </div>
 
-    <div class="tabs">
+    <div class="tabs" role="tablist">
         <div class="tab-list">
-            <div class="tab active" data-tab="all">All</div>
-            <div class="tab" data-tab="apps">Apps</div>
-            <div class="tab" data-tab="books">Books</div>
-            <div class="tab" data-tab="chelp">Support</div>
+            <div class="tab active" data-tab="books" role="tab" aria-selected="true" id="books-tab">Books</div>
+            <div class="tab" data-tab="chelp" role="tab" aria-selected="false" id="chelp-tab">CodeX</div>
         </div>
     </div>
 
     <div class="content">
-        <div class="section active" id="all">
-            <h2 class="section-title">All</h2>
-            <div class="card-grid" id="allGrid"></div>
-            <div class="no-results" id="allNoResults">No results found</div>
-        </div>
-        <div class="section" id="apps">
-            <h2 class="section-title">Apps</h2>
-            <div class="card-grid" id="appsGrid"></div>
-            <div class="no-results" id="appsNoResults">No results found</div>
-        </div>
-        <div class="section" id="books">
+        <div class="section active" id="books" role="tabpanel" aria-labelledby="books-tab">
             <h2 class="section-title">Books</h2>
             <div class="card-grid" id="booksGrid"></div>
             <div class="no-results" id="booksNoResults">No results found</div>
         </div>
-        <div class="section" id="chelp">
-            <h2 class="section-title">Support</h2>
+        <div class="section" id="chelp" role="tabpanel" aria-labelledby="chelp-tab">
+            <h2 class="section-title">CodeX</h2>
             <div class="card-grid" id="chelpGrid"></div>
             <div class="no-results" id="chelpNoResults">No results found</div>
         </div>
     </div>
 
     <div class="detail-view" id="detailView">
-        <button class="back-btn" id="backBtn">←</button>
+        <button class="close-btn" id="closeBtn">×</button>
         <div class="detail-container">
             <div class="detail-header">
                 <img class="detail-logo" id="detailLogo" src="">
@@ -466,27 +696,26 @@
         </div>
     </div>
 
+    <div class="overlay" id="overlay"></div>
+    <div class="settings-window" id="settingsWindow">
+        <h2>Settings</h2>
+        <label for="theme">Theme</label>
+        <select id="theme">
+            <option value="dark">Dark</option>
+            <option value="light">Light</option>
+        </select>
+        <button id="saveSettings">Save</button>
+    </div>
+
     <script>
         const storeData = {
-            all: [
-                { id: 1, title: "Productivity Master", type: "Productivity", verified: true, logo: "Sarvwigyan.png", shortDesc: "Boost your workflow with smart tools.", longDesc: "Boost your workflow with smart tools and seamless task management. This app offers a variety of features to enhance your productivity, including task scheduling, reminders, and collaboration tools.", images: ["https://via.placeholder.com/200x120", "https://via.placeholder.com/200x120"], file: "productivity.apk" },
-                { id: 2, title: "ConnectSphere", type: "Social", verified: true, logo: "https://via.placeholder.com/64", shortDesc: "Stay connected with friends.", longDesc: "Stay connected with friends and share your moments. ConnectSphere allows you to chat, post updates, and join communities effortlessly.", images: ["https://via.placeholder.com/200x120"], file: "social.apk" },
-                { id: 5, title: "Epic Tales", type: "Books & Reference", verified: true, logo: "https://via.placeholder.com/64", shortDesc: "Gripping stories await.", longDesc: "Dive into gripping stories and epic adventures with Epic Tales. Explore a vast library of novels and references.", images: ["https://via.placeholder.com/200x120"], file: "novel.pdf" },
-                { id: 6, title: "MindLift", type: "Books & Reference", verified: false, logo: "https://via.placeholder.com/64", shortDesc: "Elevate your life.", longDesc: "Elevate your life with practical self-help insights. MindLift provides actionable advice and motivation.", images: ["https://via.placeholder.com/200x120"], file: "selfhelp.pdf" },
-                { id: 7, title: "HelpHub", type: "Tools", verified: true, logo: "https://via.placeholder.com/64", shortDesc: "Quick assistance guide.", longDesc: "Your go-to guide for quick assistance and support. HelpHub offers tutorials and troubleshooting tips.", images: ["https://via.placeholder.com/200x120"], file: "guide.apk" },
-                { id: 8, title: "TechAid", type: "Tools", verified: false, logo: "https://via.placeholder.com/64", shortDesc: "Solve tech issues.", longDesc: "Solve tech issues with this handy support app. TechAid is your companion for technical support.", images: ["https://via.placeholder.com/200x120"], file: "support.apk" }
-            ],
-            apps: [
-                { id: 1, title: "Productivity Master", type: "Productivity", verified: true, logo: "https://via.placeholder.com/64", shortDesc: "Boost your workflow with smart tools.", longDesc: "Boost your workflow with smart tools and seamless task management.", images: ["https://via.placeholder.com/200x120"], file: "productivity.apk" },
-                { id: 2, title: "ConnectSphere", type: "Social", verified: true, logo: "https://via.placeholder.com/64", shortDesc: "Stay connected with friends.", longDesc: "Stay connected with friends and share your moments.", images: ["https://via.placeholder.com/200x120"], file: "social.apk" }
-            ],
             books: [
-                { id: 5, title: "Epic Tales", type: "Books & Reference", verified: true, logo: "https://via.placeholder.com/64", shortDesc: "Gripping stories await.", longDesc: "Dive into gripping stories and epic adventures.", images: ["https://via.placeholder.com/200x120"], file: "novel.pdf" },
-                { id: 6, title: "MindLift", type: "Books & Reference", verified: false, logo: "https://via.placeholder.com/64", shortDesc: "Elevate your life.", longDesc: "Elevate your life with practical self-help insights.", images: ["https://via.placeholder.com/200x120"], file: "selfhelp.pdf" }
+                { id: 1, title: "Trigonometry", type: "Books", verified: true, logo: "https://via.placeholder.com/64", shortDesc: "Gripping stories await.", longDesc: "Dive into gripping stories and epic adventures.", images: ["https://via.placeholder.com/200x120"], file: "https://raw.githubusercontent.com/padmeshdviwedi/sarvstore_books/main/Trigonometry-S.L%20Loney.pdf"},
+                { id: 2, title: "MindLift", type: "Books", verified: false, logo: "https://via.placeholder.com/64", shortDesc: "Elevate your life.", longDesc: "Elevate your life with practical self-help insights.", images: ["https://via.placeholder.com/200x120"], file: "selfhelp.pdf" }
             ],
             chelp: [
-                { id: 7, title: "HelpHub", type: "Tools", verified: true, logo: "https://via.placeholder.com/64", shortDesc: "Quick assistance guide.", longDesc: "Your go-to guide for quick assistance and support.", images: ["https://via.placeholder.com/200x120"], file: "guide.apk" },
-                { id: 8, title: "TechAid", type: "Tools", verified: false, logo: "https://via.placeholder.com/64", shortDesc: "Solve tech issues.", longDesc: "Solve tech issues with this handy support app.", images: ["https://via.placeholder.com/200x120"], file: "support.apk" }
+                { id: 3, title: "HelpHub", type: "Tools", verified: true, logo: "https://via.placeholder.com/64", shortDesc: "Quick assistance guide.", longDesc: "Your go-to guide for quick assistance and support.", images: ["https://via.placeholder.com/200x120"], file: "guide.apk" },
+                { id: 4, title: "TechAid", type: "Tools", verified: false, logo: "https://via.placeholder.com/64", shortDesc: "Solve tech issues.", longDesc: "Solve tech issues with this handy support app.", images: ["https://via.placeholder.com/200x120"], file: "support.apk" }
             ]
         };
 
@@ -496,6 +725,9 @@
             data.forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'card';
+                card.setAttribute('role', 'button');
+                card.setAttribute('tabIndex', '0');
+                card.setAttribute('aria-label', `View details for ${item.title}`);
                 card.innerHTML = `
                     <img class="card-logo" src="${item.logo}" alt="${item.title}">
                     <div class="card-title">${item.title}</div>
@@ -504,6 +736,9 @@
                 `;
                 card.addEventListener('click', (e) => {
                     if (e.target.className !== 'card-download') showDetail(item);
+                });
+                card.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') showDetail(item);
                 });
                 card.querySelector('.card-download').addEventListener('click', () => downloadFile(item));
                 container.appendChild(card);
@@ -520,8 +755,6 @@
             alert(`Downloading ${item.title}`);
         }
 
-        renderCards(storeData.all, 'allGrid');
-        renderCards(storeData.apps, 'appsGrid');
         renderCards(storeData.books, 'booksGrid');
         renderCards(storeData.chelp, 'chelpGrid');
 
@@ -529,13 +762,17 @@
         const sections = document.querySelectorAll('.section');
         tabs.forEach(tab => {
             tab.addEventListener('click', () => {
-                tabs.forEach(t => t.classList.remove('active'));
-                sections.forEach(s => s.classList.remove('active'));
+                tabs.forEach(t => {
+                    t.classList.remove('active');
+                    t.setAttribute('aria-selected', 'false');
+                });
                 tab.classList.add('active');
+                tab.setAttribute('aria-selected', 'true');
+                sections.forEach(s => s.classList.remove('active'));
                 const tabId = tab.getAttribute('data-tab');
                 document.getElementById(tabId).classList.add('active');
                 document.getElementById('detailView').classList.remove('active');
-                document.body.style.overflowY = 'auto'; // Restore main scrollbar
+                document.body.style.overflowY = 'auto';
                 performSearch();
             });
         });
@@ -574,6 +811,7 @@
 
         function showDetail(item) {
             const detailView = document.getElementById('detailView');
+            const overlay = document.getElementById('overlay');
             document.getElementById('detailLogo').src = item.logo;
             document.getElementById('detailTitle').textContent = item.title;
             document.getElementById('detailType').textContent = item.type;
@@ -590,31 +828,52 @@
             });
 
             detailView.classList.add('active');
-            document.body.style.overflowY = 'hidden'; // Hide main scrollbar
+            overlay.classList.add('active');
+            document.body.style.overflowY = 'hidden';
             document.getElementById('detailDownload').onclick = () => downloadFile(item);
         }
 
-        document.getElementById('backBtn').addEventListener('click', () => {
+        document.getElementById('closeBtn').addEventListener('click', () => {
             const detailView = document.getElementById('detailView');
-            detailView.style.animation = 'slideOut 0.3s ease';
-            setTimeout(() => {
-                detailView.classList.remove('active');
-                detailView.style.animation = 'slideIn 0.3s ease';
-                document.body.style.overflowY = 'auto'; // Restore main scrollbar
-                const activeTab = document.querySelector('.tab.active').getAttribute('data-tab');
-                renderCards(storeData[activeTab], `${activeTab}Grid`);
-                performSearch();
-            }, 300);
+            const overlay = document.getElementById('overlay');
+            detailView.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflowY = 'auto';
+            const activeTab = document.querySelector('.tab.active').getAttribute('data-tab');
+            renderCards(storeData[activeTab], `${activeTab}Grid`);
+            performSearch();
         });
 
-        const style = document.createElement('style');
-        style.innerHTML = `
-            @keyframes slideOut {
-                from { transform: translateY(0); }
-                to { transform: translateY(100%); }
-            }
-        `;
-        document.head.appendChild(style);
+        // Settings Functionality
+        const settingsIcon = document.getElementById('settingsIcon');
+        const settingsWindow = document.getElementById('settingsWindow');
+        const overlay = document.getElementById('overlay');
+        const themeSelect = document.getElementById('theme');
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        document.body.dataset.theme = savedTheme;
+        themeSelect.value = savedTheme;
+
+        settingsIcon.addEventListener('click', () => {
+            settingsWindow.classList.add('active');
+            overlay.classList.add('active');
+        });
+
+        overlay.addEventListener('click', () => {
+            settingsWindow.classList.remove('active');
+            document.getElementById('detailView').classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflowY = 'auto';
+        });
+
+        document.getElementById('saveSettings').addEventListener('click', () => {
+            const theme = themeSelect.value;
+            document.body.dataset.theme = theme;
+            localStorage.setItem('theme', theme);
+            settingsWindow.classList.remove('active');
+            overlay.classList.remove('active');
+        });
     </script>
 </body>
 </html>
