@@ -42,7 +42,7 @@
             overflow-x: hidden;
             overflow-y: auto;
             transition: all 0.3s ease;
-            font-size: 16px; /* Base font size for rem scaling */
+            font-size: 16px;
         }
 
         body::-webkit-scrollbar {
@@ -76,7 +76,6 @@
             margin-right: 1.5rem;
             letter-spacing: 1px;
             font-family: 'Orbitron', sans-serif;
-
         }
 
         .search-bar {
@@ -514,7 +513,6 @@
             opacity: 1;
         }
 
-        /* Responsive Adjustments */
         @media (max-width: 900px) {
             .header {
                 padding: 0.75rem 1rem;
@@ -616,7 +614,7 @@
             }
             .detail-header {
                 flex-direction: column;
-                gap: 1rem;
+
             }
             .detail-logo {
                 width: 4rem;
@@ -650,7 +648,9 @@
 </head>
 <body>
     <div class="header">
-        <div class="header-logo" style="display: flex; justify-content: center; align-items: center; gap: 2px;;"><img src="Resources/Sarvstore.png" style="width: auto; height: 1em;">Sarv Store</div>
+        <div class="header-logo" style="display: flex; justify-content: center; align-items: center; gap: 2px;">
+            <img src="Resources/Sarvstore.png" style="width: auto; height: 1em;">Sarv Store
+        </div>
         <div class="search-bar">
             <input type="text" placeholder="Search apps..." id="searchInput">
             <button class="clear-btn" id="clearBtn">×</button>
@@ -712,14 +712,53 @@
     <script>
         const storeData = {
             books: [
-                { id: 1, title: "Trigonometry", type: "Books", verified: true, logo: "https://via.placeholder.com/64", shortDesc: "Gripping stories await.", longDesc: "Dive into gripping stories and epic adventures.", images: ["https://via.placeholder.com/200x120"], file: "https://raw.githubusercontent.com/padmeshdviwedi/sarvstore_books/main/Trigonometry-S.L%20Loney.pdf"},
-                { id: 2, title: "MindLift", type: "Books", verified: false, logo: "https://via.placeholder.com/64", shortDesc: "Elevate your life.", longDesc: "Elevate your life with practical self-help insights.", images: ["https://via.placeholder.com/200x120"], file: "selfhelp.pdf" }
+                { 
+                    id: 1, 
+                    title: "Trigonometry",
+                    type: "Books", 
+                    verified: true,
+                    logo: "https://via.placeholder.com/64",
+                    shortDesc: "Gripping stories await.",
+                    longDesc: "Dive into gripping stories and epic adventures.",
+                    images: ["https://via.placeholder.com/200x120"],
+                    file: "Resources/Books/The Art Of Being Perfect.pdf"
+                },
+                { 
+                    id: 2,
+                    title: "MindLift",
+                    type: "Books",
+                    verified: false,
+                    logo: "https://via.placeholder.com/64",
+                    shortDesc: "Elevate your life.",
+                    longDesc: "Elevate your life with practical self-help insights.",
+                    images: ["https://via.placeholder.com/200x120"],
+                    file: "selfhelp.pdf" 
+                }
             ],
             chelp: [
                 { id: 3, title: "HelpHub", type: "Tools", verified: true, logo: "https://via.placeholder.com/64", shortDesc: "Quick assistance guide.", longDesc: "Your go-to guide for quick assistance and support.", images: ["https://via.placeholder.com/200x120"], file: "guide.apk" },
                 { id: 4, title: "TechAid", type: "Tools", verified: false, logo: "https://via.placeholder.com/64", shortDesc: "Solve tech issues.", longDesc: "Solve tech issues with this handy support app.", images: ["https://via.placeholder.com/200x120"], file: "support.apk" }
             ]
         };
+
+        function downloadAndOpenFile(item) {
+            const filePath = item.file;
+            const fileName = filePath.split('/').pop();
+            
+            const link = document.createElement('a');
+            link.href = filePath;
+            link.download = fileName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            setTimeout(() => {
+                const shouldOpen = confirm(`"${fileName}" has been downloaded. Would you like to open it now?`);
+                if (shouldOpen) {
+                    window.open(filePath, '_blank');
+                }
+            }, 1000);
+        }
 
         function renderCards(data, containerId) {
             const container = document.getElementById(containerId);
@@ -742,19 +781,9 @@
                 card.addEventListener('keydown', (e) => {
                     if (e.key === 'Enter' || e.key === ' ') showDetail(item);
                 });
-                card.querySelector('.card-download').addEventListener('click', () => downloadFile(item));
+                card.querySelector('.card-download').addEventListener('click', () => downloadAndOpenFile(item));
                 container.appendChild(card);
             });
-        }
-
-        function downloadFile(item) {
-            const link = document.createElement('a');
-            link.href = item.file;
-            link.download = item.file;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            alert(`Downloading ${item.title}`);
         }
 
         renderCards(storeData.books, 'booksGrid');
@@ -832,7 +861,7 @@
             detailView.classList.add('active');
             overlay.classList.add('active');
             document.body.style.overflowY = 'hidden';
-            document.getElementById('detailDownload').onclick = () => downloadFile(item);
+            document.getElementById('detailDownload').onclick = () => downloadAndOpenFile(item);
         }
 
         document.getElementById('closeBtn').addEventListener('click', () => {
@@ -846,13 +875,11 @@
             performSearch();
         });
 
-        // Settings Functionality
         const settingsIcon = document.getElementById('settingsIcon');
         const settingsWindow = document.getElementById('settingsWindow');
         const overlay = document.getElementById('overlay');
         const themeSelect = document.getElementById('theme');
 
-        // Load saved theme
         const savedTheme = localStorage.getItem('theme') || 'dark';
         document.body.dataset.theme = savedTheme;
         themeSelect.value = savedTheme;
