@@ -1,0 +1,20 @@
+{
+    "name": "Sarv Calculator",
+    "short_name": "Calculator",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#f0f2f5",
+    "theme_color": "#0288d1",
+    "icons": [
+        {
+            "src": "Resources/SarvCal.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "Resources/SarvCal.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
