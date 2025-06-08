@@ -59,7 +59,6 @@
             background-color: var(--card-bg);
         }
 
-        /* Header Styles */
         .header {
             padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 2);
             display: flex;
@@ -120,7 +119,6 @@
             transform: rotate(90deg);
         }
 
-        /* Tabs Styles */
         .tabs {
             background-color: var(--card-bg);
             padding: calc(var(--spacing-unit) * 0.75) calc(var(--spacing-unit) * 1.5);
@@ -155,7 +153,6 @@
             display: none;
         }
 
-        /* Content Styles */
         .content {
             padding: calc(var(--spacing-unit) * 2);
             max-width: 1400px;
@@ -188,6 +185,41 @@
             width: 100%;
         }
 
+        .featured-section {
+            display: none;
+        }
+
+        .section#all.active ~ .featured-section {
+            display: block;
+        }
+
+        .featured-section .card-grid {
+            display: flex;
+            overflow-x: auto;
+            white-space: nowrap;
+            gap: calc(var(--spacing-unit) * 1.5);
+            padding-bottom: var(--spacing-unit);
+        }
+
+        .featured-section .card-grid::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .featured-section .card-grid::-webkit-scrollbar-thumb {
+            background-color: var(--primary);
+            border-radius: 4px;
+        }
+
+        .featured-section .card-grid::-webkit-scrollbar-track {
+            background-color: var(--card-bg);
+        }
+
+        .featured-section .card {
+            flex: 0 0 auto;
+            width: 200px;
+            min-width: 200px;
+        }
+
         .card {
             background: var(--card-bg);
             border-radius: 16px;
@@ -197,6 +229,9 @@
             transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
             cursor: pointer;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .card:hover {
@@ -209,7 +244,7 @@
             height: 5rem;
             border-radius: 20px;
             object-fit: cover;
-            margin-bottom: var(--spacing-unit);
+            margin: 0 auto calc(var(--spacing-unit) * 1);
         }
 
         .card-title {
@@ -217,12 +252,20 @@
             font-weight: 600;
             margin-bottom: 0.5rem;
             color: var(--text);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: normal;
+            overflow-wrap: break-word;
+            max-height: 3.75rem;
         }
 
         .card-type {
             font-size: 0.875rem;
             color: var(--secondary-text);
-            margin-bottom: var(--spacing-unit);
+            margin-bottom: calc(var(--spacing-unit) * 1);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .card-download {
@@ -235,6 +278,7 @@
             font-weight: 500;
             cursor: pointer;
             transition: transform var(--transition-speed) ease;
+            margin-top: auto;
         }
 
         .card-download:hover {
@@ -249,7 +293,6 @@
             display: none;
         }
 
-        /* Detail View Styles */
         .detail-view {
             position: fixed;
             top: 50%;
@@ -306,8 +349,8 @@
         }
 
         .detail-logo {
-            width: 8rem;
-            height: 8rem;
+            width: 6rem;
+            height: 6rem;
             border-radius: 24px;
             object-fit: cover;
             box-shadow: 0 4px 12px var(--shadow);
@@ -339,10 +382,10 @@
 
         .detail-download {
             padding: 0.75rem 2rem;
-            background: linear-gradient(135deg, var(--primary), var(--highlight));
+            background: linear-gradient(45deg, var(--primary), var(--highlight));
             color: #fff;
             border: none;
-            border-radius: 24px;
+            border-radius: 25px;
             font-size: 1rem;
             font-weight: 500;
             cursor: pointer;
@@ -369,7 +412,7 @@
             display: flex;
             gap: calc(var(--spacing-unit) * 1.5);
             overflow-x: auto;
-            padding: calc(var(--spacing-unit) * 1.5);
+            padding: calc(var(--spacing-unit) * 1.5) 0;
             background: var(--card-bg);
             border-radius: 12px;
             box-shadow: 0 4px 12px var(--shadow);
@@ -389,7 +432,6 @@
             transform: scale(1.05);
         }
 
-        /* Settings Window Styles */
         .settings-window {
             position: fixed;
             top: 50%;
@@ -397,8 +439,8 @@
             transform: translate(-50%, -50%);
             background: var(--card-bg);
             padding: calc(var(--spacing-unit) * 2);
-            border-radius: 16px;
-            box-shadow: 0 8px 24px var(--shadow);
+            border-radius: 12px;
+            box-shadow: 0 8px 16px var(--shadow);
             z-index: 1002;
             width: 90vw;
             max-width: 450px;
@@ -450,7 +492,7 @@
 
         .settings-window button {
             padding: 0.75rem 1.5rem;
-            background: linear-gradient(135deg, var(--primary), var(--highlight));
+            background: linear-gradient(45deg, var(--primary), var(--highlight));
             color: #fff;
             border: none;
             border-radius: 8px;
@@ -465,14 +507,13 @@
             transform: scale(1.05);
         }
 
-        /* Overlay Styles */
         .overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0,0,0,0.7);
             z-index: 1000;
             opacity: 0;
             transition: opacity var(--transition-speed) ease;
@@ -484,7 +525,6 @@
             opacity: 1;
         }
 
-        /* Footer Styles */
         footer {
             background: var(--card-bg);
             padding: var(--spacing-unit);
@@ -512,27 +552,29 @@
             color: var(--highlight);
         }
 
-        /* Secret Animation */
         @keyframes rainbowGlow {
             0% { box-shadow: 0 0 10px #ff0000; }
             20% { box-shadow: 0 0 10px #ff00ff; }
-            40% { box-shadow: 0 0 10px #0000ff; }
-            60% { box-shadow: 0 0 10px #00ffff; }
-            80% { box-shadow: 0 0 10px #00ff00; }
-            100% { box-shadow: 0 0 10px #ff0000; }
+            40% { box-shadow: 0 0 40px #0000ff; }
+            60% { box-shadow: 0 0 60px #00ffff; }
+            80% { box-shadow: 0 0 80px #00ff00; }
+            100% { box-shadow: 0 0 100px #ff0000; }
         }
 
         .rainbow-active {
             animation: rainbowGlow 3s infinite;
         }
 
-        /* Responsive Design */
         @media (max-width: 1400px) {
             .content {
                 max-width: 1200px;
             }
             .card-grid {
                 grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            }
+            .featured-section .card {
+                width: 180px;
+                min-width: 180px;
             }
         }
 
@@ -542,6 +584,10 @@
             }
             .card-grid {
                 grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            }
+            .featured-section .card {
+                width: 160px;
+                min-width: 160px;
             }
             .detail-logo {
                 width: 7rem;
@@ -554,13 +600,17 @@
                 padding: var(--spacing-unit);
             }
             .header-logo {
-                font-size: 1.75rem;
+                height: 1.75rem;
             }
             .search-bar {
                 max-width: 60%;
             }
             .card-grid {
                 grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            .featured-section .card {
+                width: 150px;
+                min-width: 150px;
             }
             .detail-header {
                 gap: var(--spacing-unit);
@@ -593,7 +643,7 @@
             }
             .tab {
                 font-size: 0.875rem;
-                padding: 0.5rem 0.75rem;
+                padding: 0.5rem;
             }
             .content {
                 padding: var(--spacing-unit);
@@ -601,6 +651,10 @@
             .card-grid {
                 grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
                 gap: var(--spacing-unit);
+            }
+            .featured-section .card {
+                width: 140px;
+                min-width: 140px;
             }
             .card {
                 padding: var(--spacing-unit);
@@ -637,6 +691,7 @@
             }
             .card-title {
                 font-size: 1rem;
+                max-height: 3rem;
             }
             .detail-title {
                 font-size: 1.25rem;
@@ -646,6 +701,10 @@
         @media (max-width: 400px) {
             .card-grid {
                 grid-template-columns: 1fr;
+            }
+            .featured-section .card {
+                width: 140px;
+                min-width: 140px;
             }
             .card {
                 padding: calc(var(--spacing-unit) * 0.75);
@@ -680,6 +739,7 @@
             }
             .card-title {
                 font-size: 0.875rem;
+                max-height: 2.625rem;
             }
             .card-type {
                 font-size: 0.75rem;
@@ -700,7 +760,8 @@
 
     <div class="tabs" role="tablist">
         <div class="tab-list">
-            <div class="tab active" data-tab="books" role="tab" aria-selected="true" tabindex="0">Books</div>
+            <div class="tab active" data-tab="all" role="tab" aria-selected="true" tabindex="0">All</div>
+            <div class="tab" data-tab="books" role="tab" aria-selected="false" tabindex="0">Books</div>
             <div class="tab" data-tab="chelp" role="tab" aria-selected="false" tabindex="0">CodeX</div>
             <div class="tab" data-tab="games" role="tab" aria-selected="false" tabindex="0">Games</div>
             <div class="tab" data-tab="productivity" role="tab" aria-selected="false" tabindex="0">Productivity</div>
@@ -714,7 +775,12 @@
             <h2 class="section-title">Featured Apps</h2>
             <div class="card-grid" id="featuredGrid"></div>
         </div>
-        <div class="section active" id="books" role="tabpanel" aria-labelledby="books-tab">
+        <div class="section active" id="all" role="tabpanel" aria-labelledby="all-tab">
+            <h2 class="section-title">All Apps</h2>
+            <div class="card-grid" id="allGrid"></div>
+            <div class="no-results" id="allNoResults">No results found</div>
+        </div>
+        <div class="section" id="books" role="tabpanel" aria-labelledby="books-tab">
             <h2 class="section-title">Books</h2>
             <div class="card-grid" id="booksGrid"></div>
             <div class="no-results" id="booksNoResults">No results found</div>
@@ -795,7 +861,6 @@
     </footer>
 
     <script>
-        // Sample data with more items to increase code length
         const storeData = {
             books: [
                 { id: 1, title: "Trigonometry", type: "Books", verified: true, logo: "https://via.placeholder.com/64", shortDesc: "Master trigonometric concepts.", longDesc: "A comprehensive guide to understanding trigonometry with practical examples.", images: ["https://via.placeholder.com/200x120"], file: "trig.pdf" },
@@ -831,7 +896,6 @@
             ]
         };
 
-        // Featured apps
         const featured = [
             storeData.books[0],
             storeData.chelp[0],
@@ -841,23 +905,34 @@
             storeData.chelp[2]
         ];
 
-        // Utility Functions
         function downloadAndOpenFile(item) {
             const filePath = item.file;
+            if (!filePath || filePath === '') {
+                alert('Sorry, the file is not available for download at this time.');
+                return;
+            }
             const fileName = filePath.split('/').pop();
             const link = document.createElement('a');
             link.href = filePath;
             link.download = fileName;
             document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-
-            setTimeout(() => {
-                const shouldOpen = confirm(`"${fileName}" has been downloaded. Would you like to open it now?`);
-                if (shouldOpen) {
-                    window.open(filePath, '_blank');
-                }
-            }, 1000);
+            try {
+                link.click();
+                document.body.removeChild(link);
+                setTimeout(() => {
+                    const shouldOpen = confirm(`"${fileName}" has been downloaded. Would you like to open it now?`);
+                    if (shouldOpen) {
+                        try {
+                            window.open(filePath, '_blank');
+                        } catch (e) {
+                            alert('Unable to open the file. Please check if it is supported by your browser.');
+                        }
+                    }
+                }, 1000);
+            } catch (e) {
+                document.body.removeChild(link);
+                alert('Download failed. Please try again later.');
+            }
         }
 
         function renderCards(data, containerId) {
@@ -866,13 +941,11 @@
                 console.error(`Container not found: ${containerId}`);
                 return;
             }
-            container.innerHTML = ''; // Clear the container
+            container.innerHTML = '';
 
-            // Derive the "no results" element ID and attempt to get it
             const noResultsId = containerId.replace('Grid', 'NoResults');
             const noResultsElement = document.getElementById(noResultsId);
 
-            // If there’s no data, show the "no results" message if the element exists
             if (!data || data.length === 0) {
                 if (noResultsElement) {
                     noResultsElement.style.display = 'block';
@@ -880,12 +953,10 @@
                 return;
             }
 
-            // If there is data, hide the "no results" message if the element exists
             if (noResultsElement) {
                 noResultsElement.style.display = 'none';
             }
 
-            // Render the cards
             data.forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'card';
@@ -912,16 +983,17 @@
             });
         }
 
-        // Initial rendering
         renderCards(featured, 'featuredGrid');
+        renderCards([...storeData.books, ...storeData.chelp, ...storeData.games, ...storeData.productivity], 'allGrid');
         renderCards(storeData.books, 'booksGrid');
         renderCards(storeData.chelp, 'chelpGrid');
         renderCards(storeData.games, 'gamesGrid');
         renderCards(storeData.productivity, 'productivityGrid');
 
-        // Tab navigation
         const tabs = document.querySelectorAll('.tab');
         const sections = document.querySelectorAll('.section');
+        const featuredSection = document.querySelector('.featured-section');
+
         tabs.forEach(tab => {
             tab.addEventListener('click', () => switchTab(tab));
             tab.addEventListener('keydown', (e) => {
@@ -944,6 +1016,8 @@
             document.getElementById(tabId).classList.add('active');
             document.getElementById('detailView').classList.remove('active');
             document.body.style.overflowY = 'auto';
+            // Show featured section only for 'all' tab
+            featuredSection.style.display = tabId === 'all' ? 'block' : 'none';
             if (tabId === 'recent') {
                 renderRecentlyViewed();
             } else if (tabId === 'favorites') {
@@ -953,7 +1027,6 @@
             }
         }
 
-        // Search functionality with debounce
         const searchInput = document.getElementById('searchInput');
         function debounce(func, delay) {
             let timeout;
@@ -972,13 +1045,16 @@
                 renderRecentlyViewed(query);
             } else if (activeTab === 'favorites') {
                 renderFavorites(query);
+            } else if (activeTab === 'all') {
+                const allItems = [...storeData.books, ...storeData.chelp, ...storeData.games, ...storeData.productivity];
+                const data = allItems.filter(item => item.title.toLowerCase().includes(query));
+                renderCards(data, 'allGrid');
             } else {
                 const data = storeData[activeTab].filter(item => item.title.toLowerCase().includes(query));
                 renderCards(data, `${activeTab}Grid`);
             }
         }
 
-        // Detail view
         function showDetail(item) {
             const detailView = document.getElementById('detailView');
             const overlay = document.getElementById('overlay');
@@ -1004,7 +1080,6 @@
             document.getElementById('detailDownload').onclick = () => downloadAndOpenFile(item);
             detailView.querySelector('#closeBtn').focus();
 
-            // Save to recently viewed
             let recentlyViewed = JSON.parse(localStorage.getItem('recentlyViewed')) || [];
             recentlyViewed = recentlyViewed.filter(id => id !== item.id);
             recentlyViewed.unshift(item.id);
@@ -1012,7 +1087,6 @@
             localStorage.setItem('recentlyViewed', JSON.stringify(recentlyViewed));
         }
 
-        // Recently Viewed
         function renderRecentlyViewed(query = '') {
             const recentlyViewed = JSON.parse(localStorage.getItem('recentlyViewed')) || [];
             let items = [];
@@ -1027,7 +1101,6 @@
             renderCards(items, 'recentGrid');
         }
 
-        // Favorites (Secret Feature)
         function renderFavorites(query = '') {
             const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
             let items = [];
@@ -1055,7 +1128,6 @@
             }
         }
 
-        // Close modal
         document.getElementById('closeBtn').addEventListener('click', closeModal);
         document.getElementById('detailView').addEventListener('keydown', (e) => {
             if (e.key === 'Escape') closeModal();
@@ -1075,9 +1147,10 @@
             } else {
                 performSearch();
             }
+            // Ensure featured section visibility is updated
+            featuredSection.style.display = activeTab === 'all' ? 'block' : 'none';
         }
 
-        // Settings
         const settingsIcon = document.getElementById('settingsIcon');
         const settingsWindow = document.getElementById('settingsWindow');
         const overlay = document.getElementById('overlay');
@@ -1103,6 +1176,9 @@
             document.getElementById('detailView').classList.remove('active');
             overlay.classList.remove('active');
             document.body.style.overflowY = 'auto';
+            const activeTab = document.querySelector('.tab.active').getAttribute('data-tab');
+            // Ensure featured section visibility is updated
+            featuredSection.style.display = activeTab === 'all' ? 'block' : 'none';
         });
 
         document.getElementById('saveSettings').addEventListener('click', () => {
@@ -1116,15 +1192,16 @@
 
             settingsWindow.classList.remove('active');
             overlay.classList.remove('active');
+            const activeTab = document.querySelector('.tab.active').getAttribute('data-tab');
+            // Ensure featured section visibility is updated
+            featuredSection.style.display = activeTab === 'all' ? 'block' : 'none';
         });
 
-        // Secret Feature: Rainbow Glow on double-click logo
         const headerLogo = document.querySelector('.header-logo');
         headerLogo.addEventListener('dblclick', () => {
             headerLogo.classList.toggle('rainbow-active');
         });
 
-        // Keyboard navigation for tabs
         document.querySelector('.tab-list').addEventListener('keydown', (e) => {
             const activeTab = document.querySelector('.tab.active');
             const tabList = Array.from(tabs);
@@ -1146,7 +1223,6 @@
             }
         });
 
-        // Extend code with additional utility functions
         function logActivity(action, details) {
             console.log(`[${new Date().toISOString()}] ${action}: ${JSON.stringify(details)}`);
         }
@@ -1167,11 +1243,10 @@
         function updateCardStyles() {
             const cards = document.querySelectorAll('.card');
             cards.forEach(card => {
-                card.style.transition = `transform ${varTransitionSpeed} ease, box-shadow ${varTransitionSpeed} ease`;
+                card.style.transition = `transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease`;
             });
         }
 
-        // Simulate dynamic content loading
         function simulateContentLoad(containerId, delay) {
             setTimeout(() => {
                 const container = document.getElementById(containerId);
@@ -1181,12 +1256,17 @@
             }, delay);
         }
 
-        // Initial load enhancements
         document.addEventListener('DOMContentLoaded', () => {
             logActivity('Page Loaded', { theme: savedTheme });
             updateCardStyles();
             simulateContentLoad('featuredGrid', 200);
+            simulateContentLoad('allGrid', 200);
             simulateContentLoad('booksGrid', 300);
+            simulateContentLoad('chelpGrid', 300);
+            simulateContentLoad('gamesGrid', 300);
+            simulateContentLoad('productivityGrid', 300);
+            // Ensure featured section is visible only for 'all' tab on load
+            featuredSection.style.display = document.querySelector('.tab.active').getAttribute('data-tab') === 'all' ? 'block' : 'none';
         });
     </script>
 </body>
