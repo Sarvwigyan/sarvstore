@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="sa" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>📘 पूर्णत्वकला | आत्मपूर्णतायाः कला (संस्कृतम्)</title>
+
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="पूर्णत्वकला - आत्मविकासः, दर्शनम्, आध्यात्मिकता च संनादति। The Art of Being Perfect इति ग्रन्थस्य संस्कृतानुवादः।">
+  <meta name="keywords" content="पूर्णत्वकला, संस्कृतम्, आत्मविकासः, दर्शनम्, आध्यात्मिकता, The Art of Being Perfect, ज्ञानम्, सत्यस्य खोजः">
+  <meta name="author" content="सर्वंविज्ञानम्">
+  <meta property="og:title" content="पूर्णत्वकला | आत्मपूर्णतायाः कला (संस्कृतम्)">
+  <meta property="og:description" content="The Art of Being Perfect इति ग्रन्थस्य संस्कृतानुवादः - आत्मविकासाय दार्शनिकं मार्गदर्शनम्।">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://example.com/book-cover.jpg">
+  <meta property="og:url" content="https://sarvwigyan.org/sanskrit/perfect">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Noto Serif Devanagari', serif;
+      background-color: #0f172a;
+      color: #f8fafc;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(to right, #1e3a8a, #0ea5e9);
+      padding: 2.5rem 1rem;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      margin: 0.5rem 0 0;
+      font-size: 1.1rem;
+      color: #cbd5e1;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .intro {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 1.2rem;
+      color: #e2e8f0;
+      max-width: 800px;
+    }
+
+    .resizable {
+      overflow: hidden;
+      border: 2px dashed #94a3b8;
+      border-radius: 12px;
+      background: #1e293b;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+      position: relative;
+      transition: transform 0.3s ease;
+    }
+
+    /* Desktop styles */
+    @media (min-width: 769px) {
+      .resizable {
+        resize: both;
+        width: 90vw;
+        height: 80vh;
+        min-width: 600px;
+        min-height: 400px;
+        max-width: 100%;
+        max-height: 90vh;
+      }
+    }
+
+    /* Mobile styles */
+    @media (max-width: 768px) {
+      .resizable {
+        width: 100vw;
+        height: 80vh;
+        min-width: 100%;
+        min-height: 60vh;
+        border: none;
+        border-radius: 0;
+      }
+    }
+
+    .resizable:hover {
+      transform: scale(1.02);
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 10px;
+    }
+
+    .resize-hint {
+      position: absolute;
+      bottom: 8px;
+      right: 12px;
+      font-size: 0.9rem;
+      color: #94a3b8;
+      opacity: 0.8;
+      animation: pulse 2s infinite;
+      pointer-events: none;
+      display: none; /* Hidden on mobile by default */
+    }
+
+    @media (min-width: 769px) {
+      .resize-hint {
+        display: block; /* Show resize hint only on desktop */
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.7; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.1); }
+    }
+
+    .note {
+      margin-top: 1.5rem;
+      color: #94a3b8;
+      text-align: center;
+      font-size: 1rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background-color: #1e293b;
+      color: #94a3b8;
+      font-size: 0.95rem;
+    }
+
+    .visit-button {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.75rem 1.5rem;
+      background: linear-gradient(to right, #1e3a8a, #0ea5e9);
+      color: #f8fafc;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: transform 0.2s ease, background 0.3s ease;
+    }
+
+    .visit-button:hover {
+      transform: translateY(-2px);
+      background: linear-gradient(to right, #0ea5e9, #1e3a8a);
+    }
+
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 1.8rem;
+      }
+
+      .intro {
+        font-size: 1rem;
+      }
+
+      .note {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>📘 पूर्णत्वकला</h1>
+    <p>The Art of Being Perfect — संस्कृतानुवादः</p>
+  </header>
+
+  <main class="container">
+    <div class="intro">
+      पूर्णत्वकला इति ग्रन्थः आत्मविकासस्य दार्शनिकं मार्गदर्शनं संनादति। ज्ञानस्य, सत्यस्य च खोजेन संनादति यत् जीवनं पूर्णतायाः संनादति। अधुना संस्कृतभाषायां संनादति यत् सर्वं संनादति।
+    </div>
+    <div class="resizable" role="region" aria-label="पूर्णत्वकला पाठदृश्यम्">
+      <iframe 
+        src="https://archive.org/embed/the-art-of-being-perfect-1" 
+        allowfullscreen 
+        webkitallowfullscreen="true" 
+        mozallowfullscreen="true"
+        aria-label="The Art of Being Perfect पाठः">
+      </iframe>
+      <div class="resize-hint">↘ आकारं परिवर्तयतु</div>
+    </div>
+    <p class="note">🔧 कोने खींचित्वा पाठविंडोः आकारं परिवर्तयतु (केवलं संगणकेषु)</p>
+  </main>
+
+  <footer>
+    © 2025 सर्वंविज्ञानम् | सत्यम् सेवा च संकल्पः<br>
+    <a href="https://sarvwigyan.github.io/" class="visit-button" target="_blank" rel="noopener" aria-label="सर्वDownloading artifact...ंविज्ञानं संनादतु">सर्वंविज्ञानं संनादतु</a>
+  </footer>
+</body>
+</html>

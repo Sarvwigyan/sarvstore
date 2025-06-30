@@ -69,7 +69,7 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
             gap: var(--spacing-unit);
         }
 
@@ -87,7 +87,7 @@
             flex: 1;
             max-width: 50%;
             position: relative;
-            min-width: 200px;
+            min-width: 150px;
         }
 
         .search-bar input {
@@ -552,6 +552,21 @@
             color: var(--highlight);
         }
 
+        .filter-section {
+            margin-bottom: calc(var(--spacing-unit) * 1.5);
+        }
+
+        .filter-section select {
+            padding: 0.75rem;
+            border: 1px solid var(--primary);
+            border-radius: 8px;
+            font-size: 1rem;
+            background: var(--background);
+            color: var(--text);
+            outline: none;
+            margin-right: 0.5rem;
+        }
+
         @keyframes rainbowGlow {
             0% { box-shadow: 0 0 10px #ff0000; }
             20% { box-shadow: 0 0 10px #ff00ff; }
@@ -601,9 +616,11 @@
             }
             .header-logo {
                 height: 1.75rem;
+                font-size: 1.5rem;
             }
             .search-bar {
-                max-width: 60%;
+                max-width: 50%;
+                min-width: 120px;
             }
             .card-grid {
                 grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -626,17 +643,32 @@
 
         @media (max-width: 600px) {
             .header {
-                flex-direction: column;
-                align-items: center;
                 padding: calc(var(--spacing-unit) * 0.75);
+                flex-direction: row;
+                flex-wrap: nowrap;
+                align-items: center;
+                justify-content: space-between;
+            }
+            .header-logo {
+                font-size: 1.25rem;
+                flex-shrink: 1;
+                max-width: 30%;
+            }
+            .header-logo img {
+                height: 1.25rem;
             }
             .search-bar {
-                max-width: 100%;
-                margin: 0.5rem 0;
-                width: 100%;
+                max-width: 50%;
+                min-width: 100px;
+                flex-grow: 1;
+            }
+            .search-bar input {
+                padding: 0.5rem;
+                font-size: 0.875rem;
             }
             .settings-icon {
-                font-size: 1.5rem;
+                font-size: 1.25rem;
+                flex-shrink: 0;
             }
             .tabs {
                 padding: 0.5rem;
@@ -649,7 +681,7 @@
                 padding: var(--spacing-unit);
             }
             .card-grid {
-                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                grid-template-columns: repeat(2, 1fr);
                 gap: var(--spacing-unit);
             }
             .featured-section .card {
@@ -660,8 +692,8 @@
                 padding: var(--spacing-unit);
             }
             .card-logo {
-                width: 4rem;
-                height: 4rem;
+                width: 3.5rem;
+                height: 3.5rem;
             }
             .detail-view {
                 padding: var(--spacing-unit);
@@ -699,22 +731,33 @@
         }
 
         @media (max-width: 400px) {
+            .header-logo {
+                font-size: 1rem;
+                max-width: 25%;
+            }
+            .header-logo img {
+                height: 1rem;
+            }
+            .search-bar {
+                max-width: 60%;
+                min-width: 80px;
+            }
+            .settings-icon {
+                font-size: 1rem;
+            }
             .card-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
             }
             .featured-section .card {
-                width: 140px;
-                min-width: 140px;
+                width: 120px;
+                min-width: 120px;
             }
             .card {
                 padding: calc(var(--spacing-unit) * 0.75);
             }
             .card-logo {
-                width: 3.5rem;
-                height: 3.5rem;
-            }
-            .header-logo {
-                font-size: 1.5rem;
+                width: 3rem;
+                height: 3rem;
             }
             .tab {
                 font-size: 0.75rem;
@@ -734,8 +777,8 @@
                 padding: 0.5rem;
             }
             .search-bar input {
-                padding: 0.5rem;
-                font-size: 0.875rem;
+                padding: 0.4rem;
+                font-size: 0.75rem;
             }
             .card-title {
                 font-size: 0.875rem;
@@ -773,40 +816,108 @@
     <div class="content">
         <div class="featured-section">
             <h2 class="section-title">Featured Apps</h2>
+            <div class="filter-section">
+                <select onchange="filterApps('featuredGrid', this.value)" aria-label="Filter featured apps">
+                    <option value="">Filter by...</option>
+                    <option value="popularity">Popularity</option>
+                    <option value="rating">Rating</option>
+                    <option value="newest">Newest</option>
+                </select>
+            </div>
             <div class="card-grid" id="featuredGrid"></div>
         </div>
         <div class="section active" id="all" role="tabpanel" aria-labelledby="all-tab">
             <h2 class="section-title">All Apps</h2>
+            <div class="filter-section">
+                <select onchange="filterApps('allGrid', this.value)" aria-label="Filter all apps">
+                    <option value="">Filter by...</option>
+                    <option value="popularity">Popularity</option>
+                    <option value="rating">Rating</option>
+                    <option value="newest">Newest</option>
+                </select>
+            </div>
             <div class="card-grid" id="allGrid"></div>
             <div class="no-results" id="allNoResults">No results found</div>
         </div>
         <div class="section" id="books" role="tabpanel" aria-labelledby="books-tab">
             <h2 class="section-title">Books</h2>
+            <div class="filter-section">
+                <select onchange="filterApps('booksGrid', this.value)" aria-label="Filter books">
+                    <option value="">Filter by...</option>
+                    <option value="language">Language</option>
+                    <option value="genre">Genre</option>
+                    <option value="author">Author</option>
+                </select>
+                <select id="language-filter" style="display: none;" onchange="filterByLanguage(this.value)" aria-label="Filter books by language">
+                    <option value="">Select Language...</option>
+                    <option value="english">English</option>
+                    <option value="hindi">Hindi</option>
+                    <option value="sanskrit">Sanskrit</option>
+                </select>
+            </div>
             <div class="card-grid" id="booksGrid"></div>
             <div class="no-results" id="booksNoResults">No results found</div>
         </div>
         <div class="section" id="chelp" role="tabpanel" aria-labelledby="chelp-tab">
             <h2 class="section-title">CodeX</h2>
+            <div class="filter-section">
+                <select onchange="filterApps('chelpGrid', this.value)" aria-label="Filter CodeX tools">
+                    <option value="">Filter by...</option>
+                    <option value="language">Programming Language</option>
+                    <option value="difficulty">Difficulty</option>
+                    <option value="category">Category</option>
+                </select>
+            </div>
             <div class="card-grid" id="chelpGrid"></div>
             <div class="no-results" id="chelpNoResults">No results found</div>
         </div>
         <div class="section" id="games" role="tabpanel" aria-labelledby="games-tab">
             <h2 class="section-title">Games</h2>
+            <div class="filter-section">
+                <select onchange="filterApps('gamesGrid', this.value)" aria-label="Filter games">
+                    <option value="">Filter by...</option>
+                    <option value="genre">Genre</option>
+                    <option value="platform">Platform</option>
+                    <option value="multiplayer">Multiplayer</option>
+                </select>
+            </div>
             <div class="card-grid" id="gamesGrid"></div>
             <div class="no-results" id="gamesNoResults">No results found</div>
         </div>
         <div class="section" id="productivity" role="tabpanel" aria-labelledby="productivity-tab">
             <h2 class="section-title">Productivity</h2>
+            <div class="filter-section">
+                <select onchange="filterApps('productivityGrid', this.value)" aria-label="Filter productivity apps">
+                    <option value="">Filter by...</option>
+                    <option value="category">Category</option>
+                    <option value="price">Price</option>
+                    <option value="rating">Rating</option>
+                </select>
+            </div>
             <div class="card-grid" id="productivityGrid"></div>
             <div class="no-results" id="productivityNoResults">No results found</div>
         </div>
         <div class="section" id="recent" role="tabpanel" aria-labelledby="recent-tab">
             <h2 class="section-title">Recently Viewed</h2>
+            <div class="filter-section">
+                <select onchange="filterApps('recentGrid', this.value)" aria-label="Filter recently viewed items">
+                    <option value="">Filter by...</option>
+                    <option value="date">Date Viewed</option>
+                    <option value="category">Category</option>
+                </select>
+            </div>
             <div class="card-grid" id="recentGrid"></div>
             <div class="no-results" id="recentNoResults">No recently viewed items</div>
         </div>
         <div class="section" id="favorites" role="tabpanel" aria-labelledby="favorites-tab">
             <h2 class="section-title">Favorites</h2>
+            <div class="filter-section">
+                <select onchange="filterApps('favoritesGrid', this.value)" aria-label="Filter favorite items">
+                    <option value="">Filter by...</option>
+                    <option value="category">Category</option>
+                    <option value="date-added">Date Added</option>
+                </select>
+            </div>
             <div class="card-grid" id="favoritesGrid"></div>
             <div class="no-results" id="favoritesNoResults">No favorite items yet</div>
         </div>
@@ -863,12 +974,12 @@
     <script>
         const storeData = {
             books: [
-                { id: 1, title: "Trigonometry", type: "Books", verified: true, logo: "https://via.placeholder.com/64", shortDesc: "Master trigonometric concepts.", longDesc: "A comprehensive guide to understanding trigonometry with practical examples.", images: ["https://via.placeholder.com/200x120"], file: "trig.pdf" },
-                { id: 2, title: "MindLift", type: "Books", verified: false, logo: "https://via.placeholder.com/64", shortDesc: "Elevate your life.", longDesc: "Practical self-help insights to improve your daily life.", images: ["https://via.placeholder.com/200x120"], file: "mindlift.pdf" },
-                { id: 9, title: "Algebra Basics", type: "Books", verified: true, logo: "https://via.placeholder.com/64", shortDesc: "Learn algebra easily.", longDesc: "A beginner's guide to algebra with step-by-step explanations.", images: ["https://via.placeholder.com/200x120"], file: "algebra.pdf" },
-                { id: 10, title: "Calculus Made Simple", type: "Books", verified: false, logo: "https://via.placeholder.com/64", shortDesc: "Simplify calculus.", longDesc: "Understand calculus concepts with clear examples.", images: ["https://via.placeholder.com/200x120"], file: "calculus.pdf" },
-                { id: 11, title: "Geometry Essentials", type: "Books", verified: true, logo: "https://via.placeholder.com/64", shortDesc: "Explore shapes.", longDesc: "Dive into the world of geometry with practical applications.", images: ["https://via.placeholder.com/200x120"], file: "geometry.pdf" },
-                { id: 12, title: "Statistics 101", type: "Books", verified: false, logo: "https://via.placeholder.com/64", shortDesc: "Understand stats.", longDesc: "A basic introduction to statistical methods and analysis.", images: ["https://via.placeholder.com/200x120"], file: "stats.pdf" },
+                { id:1, title:"The Art Of Being Perfect(Sanskrit)", type:"Books", verified:false, logo:"https://via.placeholder.com/64", shortDesc:"एषा पुस्तिका आत्मविकासस्य, चारित्रशुद्धेः, चित्तनिग्रहस्य च मार्गं प्रकाशयति। श्रद्धा, भक्तिः, तर्कः, भावना च — एतेषां समन्वयेन मानवस्य जीवने पूर्णत्वं साध्यते।", longDesc:"‘पूर्णत्वकला’ नाम पुस्तकायाः विशेषता या अस्ति यत् सा केवलं बाह्यजीवनस्य नियमपरायणतां न उपदिशति, अपि तु अंतरङ्गस्य आध्यात्मिकविकासं प्रति मानवं प्रेरयति। एषा पुस्तिका श्रद्धाया, भक्तेः, तर्कस्य, भावनायाः च समुच्चयेन आत्मशुद्धिं, चित्तस्थैर्यं, जीवनस्य उद्देशपरिज्ञानं च बोधयति। अत्र न केवलं तत्त्वविमर्शः दृश्यते, अपि तु प्रत्येकः पाठकः 'सत्यं किम्?' इति प्रश्नं स्वयमेव गवेषते। पूर्णत्वं न तु दशांशवर्जितरूपं, किं तु चरमं मानवीयतत्त्वम् — यत्र आत्मा स्वस्वरूपे विशुद्धे बोधयति। एषा पुस्तिका न केवलं ज्ञानसमृद्धा, अपि तु अनुभवपूरिता अस्ति, यत्र प्रत्येकः अध्यायः एकस्य साधकस्य चित्तगह्वरात् उत्पन्न इव दृश्यते। श्रद्धा आरम्भबिन्दुः, तर्कः निर्देशनम्, भावना प्रेरणा, भक्तिः प्रकाशः च इत्येते समवायेन आत्मविकासस्य पथं निर्मायन्ते। अतः 'पूर्णत्वकला' इत्ययं ग्रन्थः केवलं पाठ्यपुस्तकम् न, अपि तु जीवनदर्शकम्, आत्मदर्पणं च अस्ति, यत्र पाठकः आत्मनः स्वरूपं दृष्ट्वा विवर्धते।", images: ["https://via.placeholder.com/200x120"], file:"Books/TheArtOfBeingPerfectSanskrit.html", language: "Sanskrit" },
+                { id: 2, title: "The Art Of Being Perfect(Hindi)", type: "Books", verified: false, logo: "https://via.placeholder.com/64", shortDesc: "यह पुस्तक आत्मविकास, विचारशीलता और जीवन की पूर्णता को प्राप्त करने की आध्यात्मिक दिशा दिखाती है।", longDesc: "'पूर्णता की कला' एक प्रेरणादायक और आत्मगामी पुस्तक है जो व्यक्ति को अपने आंतरिक स्वरूप की खोज, आत्मशुद्धि और आध्यात्मिक उन्नयन की ओर मार्गदर्शन करती है। इसमें श्रद्धा, तर्क, भावना और भक्ति जैसे गहरे तत्वों के माध्यम से जीवन की सार्थकता, उद्देश्य और आत्मिक पूर्णता की ओर बढ़ने का पथ दिखाया गया है। यह पुस्तक न केवल दार्शनिक विचार प्रस्तुत करती है, बल्कि पाठक को स्वयं से जुड़ने, अपनी चेतना को जाग्रत करने और एक संतुलित, शुद्ध तथा अर्थपूर्ण जीवन जीने के लिए प्रेरित करती है।", images: ["https://via.placeholder.com/200x120"], file: "Books/TheArtOfBeingPerfectHindi.html", language: "Hindi" },
+                { id: 9, title: "श्रीमद्भगवद्गीता", type: "Books", verified: true, logo: "https://ik.imagekit.io/sarvwigyan/bhagwadgeeta.png", shortDesc: "श्रीमद्भगवद्गीता एक दिव्य ग्रंथ है जो कर्म, ज्ञान और भक्ति के माध्यम से जीवन के धर्म, उद्देश्य और मोक्ष की दिशा प्रदान करता है।", longDesc: "श्रीमद्भगवद्गीता सनातन धर्म का सर्वश्रेष्ठ आध्यात्मिक ग्रंथ है, जो केवल एक युद्धभूमि पर दिए गए उपदेशों का संकलन नहीं, अपितु सम्पूर्ण मानवता के लिए जीवन, धर्म, कर्म, ज्ञान, भक्ति, योग, वैराग्य और मोक्ष का एक सार्वभौमिक मार्गदर्शन है; यह महाभारत के भीष्म पर्व का एक अंश होते हुए भी एक स्वतंत्र दार्शनिक ग्रंथ के रूप में प्रतिष्ठित है, जिसमें भगवान श्रीकृष्ण द्वारा अर्जुन को दिए गए उपदेश न केवल व्यक्तिगत संकट और कर्तव्य की उलझनों को सुलझाते हैं, बल्कि आत्मा की अमरता, शरीर की क्षणभंगुरता, निष्काम कर्म की महिमा, समत्व योग, भक्तियोग, ज्ञानयोग, सांख्ययोग, राजविद्या, और पुरुषोत्तम तत्व जैसे गूढ़ और दिव्य विषयों का अत्यंत सुन्दर तथा गूढ़ वर्णन करते हैं; इसमें मानव जीवन की प्रत्येक स्थिति में स्थिरबुद्धि, विवेक, धैर्य, और आध्यात्मिक जागरूकता के साथ कैसे जीया जाए, यह दर्शाया गया है, और यही कारण है कि यह ग्रंथ न केवल भारतवर्ष में, अपितु सम्पूर्ण विश्व में योगियों, दार्शनिकों, वैज्ञानिकों और सामान्य जनों के लिए भी आत्मबोध, शांति और सच्चे जीवन पथ की प्रेरणा बन चुका है; गीता का प्रत्येक श्लोक एक दर्पण है, जो आत्मा को उसके स्वरूप का बोध कराता है, और जीवन को एक युद्ध न मानकर एक साधना, एक सेवा और एक परम लक्ष्य की ओर उन्मुख यात्रा के रूप में देखने की दृष्टि प्रदान करता है।", images: ["https://www.bhagavad-gita.us/wp-content/uploads/2012/09/gita-118.jpg","https://play-lh.googleusercontent.com/DgDUHUNP4w8DGuYh96h21leQ7P0Fl8Hpmh9QpfEzR5AhHTCPoT50hzRWMEMvtU_EO1Qp","https://i.ytimg.com/vi/bOaPXCL-WE4/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDREoQ6Fm_6kAh6jja8iqHGK1-p4w"], file: "Books/Bhagwadgeeta.html", language: "Hindi" },
+                { id: 10, title: "Calculus Made Simple", type: "Books", verified: false, logo: "https://via.placeholder.com/64", shortDesc: "Simplify calculus.", longDesc: "Understand calculus concepts with clear examples.", images: ["https://via.placeholder.com/200x120"], file: "calculus.pdf", language: "English" },
+                { id: 11, title: "Geometry Essentials", type: "Books", verified: true, logo: "https://via.placeholder.com/64", shortDesc: "Explore shapes.", longDesc: "Dive into the world of geometry with practical applications.", images: ["https://via.placeholder.com/200x120"], file: "geometry.pdf", language: "English" },
+                { id: 12, title: "Statistics 101", type: "Books", verified: false, logo: "https://via.placeholder.com/64", shortDesc: "Understand stats.", longDesc: "A basic introduction to statistical methods and analysis.", images: ["https://via.placeholder.com/200x120"], file: "stats.pdf", language: "English" },
             ],
             chelp: [
                 { id: 3, title: "HelpHub", type: "Tools", verified: true, logo: "https://via.placeholder.com/64", shortDesc: "Quick assistance guide.", longDesc: "Your go-to guide for quick assistance and support.", images: ["https://via.placeholder.com/200x120"], file: "helphub.apk" },
@@ -904,6 +1015,18 @@
             storeData.books[2],
             storeData.chelp[2]
         ];
+
+        function readBook(item) {
+            if (!item.file || item.file === '') {
+                alert('Sorry, the book is not available for reading at this time.');
+                return;
+            }
+            try {
+                window.open(item.file, '_blank');
+            } catch (e) {
+                alert('Unable to open the book. Please check if it is supported by your browser.');
+            }
+        }
 
         function downloadAndOpenFile(item) {
             const filePath = item.file;
@@ -963,11 +1086,12 @@
                 card.setAttribute('role', 'button');
                 card.setAttribute('tabindex', '0');
                 card.setAttribute('aria-label', `View details for ${item.title}`);
+                const buttonText = item.type === 'Books' ? 'Read' : 'Download';
                 card.innerHTML = `
                     <img class="card-logo" src="${item.logo}" alt="${item.title}">
                     <div class="card-title">${item.title}</div>
                     <div class="card-type">${item.type}</div>
-                    <button class="card-download" aria-label="Download ${item.title}">Download</button>
+                    <button class="card-download" aria-label="${buttonText} ${item.title}">${buttonText}</button>
                 `;
                 card.addEventListener('click', (e) => {
                     if (e.target.className !== 'card-download') showDetail(item);
@@ -978,7 +1102,13 @@
                         showDetail(item);
                     }
                 });
-                card.querySelector('.card-download').addEventListener('click', () => downloadAndOpenFile(item));
+                card.querySelector('.card-download').addEventListener('click', () => {
+                    if (item.type === 'Books') {
+                        readBook(item);
+                    } else {
+                        downloadAndOpenFile(item);
+                    }
+                });
                 container.appendChild(card);
             });
         }
@@ -1016,7 +1146,6 @@
             document.getElementById(tabId).classList.add('active');
             document.getElementById('detailView').classList.remove('active');
             document.body.style.overflowY = 'auto';
-            // Show featured section only for 'all' tab
             featuredSection.style.display = tabId === 'all' ? 'block' : 'none';
             if (tabId === 'recent') {
                 renderRecentlyViewed();
@@ -1025,6 +1154,7 @@
             } else {
                 performSearch();
             }
+            document.getElementById('language-filter').style.display = 'none'; // Reset language filter visibility
         }
 
         const searchInput = document.getElementById('searchInput');
@@ -1074,11 +1204,21 @@
                 imagesContainer.appendChild(img);
             });
 
+            const detailDownload = document.getElementById('detailDownload');
+            detailDownload.textContent = item.type === 'Books' ? 'Read' : 'Download';
+            detailDownload.setAttribute('aria-label', `${item.type === 'Books' ? 'Read' : 'Download'} ${item.title}`);
+            detailDownload.onclick = () => {
+                if (item.type === 'Books') {
+                    readBook(item);
+                } else {
+                    downloadAndOpenFile(item);
+                }
+            };
+
             detailView.classList.add('active');
             overlay.classList.add('active');
             document.body.style.overflowY = 'hidden';
-            document.getElementById('detailDownload').onclick = () => downloadAndOpenFile(item);
-            detailView.querySelector('#closeBtn').focus();
+            document.getElementById('closeBtn').focus();
 
             let recentlyViewed = JSON.parse(localStorage.getItem('recentlyViewed')) || [];
             recentlyViewed = recentlyViewed.filter(id => id !== item.id);
@@ -1147,7 +1287,6 @@
             } else {
                 performSearch();
             }
-            // Ensure featured section visibility is updated
             featuredSection.style.display = activeTab === 'all' ? 'block' : 'none';
         }
 
@@ -1177,7 +1316,6 @@
             overlay.classList.remove('active');
             document.body.style.overflowY = 'auto';
             const activeTab = document.querySelector('.tab.active').getAttribute('data-tab');
-            // Ensure featured section visibility is updated
             featuredSection.style.display = activeTab === 'all' ? 'block' : 'none';
         });
 
@@ -1193,7 +1331,6 @@
             settingsWindow.classList.remove('active');
             overlay.classList.remove('active');
             const activeTab = document.querySelector('.tab.active').getAttribute('data-tab');
-            // Ensure featured section visibility is updated
             featuredSection.style.display = activeTab === 'all' ? 'block' : 'none';
         });
 
@@ -1222,6 +1359,27 @@
                 }
             }
         });
+
+        function filterApps(containerId, filterType) {
+            if (containerId === 'booksGrid' && filterType === 'language') {
+                document.getElementById('language-filter').style.display = 'inline';
+            } else {
+                document.getElementById('language-filter').style.display = 'none';
+            }
+            logActivity('Filter Applied', { containerId, filterType });
+            // Placeholder for actual filtering logic
+            // You can implement specific filtering logic here based on filterType
+        }
+
+        function filterByLanguage(language) {
+            const query = searchInput.value.toLowerCase();
+            const data = storeData.books.filter(item => 
+                item.language.toLowerCase() === language.toLowerCase() && 
+                (!query || item.title.toLowerCase().includes(query))
+            );
+            renderCards(data, 'booksGrid');
+            logActivity('Language Filter Applied', { language });
+        }
 
         function logActivity(action, details) {
             console.log(`[${new Date().toISOString()}] ${action}: ${JSON.stringify(details)}`);
@@ -1265,7 +1423,6 @@
             simulateContentLoad('chelpGrid', 300);
             simulateContentLoad('gamesGrid', 300);
             simulateContentLoad('productivityGrid', 300);
-            // Ensure featured section is visible only for 'all' tab on load
             featuredSection.style.display = document.querySelector('.tab.active').getAttribute('data-tab') === 'all' ? 'block' : 'none';
         });
     </script>
