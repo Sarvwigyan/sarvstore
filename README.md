@@ -1,8 +1,8 @@
-# 🌍 Sarv Store - The Digital Marketplace by Sarvwigyan
+# 🌍 Sarvstore - The Digital Marketplace by Sarvwigyan
 
 ## 🚀 Introduction  
 
-**Sarv Store** is a digital marketplace under **Sarvwigyan**, designed to provide a wide range of digital and physical resources, including:  
+**Sarvstore** is a digital marketplace under **Sarvwigyan**, designed to provide a wide range of digital and physical resources, including:  
 - 📚 Books (Printed & Digital, Free & Paid)  
 - 📱 Apps and Software Tools  
 - 🎓 Educational Resources  
@@ -24,7 +24,7 @@ Sarv Store aims to **promote self-reliance, innovation, and accessible learning*
 
 ## 🔧 Tech Stack  
 
-Sarv Store is built using modern web technologies to ensure high performance and scalability.  
+Sarvstore is built using modern web technologies to ensure high performance and scalability.  
 
 - **Frontend:** React.js / Next.js  
 - **Backend:** Node.js / Django / FastAPI  
@@ -45,7 +45,7 @@ Sarv Store is built using modern web technologies to ensure high performance and
 
 ## 🤝 Contributing  
 
-We welcome contributors to improve and expand **Sarv Store**! Follow these steps:  
+We welcome contributors to improve and expand **Sarvstore**! Follow these steps:  
 
 1. **Fork the Repository** 
 2. **Clone the Repository** 
