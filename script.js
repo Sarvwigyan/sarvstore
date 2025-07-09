@@ -90,16 +90,18 @@
                     title: "स्कन्द पुराण",
                     type: "Books",
                     verified: true,
-                    logo: "https://sarvwigyan.github.io/resources/skandpuran.jpg",
+                    logo: "https://sarvwigyan.github.io/resources/Images/Skanda%20Puran%20FC.jpg",
                     shortDesc: "'स्कन्द पुराण' हिन्दू धर्म के 18 महापुराणों में सबसे विशाल पुराण है, जो भगवान शिव और उनके पुत्र स्कन्द (कार्तिकेय) के महात्म्य एवं लीलाओं का विस्तार से वर्णन करता है।",
                     longDesc: "स्कन्द पुराण हिन्दू धर्म के अठारह महापुराणों में सबसे विशाल और व्यापक ग्रंथ है, जिसमें लगभग 81,000 से अधिक श्लोक हैं और यह भगवान शिव के पुत्र भगवान स्कन्द (कार्तिकेय) की शिक्षाओं, लीलाओं और महात्म्य को केन्द्र में रखता है।",
                     images: [
+                        "https://sarvwigyan.github.io/resources/Images/Skanda%20Puran%20FC.jpg",
                         "https://sarvwigyan.github.io/resources/skandpuran1.jpg",
                         "https://sarvwigyan.github.io/resources/skandpuran.jpg"
                     ],
                     imageAlts: [
-                        "Illustration from Skanda Purana in Hindi",
-                        "Cover page of Skanda Purana in Hindi"
+                        "Cover page of Skanda Purana in Hindi",
+                        "Illustration of Skanda Purana in Hindi",
+                        "Illustration of Skanda Purana in Hindi",
                     ],
                     file: "https://archive.org/embed/skanda-puran-gita-press-gorakhpur",
                     language: "Hindi"
@@ -109,26 +111,39 @@
                     title: "भविष्य पुराण",
                     type: "Books",
                     verified: true,
-                    logo: "https://sarvwigyan.github.io/resources/BhavishyaPuran.png",
+                    logo: "https://sarvwigyan.github.io/resources/Images/Bhavishya%20Puran%20FC.jpg",
                     shortDesc: "'भविष्य पुराण' हिन्दू पुराणों में एक विशिष्ट ग्रंथ है जो भविष्यवाणियों, धर्म, और सांस्कृतिक परंपराओं का संगम है।",
                     longDesc: "भविष्य पुराण हिन्दू धर्म का एक प्राचीन ग्रंथ है जिसमें अतीत, वर्तमान और भविष्य से संबंधित कथाएँ, राजा-वंश, धर्मशास्त्र, नीति, चिकित्सा, योग, और विभिन्न युगों की भविष्यवाणियाँ समाहित हैं।",
-                    images: ["https://sarvwigyan.github.io/resources/BhavishyaPuran.png"],
-                    imageAlts: ["Cover page of Bhavishya Purana in Hindi"],
+                    images: ["https://sarvwigyan.github.io/resources/Images/Bhavishya%20Puran%20FC.jpg","https://sarvwigyan.github.io/resources/BhavishyaPuran.png"],
+                    imageAlts: ["Cover page of Bhavishya Purana in Hindi", "Representation of Bhavishya Purana"],
                     file: "https://archive.org/embed/bhavishya-puran-gita-press-gorakhpur",
                     language: "Hindi"
                 },
                 {
                     id: 12,
-                    title: "Statistics 101",
+                    title: "Charaka Samhita",
                     type: "Books",
-                    verified: false,
-                    logo: "https://via.placeholder.com/64",
-                    shortDesc: "Understand stats.",
-                    longDesc: "A basic introduction to statistical methods and analysis.",
-                    images: ["https://via.placeholder.com/200x120"],
-                    imageAlts: ["Cover page of Statistics 101"],
-                    file: "https://raw.githubusercontent.com/sarvwigyan/resources/main/Statistics101.pdf",
+                    verified: true,
+                    logo: "https://ia801901.us.archive.org/BookReader/BookReaderImages.php?zip=/19/items/CharakaSamhitaTextWithEnglishTanslationP.V.Sharma/Charaka%20Samhita%20Text%20with%20English%20Tanslation%20-%20P.V.%20Sharma_jp2.zip&file=Charaka%20Samhita%20Text%20with%20English%20Tanslation%20-%20P.V.%20Sharma_jp2/Charaka%20Samhita%20Text%20with%20English%20Tanslation%20-%20P.V.%20Sharma_0000.jp2&id=CharakaSamhitaTextWithEnglishTanslationP.V.Sharma&scale=8&rotate=0",
+                    shortDesc: "Charak Samhita English translation .Charak Samhita is an ancient Indian text on Ayurveda, the traditional system of medicine.",
+                    longDesc: "Charak Samhita is one of the foundational texts of Ayurveda, detailing various aspects of health, disease, and treatment methods. This English translation makes it accessible to a wider audience interested in traditional Indian medicine. It covers topics such as anatomy, physiology, pathology, and therapeutic practices, providing insights into ancient medical knowledge and practices. This translation is by P.V. Sharma, a renowned scholar in the field of Ayurveda. It is a valuable resource for students, practitioners, and anyone interested in the history and principles of Ayurvedic medicine. The text emphasizes the holistic approach of Ayurveda, integrating physical, mental, and spiritual health. It also discusses the importance of diet, lifestyle, and herbal remedies in maintaining health and treating diseases. The Charak Samhita is considered a classic in Ayurvedic literature and continues to be studied and referenced in modern Ayurvedic practice.",
+                    images: ["https://ia801901.us.archive.org/BookReader/BookReaderImages.php?zip=/19/items/CharakaSamhitaTextWithEnglishTanslationP.V.Sharma/Charaka%20Samhita%20Text%20with%20English%20Tanslation%20-%20P.V.%20Sharma_jp2.zip&file=Charaka%20Samhita%20Text%20with%20English%20Tanslation%20-%20P.V.%20Sharma_jp2/Charaka%20Samhita%20Text%20with%20English%20Tanslation%20-%20P.V.%20Sharma_0000.jp2&id=CharakaSamhitaTextWithEnglishTanslationP.V.Sharma&scale=8&rotate=0"],
+                    imageAlts: ["Front Cover of Charaka Samhita"],
+                    file: "https://archive.org/embed/CharakaSamhitaTextWithEnglishTanslationP.V.Sharma",
                     language: "English"
+                },
+                {
+                    id: 25,
+                    title: "विष्णु पुराण",
+                    type: "Books",
+                    verified: true,
+                    logo: "https://sarvwigyan.github.io/resources/Images/Vishnu%20Puran%20Front%20Cover.jpg",
+                    shortDesc: "विष्णु पुराण हिन्दू धर्म के प्रमुख अठारह पुराणों में से एक है, जो भगवान विष्णु को समर्पित है। इसमें सृष्टि की उत्पत्ति, ब्रह्मांड की रचना, समयचक्र, धर्म, नीति, अवतारों की कथाएं (विशेषतः श्रीराम और श्रीकृष्ण), समुद्र मंथन, पृथ्वी के भूगोल, राजवंशों का इतिहास, और कलियुग के लक्षणों का विस्तार से वर्णन है। यह पुराण भक्ति, ज्ञान और कर्मयोग का समन्वय प्रस्तुत करता है, तथा मोक्ष (आत्मिक मुक्ति) प्राप्त करने का मार्ग बताता है। इसका उद्देश्य धार्मिक, सामाजिक और आध्यात्मिक चेतना को जागृत करना है। ऋषि पाराशर द्वारा रचित यह पुराण वेदों की व्याख्या भी करता है और इसे वैष्णव परंपरा का आधारभूत ग्रंथ माना जाता है।",
+                    longDesc: "विष्णु पुराण हिंदू धर्म के अठारह महापुराणों में एक अत्यंत महत्वपूर्ण और पवित्र ग्रंथ है, जो संपूर्ण ब्रह्मांड की रचना, संचालन और संहार की प्रक्रिया को भगवान विष्णु के माध्यम से समझाने वाला एक अत्यंत व्यापक और दार्शनिक ग्रंथ है; इसका प्रत्येक श्लोक न केवल धार्मिक आस्था का प्रतिबिंब है बल्कि गहन सांस्कृतिक, आध्यात्मिक और दार्शनिक ज्ञान का स्रोत भी है, इसकी रचना महर्षि पराशर ने की थी जिन्होंने अपने पुत्र महर्षि व्यास को यह अमूल्य ज्ञान प्रदान किया और इस ग्रंथ के माध्यम से उन्होंने संसार के समस्त रहस्यों को उजागर किया, यह पुराण न केवल भगवान विष्णु की महिमा का गुणगान करता है अपितु यह बताता है कि सम्पूर्ण ब्रह्मांड उन्हीं से उत्पन्न होता है, उन्हीं में स्थित है और अंततः उन्हीं में लीन हो जाता है, इस पुराण के कुल 6 अंश और 126 अध्याय हैं जिनमें सृष्टि की उत्पत्ति, विभिन्न कल्पों का वर्णन, मन्वंतर, विविध अवतारों की गाथाएं, समुद्र मंथन की कथा, धर्म और अधर्म का संघर्ष, पाताल और स्वर्ग लोक का वर्णन, चार युगों की व्याख्या, कलियुग के लक्षण, लोकाचार, आचारशास्त्र, गृहस्थ और संन्यासी के कर्तव्य, यज्ञ, तप, ब्रह्मचर्य, दान, श्रद्धा, भक्ति, मोक्ष तथा ब्रह्मज्ञान का अद्वितीय समन्वय देखने को मिलता है, इसमें विष्णु के दशावतार – मत्स्य, कूर्म, वराह, नृसिंह, वामन, परशुराम, राम, कृष्ण, बुद्ध और कल्कि – की गाथाएं अत्यंत विस्तृत रूप से वर्णित हैं जो यह दर्शाती हैं कि जब-जब पृथ्वी पर पाप और अधर्म बढ़ा, तब-तब विष्णु ने विभिन्न रूपों में अवतार लेकर संतों, धर्म और सृष्टि की रक्षा की, यह ग्रंथ केवल पौराणिक घटनाओं का संकलन नहीं बल्कि उसमें छिपे प्रतीकों और उपदेशों के माध्यम से मनुष्य के जीवन को दिव्यता की ओर ले जाने का माध्यम है, इसमें समुद्र मंथन की कथा केवल एक घटना नहीं बल्कि अमृत और विष के प्रतीक के रूप में आत्मा के भीतर चलने वाले संघर्ष को दर्शाती है, यह बताता है कि कैसे देवता और दैत्य हमारे भीतर ही हैं और अंततः देवत्व की विजय ही मोक्ष का मार्ग है, विष्णु पुराण समय और काल की अवधारणाओं को भी दार्शनिक दृष्टिकोण से प्रस्तुत करता है जहां समय न केवल भौतिक परिवर्तन है अपितु आत्मिक यात्रा का भी आयाम है, इसमें धर्म के चार स्तंभ – सत्य, दया, तप और दान – को जीवन का मूल आधार बताया गया है, इसके अनुसार सच्चा धर्म वही है जो सबके हित की कामना करता है, यह पुराण पृथ्वी के भूगोल को मेरु पर्वत, सप्तद्वीप, सप्तसागर, भुवन मंडल आदि के माध्यम से चित्रित करता है जो कि उस काल की वैज्ञानिक और सांस्कृतिक चेतना को दर्शाता है, इसमें चंद्रवंश और सूर्यवंश के राजाओं का इतिहास, उनके गुण, चरित्र, राज्य व्यवस्था और धर्म पालन की कथाएं भी दी गई हैं जो भारतीय इतिहास का गौरवशाली परिचय देती हैं, विशेषकर भगवान श्रीकृष्ण की कथा अत्यंत व्यापक रूप से दी गई है जो महाभारत, भागवत पुराण और विष्णु पुराण तीनों में समान रूप से पूज्यनीय रूप में विद्यमान है, विष्णु पुराण केवल भगवान विष्णु की स्तुति तक सीमित नहीं बल्कि यह सम्पूर्ण सनातन धर्म के मूल तत्वों – वेद, उपनिषद, स्मृति, दर्शन और भक्ति योग – का सार है, इसमें वर्णाश्रम धर्म की संकल्पना को सामाजिक संतुलन के रूप में प्रस्तुत किया गया है न कि भेदभाव के रूप में, इसके अनुसार व्यक्ति का कर्म ही उसका धर्म है और वह अपने कर्तव्य पालन से ही ईश्वर की प्राप्ति कर सकता है, यह ग्रंथ आत्मा की अमरता, पुनर्जन्म, कर्मफल सिद्धांत और परमात्मा की सर्वव्यापकता पर बल देता है, इसमें बतलाया गया है कि आत्मा न जन्म लेती है न मरती है, वह केवल देह बदलती है जैसे मनुष्य पुराने वस्त्रों को त्यागकर नए वस्त्र पहनता है, इसी प्रकार आत्मा भी एक शरीर से दूसरे शरीर की ओर गतिशील रहती है, मोक्ष की प्राप्ति वही कर सकता है जो अपने भीतर के अज्ञान, राग-द्वेष और मोह को त्यागकर परमात्मा के स्वरूप को जानता है, विष्णु पुराण यह भी सिखाता है कि ईश्वर प्राप्ति के लिए न तो जंगलों में भागना आवश्यक है और न ही केवल यज्ञ-हवन करना, बल्कि सच्ची भक्ति, सेवा, समर्पण, सत्कर्म और अपने कर्तव्यों का ईमानदारी से पालन करना ही भगवान विष्णु की सच्ची पूजा है, इस ग्रंथ में पृथ्वी को “विष्णुपद” कहा गया है – अर्थात वह स्थान जहां भगवान स्वयं निवास करते हैं, यहाँ प्रकृति, जीव और ब्रह्म के अद्वैत भाव को सर्वोपरि माना गया है और कहा गया है कि जब भक्त अपने अहंकार और इच्छाओं का त्याग कर देता है, तब वह स्वयं भगवान के समान हो जाता है, विष्णु पुराण में ब्रह्मा, शिव और विष्णु को एक ही तत्त्व के तीन स्वरूप बताया गया है – ब्रह्मा सृष्टिकर्ता, विष्णु पालनकर्ता और शिव संहारकर्ता हैं, लेकिन इन तीनों की चेतना एक ही ब्रह्म में विलीन होती है, यह त्रैतीय भाव उपनिषदों की अद्वैत विचारधारा से गहरे रूप से जुड़ा हुआ है, यह पुराण केवल धार्मिक ग्रंथ नहीं बल्कि एक जीवंत और शाश्वत दर्शन है जो आज के युग में भी उतना ही प्रासंगिक है जितना कि सहस्त्रों वर्ष पूर्व था, यह मानव जीवन के प्रत्येक पहलू – भौतिक, मानसिक, सामाजिक, आध्यात्मिक – का संतुलन स्थापित करता है, और जीवन को ईश्वर के प्रति समर्पण, कर्तव्यपालन और सत्य की खोज की ओर प्रेरित करता है, वास्तव में विष्णु पुराण केवल एक ग्रंथ नहीं बल्कि ईश्वर के निकट जाने की सीढ़ी है, आत्मा की यात्रा का दर्पण है और धर्म, भक्ति तथा ज्ञान का अनंत स्रोत है।",
+                    images: ["https://sarvwigyan.github.io/resources/Images/Vishnu%20Puran%20Front%20Cover.jpg"],
+                    imageAlts: ["विष्णु पुराण का मुखपृष्ठ"],
+                    file: "https://archive.org/embed/vishnu-puran-illustrated-with-hindi-translations-gita-press-gorakhpur",
+                    language: "Hindi"
                 }
             ],
             chelp: [
