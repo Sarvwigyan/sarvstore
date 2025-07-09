@@ -17,7 +17,15 @@
             --primary: #1a73e8;
             --highlight: #00cc99;
             --shadow: rgba(0, 0, 0, 0.1);
-        }
+             }
+        [data-theme="pure"] {
+            --background: #fff6e6;
+            --card-bg: #fff0cc;
+            --text: #4d1a00;
+            --secondary-text: #994d00;
+            --primary: #cc3300;
+            --highlight: #ff9900;
+            --shadow: rgba(204, 102, 0, 0.3);}
         * {
             margin: 0;
             padding: 0;
