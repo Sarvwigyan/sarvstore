@@ -1,0 +1,18 @@
+[
+    {
+        "id": 20,
+        "title": "Example Productivity Tool",
+        "type": "Productivity",
+        "verified": false,
+        "logo": "https://example.com/tool-logo.png",
+        "shortDesc": "Boost your daily tasks with this efficient tool.",
+        "longDesc": "Full description of the productivity tool, its features, and benefits.",
+        "images": [
+            "https://example.com/tool-screenshot1.jpg"
+        ],
+        "imageAlts": [
+            "Screenshot of Example Productivity Tool"
+        ],
+        "downloadUrl": "https://example.com/tool.apk"
+    }
+]

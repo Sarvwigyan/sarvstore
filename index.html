@@ -62,6 +62,7 @@
     </script>
 </head>
 <body>
+    <!-- Main Header with Logo, Search, and Settings -->
     <div class="header">
         <div class="header-logo">
             <img src="https://sarvwigyan.github.io/resources/Sarvstore.png" style="width: auto; height: 1.5em;" alt="Sarv Store logo">
@@ -72,23 +73,29 @@
         </div>
         <div class="settings-icon" id="settingsIcon" role="button" aria-label="Open settings"><span class="gear-icon">⚙️</span></div>
     </div>
+
+    <!-- Navigation Tabs for Different Sections -->
     <div class="tabs" role="tablist">
         <div class="tab-list">
             <div class="tab active" data-tab="all" role="tab" aria-selected="true" tabindex="0">All</div>
             <div class="tab" data-tab="books" role="tab" aria-selected="false" tabindex="0">Books</div>
-            <div class="tab" data-tab="chelp" role="tab" aria-selected="false" tabindex="0">CodeX</div>
             <div class="tab" data-tab="games" role="tab" aria-selected="false" tabindex="0">Games</div>
             <div class="tab" data-tab="productivity" role="tab" aria-selected="false" tabindex="0">Productivity</div>
             <div class="tab" data-tab="recent" role="tab" aria-selected="false" tabindex="0">Recently Viewed</div>
             <div class="tab hidden" data-tab="favorites" role="tab" aria-selected="false" tabindex="0">Favorites</div>
         </div>
     </div>
+
+    <!-- Main Content Area with Sections -->
     <div class="content">
+        <!-- All Items Section -->
         <div class="section active" id="all" role="tabpanel" aria-labelledby="all-tab">
             <h2 class="section-title">All Apps</h2>
             <div class="card-grid" id="allGrid"></div>
             <div class="no-results" id="allNoResults">No results found</div>
         </div>
+
+        <!-- Books Section with Filters -->
         <div class="section" id="books" role="tabpanel" aria-labelledby="books-tab">
             <h2 class="section-title">Books</h2>
             <div class="books-filter-bar">
@@ -118,36 +125,43 @@
             <div class="card-grid" id="booksGrid"></div>
             <div class="no-results" id="booksNoResults">No results found</div>
         </div>
-        <div class="section" id="chelp" role="tabpanel" aria-labelledby="chelp-tab">
-            <h2 class="section-title">CodeX</h2>
-            <div class="card-grid" id="chelpGrid"></div>
-            <div class="no-results" id="chelpNoResults">No results found</div>
-        </div>
+
+        <!-- Games Section -->
         <div class="section" id="games" role="tabpanel" aria-labelledby="games-tab">
             <h2 class="section-title">Games</h2>
             <div class="card-grid" id="gamesGrid"></div>
             <div class="no-results" id="gamesNoResults">No results found</div>
         </div>
+
+        <!-- Productivity Section -->
         <div class="section" id="productivity" role="tabpanel" aria-labelledby="productivity-tab">
             <h2 class="section-title">Productivity</h2>
             <div class="card-grid" id="productivityGrid"></div>
             <div class="no-results" id="productivityNoResults">No results found</div>
         </div>
+
+        <!-- Recently Viewed Section -->
         <div class="section" id="recent" role="tabpanel" aria-labelledby="recent-tab">
             <h2 class="section-title">Recently Viewed</h2>
             <div class="card-grid" id="recentGrid"></div>
             <div class="no-results" id="recentNoResults">No recently viewed items</div>
         </div>
+
+        <!-- Favorites Section (Hidden by Default) -->
         <div class="section" id="favorites" role="tabpanel" aria-labelledby="favorites-tab">
             <h2 class="section-title">Favorites</h2>
             <div class="card-grid" id="favoritesGrid"></div>
             <div class="no-results" id="favoritesNoResults">No favorite items yet</div>
         </div>
+
+        <!-- Featured Section (Shows when All is Active) -->
         <div class="featured-section">
             <h2 class="section-title">Featured Apps</h2>
             <div class="card-grid" id="featuredGrid"></div>
         </div>
     </div>
+
+    <!-- Detail View Modal for Item Details -->
     <div class="detail-view" id="detailView" role="dialog" aria-modal="true">
         <button class="close-btn" id="closeBtn" aria-label="Close details">×</button>
         <div class="detail-container">
@@ -167,13 +181,19 @@
             </div>
         </div>
     </div>
+
+    <!-- Book Viewer Modal -->
     <div class="book-modal" id="bookModal" role="dialog" aria-modal="true">
         <div class="book-modal-content">
             <button class="book-modal-close" id="bookModalClose" aria-label="Close book viewer">×</button>
             <iframe id="bookIframe" class="book-iframe" title="Book viewer"></iframe>
         </div>
     </div>
+
+    <!-- Overlay for Modals -->
     <div class="overlay" id="overlay"></div>
+
+    <!-- Settings Window Modal -->
     <div class="settings-window" id="settingsWindow" role="dialog" aria-modal="true">
         <h2>Settings</h2>
         <div class="settings-option">
@@ -190,6 +210,8 @@
         </div>
         <button id="saveSettings">Save</button>
     </div>
+
+    <!-- Footer -->
     <footer>
         <p>© 2023 Sarv Store. All rights reserved.</p>
         <nav>
@@ -200,6 +222,8 @@
             <a href="#">Help</a>
         </nav>
     </footer>
-<script src="script.js"></script>
+
+    <!-- Main JavaScript File -->
+    <script src="script.js"></script>
 </body>
 </html>

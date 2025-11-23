@@ -1,0 +1,20 @@
+[
+    {
+        "id": 10,
+        "title": "Example Game 1",
+        "type": "Games",
+        "verified": true,
+        "logo": "https://example.com/game1-logo.png",
+        "shortDesc": "A fun puzzle game to challenge your mind.",
+        "longDesc": "This is a detailed description of the game, including gameplay, features, and why it's great.",
+        "images": [
+            "https://example.com/game1-screenshot1.jpg",
+            "https://example.com/game1-screenshot2.jpg"
+        ],
+        "imageAlts": [
+            "Screenshot 1 of Example Game 1",
+            "Screenshot 2 of Example Game 1"
+        ],
+        "downloadUrl": "https://example.com/game1.apk"
+    }
+]
