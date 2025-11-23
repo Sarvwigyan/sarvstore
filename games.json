@@ -1,20 +1,59 @@
 [
     {
         "id": 10,
-        "title": "Example Game 1",
+        "title": "Puzzle Quest Adventure",
         "type": "Games",
         "verified": true,
-        "logo": "https://example.com/game1-logo.png",
-        "shortDesc": "A fun puzzle game to challenge your mind.",
-        "longDesc": "This is a detailed description of the game, including gameplay, features, and why it's great.",
+        "logo": "https://sarvwigyan.github.io/resources/puzzlequest-logo.png",
+        "shortDesc": "An engaging puzzle game with adventure elements to challenge your mind and strategy.",
+        "longDesc": "Dive into Puzzle Quest Adventure, a thrilling match-3 game combined with RPG elements. Solve puzzles to battle monsters, collect treasures, and level up your heroes. Perfect for casual gamers seeking depth.",
         "images": [
-            "https://example.com/game1-screenshot1.jpg",
-            "https://example.com/game1-screenshot2.jpg"
+            "https://sarvwigyan.github.io/resources/puzzlequest-screenshot1.jpg",
+            "https://sarvwigyan.github.io/resources/puzzlequest-screenshot2.jpg",
+            "https://sarvwigyan.github.io/resources/puzzlequest-screenshot3.jpg"
         ],
         "imageAlts": [
-            "Screenshot 1 of Example Game 1",
-            "Screenshot 2 of Example Game 1"
+            "Main menu of Puzzle Quest Adventure",
+            "Puzzle battle screen in Puzzle Quest Adventure",
+            "Treasure collection in Puzzle Quest Adventure"
         ],
-        "downloadUrl": "https://example.com/game1.apk"
+        "downloadUrl": "https://sarvwigyan.github.io/resources/Games/PuzzleQuest.apk",
+        "language": "English"
+    },
+    {
+        "id": 11,
+        "title": "Racing Fury",
+        "type": "Games",
+        "verified": false,
+        "logo": "https://sarvwigyan.github.io/resources/racingfury-logo.png",
+        "shortDesc": "High-speed racing game with realistic physics and multiple tracks.",
+        "longDesc": "Racing Fury brings adrenaline-pumping races to your device. Customize cars, compete on global tracks, and upgrade engines for victory. Ideal for speed enthusiasts.",
+        "images": [
+            "https://sarvwigyan.github.io/resources/racingfury-screenshot1.jpg",
+            "https://sarvwigyan.github.io/resources/racingfury-screenshot2.jpg"
+        ],
+        "imageAlts": [
+            "Car selection in Racing Fury",
+            "High-speed race in Racing Fury"
+        ],
+        "downloadUrl": "https://sarvwigyan.github.io/resources/Games/RacingFury.apk",
+        "language": "English"
+    },
+    {
+        "id": 12,
+        "title": "Word Wizard Hindi",
+        "type": "Games",
+        "verified": true,
+        "logo": "https://sarvwigyan.github.io/resources/wordwizard-logo.png",
+        "shortDesc": "शब्दों से भरा मजेदार गेम जो हिंदी शब्दावली बढ़ाता है।",
+        "longDesc": "Word Wizard Hindi एक शब्द पहेली गेम है जो हिंदी भाषा सीखने में मदद करता है। विभिन्न स्तरों पर शब्द बनाएं और अंक कमाएं।",
+        "images": [
+            "https://sarvwigyan.github.io/resources/wordwizard-screenshot1.jpg"
+        ],
+        "imageAlts": [
+            "Gameplay screen of Word Wizard Hindi"
+        ],
+        "downloadUrl": "https://sarvwigyan.github.io/resources/Games/WordWizard.apk",
+        "language": "Hindi"
     }
 ]

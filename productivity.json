@@ -1,18 +1,57 @@
 [
     {
         "id": 20,
-        "title": "Example Productivity Tool",
+        "title": "TaskMaster Pro",
         "type": "Productivity",
-        "verified": false,
-        "logo": "https://example.com/tool-logo.png",
-        "shortDesc": "Boost your daily tasks with this efficient tool.",
-        "longDesc": "Full description of the productivity tool, its features, and benefits.",
+        "verified": true,
+        "logo": "https://sarvwigyan.github.io/resources/taskmaster-logo.png",
+        "shortDesc": "Advanced task manager with reminders and collaboration features.",
+        "longDesc": "TaskMaster Pro helps you organize life with intuitive lists, deadlines, and team sharing. Sync across devices for seamless productivity.",
         "images": [
-            "https://example.com/tool-screenshot1.jpg"
+            "https://sarvwigyan.github.io/resources/taskmaster-screenshot1.jpg",
+            "https://sarvwigyan.github.io/resources/taskmaster-screenshot2.jpg"
         ],
         "imageAlts": [
-            "Screenshot of Example Productivity Tool"
+            "Task list in TaskMaster Pro",
+            "Reminder setup in TaskMaster Pro"
         ],
-        "downloadUrl": "https://example.com/tool.apk"
+        "downloadUrl": "https://sarvwigyan.github.io/resources/Productivity/TaskMaster.apk",
+        "language": "English"
+    },
+    {
+        "id": 21,
+        "title": "NoteVault Secure",
+        "type": "Productivity",
+        "verified": false,
+        "logo": "https://sarvwigyan.github.io/resources/notevault-logo.png",
+        "shortDesc": "Encrypted note-taking app with cloud backup.",
+        "longDesc": "NoteVault Secure keeps your ideas safe with end-to-end encryption. Organize notes by tags, search instantly, and backup worry-free.",
+        "images": [
+            "https://sarvwigyan.github.io/resources/notevault-screenshot1.jpg"
+        ],
+        "imageAlts": [
+            "Note editor in NoteVault Secure"
+        ],
+        "downloadUrl": "https://sarvwigyan.github.io/resources/Productivity/NoteVault.apk",
+        "language": "English"
+    },
+    {
+        "id": 22,
+        "title": "CalcPro Hindi",
+        "type": "Productivity",
+        "verified": true,
+        "logo": "https://sarvwigyan.github.io/resources/calcpro-logo.png",
+        "shortDesc": "हिंदी इंटरफेस वाला उन्नत कैलकुलेटर ऐप।",
+        "longDesc": "CalcPro Hindi वैज्ञानिक और दैनिक गणनाओं के लिए हिंदी में उपलब्ध है। फॉर्मूला स्टोरेज और इतिहास के साथ।",
+        "images": [
+            "https://sarvwigyan.github.io/resources/calcpro-screenshot1.jpg",
+            "https://sarvwigyan.github.io/resources/calcpro-screenshot2.jpg"
+        ],
+        "imageAlts": [
+            "Calculator interface in CalcPro Hindi",
+            "History view in CalcPro Hindi"
+        ],
+        "downloadUrl": "https://sarvwigyan.github.io/resources/Productivity/CalcPro.apk",
+        "language": "Hindi"
     }
-]
+ ]

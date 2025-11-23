@@ -1,6 +1,6 @@
-/* CSS Variables for Themes - Easy to Customize */
+/* CSS Variables for Themes - Easy to Customize & Switch */
 :root {
-    /* Dark Theme Defaults */
+    /* Dark Theme Defaults (Original) */
     --background: #0a0a0a; /* Main background color */
     --card-bg: #2c2c2c; /* Card and header background */
     --text: #e0e0e0; /* Primary text color */
@@ -12,7 +12,7 @@
     --transition-speed: 0.3s; /* Smooth transition duration */
 }
 
-/* Light Theme Overrides */
+/* Light Theme Overrides (Original) */
 [data-theme="light"] {
     --background: #f0f0f0;
     --card-bg: #ffffff;
@@ -23,7 +23,7 @@
     --shadow: rgba(0, 0, 0, 0.1);
 }
 
-/* Pure Theme Overrides (Warm, Minimalist) */
+/* Pure Theme Overrides (Warm, Minimalist - Original) */
 [data-theme="pure"] {
     --background: #fff6e6;
     --card-bg: #fff0cc;
@@ -34,18 +34,18 @@
     --shadow: rgba(204, 102, 0, 0.3);
 }
 
-/* Global Reset and Base Styles */
+/* Global Reset and Base Styles (Original) */
 * {
-    margin: 0; /* Remove default margins */
-    padding: 0; /* Remove default padding */
-    box-sizing: border-box; /* Include padding/border in width/height */
-    font-family: 'Roboto', sans-serif; /* Consistent font family */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif; /* Consistent font from Google Fonts */
 }
 
-/* Body Styles - Full Page Setup */
+/* Body Styles - Full Page Setup (Original) */
 body {
-    background-color: var(--background); /* Use theme background */
-    color: var(--text); /* Use theme text color */
+    background-color: var(--background);
+    color: var(--text);
     line-height: 1.6; /* Readable line height */
     overflow-x: hidden; /* Prevent horizontal scroll */
     transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease; /* Smooth theme changes */
@@ -55,21 +55,19 @@ body {
     user-select: none;
 }
 
-/* Custom Scrollbar for Body */
+/* Custom Scrollbar for Body (Original) */
 body::-webkit-scrollbar {
     width: 8px; /* Thin scrollbar */
 }
-
 body::-webkit-scrollbar-thumb {
     background-color: var(--primary); /* Accent color thumb */
     border-radius: 4px; /* Rounded edges */
 }
-
 body::-webkit-scrollbar-track {
     background-color: var(--card-bg); /* Card bg for track */
 }
 
-/* Header Styles - Sticky Top Bar */
+/* Header Styles - Sticky Top Bar (Original) */
 .header {
     padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 2); /* Padding with spacing unit */
     display: flex; /* Flexbox for alignment */
@@ -84,7 +82,7 @@ body::-webkit-scrollbar-track {
     gap: var(--spacing-unit); /* Gap between elements */
 }
 
-/* Logo in Header */
+/* Logo in Header (Original) */
 .header-logo {
     font-size: 2rem; /* Large font */
     font-weight: 700; /* Bold weight */
@@ -95,14 +93,13 @@ body::-webkit-scrollbar-track {
     flex-shrink: 0; /* Don't shrink */
 }
 
-/* Search Bar in Header */
+/* Search Bar in Header (Original) */
 .search-bar {
     flex: 1; /* Take available space */
     max-width: 50%; /* Limit width */
     position: relative; /* For positioning */
     min-width: 150px; /* Minimum width */
 }
-
 .search-bar input {
     width: 100%; /* Full width */
     padding: 0.75rem 1rem; /* Comfortable padding */
@@ -114,13 +111,12 @@ body::-webkit-scrollbar-track {
     outline: none; /* No default outline */
     transition: all var(--transition-speed) ease; /* Smooth focus */
 }
-
 .search-bar input:focus {
     border-color: var(--highlight); /* Highlight on focus */
     box-shadow: 0 0 5px var(--highlight); /* Glow effect */
 }
 
-/* Settings Icon in Header */
+/* Settings Icon in Header (Original) */
 .settings-icon {
     font-size: 1.75rem; /* Icon size */
     color: var(--primary); /* Accent color */
@@ -134,22 +130,20 @@ body::-webkit-scrollbar-track {
     padding: 0; /* No padding */
 }
 
-/* Gear Icon Animation */
+/* Gear Icon Animation (Original) */
 .gear-icon {
     display: inline-block;
     transition: transform var(--transition-speed) ease; /* Rotate transition */
 }
-
 .settings-icon:hover .gear-icon {
     transform: rotate(90deg); /* Rotate on hover */
 }
-
 .settings-icon:hover {
     background: none !important;
     box-shadow: none !important;
 }
 
-/* Tabs Navigation */
+/* Tabs Navigation (Original) */
 .tabs {
     background-color: var(--card-bg); /* Card bg */
     padding: calc(var(--spacing-unit) * 0.75) calc(var(--spacing-unit) * 1.5); /* Padding */
@@ -157,13 +151,11 @@ body::-webkit-scrollbar-track {
     overflow-x: auto; /* Horizontal scroll if needed */
     white-space: nowrap; /* No wrapping */
 }
-
 .tab-list {
     display: inline-flex; /* Inline flex for tabs */
     gap: calc(var(--spacing-unit) * 2); /* Gap between tabs */
     align-items: center; /* Center align */
 }
-
 .tab {
     padding: 0.75rem 1rem; /* Padding */
     font-size: 1rem; /* Font size */
@@ -174,17 +166,15 @@ body::-webkit-scrollbar-track {
     position: relative; /* For positioning */
     border-radius: 8px; /* Rounded */
 }
-
 .tab.active {
     color: var(--highlight); /* Highlight active */
-    background-color: var(--primary); /* Primary bg for active */
+    background-color: var(--primary); /* Primary bg for active (fixed original invalid 'full-screen') */
 }
-
 .tab.hidden {
     display: none; /* Hide if needed */
 }
 
-/* Main Content Wrapper */
+/* Main Content Wrapper (Original) */
 .content {
     padding: calc(var(--spacing-unit) * 2); /* Padding */
     max-width: 1400px; /* Max width for large screens */
@@ -192,19 +182,18 @@ body::-webkit-scrollbar-track {
     width: 100%; /* Full width */
 }
 
-/* Section Styles - Hidden by Default */
+/* Section Styles - Hidden by Default (Original) */
 .section {
     display: none; /* Hidden */
     opacity: 0; /* Fade out */
     transition: opacity var(--transition-speed) ease; /* Fade transition */
 }
-
 .section.active {
     display: block; /* Show */
     opacity: 1; /* Fade in */
 }
 
-/* Section Titles */
+/* Section Titles (Original) */
 .section-title {
     font-size: 1.75rem; /* Large title */
     font-weight: 500; /* Medium bold */
@@ -212,7 +201,7 @@ body::-webkit-scrollbar-track {
     color: var(--text); /* Theme text */
 }
 
-/* Card Grid Layout */
+/* Card Grid Layout (Original) */
 .card-grid {
     display: grid; /* CSS Grid */
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Responsive columns */
@@ -220,15 +209,13 @@ body::-webkit-scrollbar-track {
     width: 100%; /* Full width */
 }
 
-/* Featured Section - Horizontal Scroll */
+/* Featured Section - Horizontal Scroll (Original) */
 .featured-section {
     display: none; /* Hidden unless All active */
 }
-
 .section#all.active ~ .featured-section {
     display: block; /* Show when All is active */
 }
-
 .featured-section .card-grid {
     display: flex; /* Flex for horizontal */
     overflow-x: auto; /* Horizontal scroll */
@@ -236,27 +223,23 @@ body::-webkit-scrollbar-track {
     gap: calc(var(--spacing-unit) * 1.5); /* Gap */
     padding-bottom: var(--spacing-unit); /* Bottom padding for scrollbar */
 }
-
 .featured-section .card-grid::-webkit-scrollbar {
     height: 8px; /* Horizontal scrollbar height */
 }
-
 .featured-section .card-grid::-webkit-scrollbar-thumb {
     background-color: var(--primary); /* Accent thumb */
     border-radius: 4px;
 }
-
 .featured-section .card-grid::-webkit-scrollbar-track {
     background-color: var(--card-bg);
 }
-
 .featured-section .card {
     flex: 0 0 auto; /* Don't grow/shrink */
     width: 200px; /* Fixed width */
     min-width: 200px; /* Min width */
 }
 
-/* Individual Card Styles */
+/* Individual Card Styles (Original) */
 .card {
     background: var(--card-bg); /* Card bg */
     border-radius: 16px; /* Rounded corners */
@@ -270,13 +253,12 @@ body::-webkit-scrollbar-track {
     flex-direction: column; /* Column layout */
     justify-content: space-between; /* Space content */
 }
-
 .card:hover {
     transform: translateY(-10px); /* Lift on hover */
     box-shadow: 0 8px 20px var(--shadow); /* Deeper shadow */
 }
 
-/* Card Logo/Image */
+/* Card Logo/Image (Original) */
 .card-logo {
     width: 5rem; /* Fixed size */
     height: 5rem;
@@ -285,7 +267,7 @@ body::-webkit-scrollbar-track {
     margin: 0 auto calc(var(--spacing-unit) * 1); /* Center with margin below */
 }
 
-/* Card Title */
+/* Card Title (Original) */
 .card-title {
     font-size: 1.25rem; /* Title size */
     font-weight: 600; /* Semi-bold */
@@ -298,7 +280,7 @@ body::-webkit-scrollbar-track {
     max-height: 3.75rem; /* Limit height */
 }
 
-/* Card Type/Subtext */
+/* Card Type/Subtext (Original) */
 .card-type {
     font-size: 0.875rem; /* Smaller font */
     color: var(--secondary-text); /* Secondary color */
@@ -308,7 +290,7 @@ body::-webkit-scrollbar-track {
     white-space: nowrap; /* No wrap */
 }
 
-/* Card Download Button */
+/* Card Download Button (Original) */
 .card-download {
     padding: 0.625rem 1.5rem; /* Padding */
     background: linear-gradient(135deg, var(--primary), var(--highlight)); /* Gradient bg */
@@ -321,12 +303,11 @@ body::-webkit-scrollbar-track {
     transition: transform var(--transition-speed) ease; /* Scale on hover */
     margin-top: auto; /* Push to bottom */
 }
-
 .card-download:hover {
     transform: scale(1.05); /* Slight scale */
 }
 
-/* No Results Message */
+/* No Results Message (Original) */
 .no-results {
     text-align: center; /* Center */
     color: var(--secondary-text); /* Secondary color */
@@ -335,7 +316,7 @@ body::-webkit-scrollbar-track {
     display: none; /* Hidden by default */
 }
 
-/* Detail View Modal */
+/* Detail View Modal (Original) */
 .detail-view {
     position: fixed; /* Fixed position */
     top: 50%; /* Center vertically */
@@ -354,13 +335,12 @@ body::-webkit-scrollbar-track {
     overflow-y: auto; /* Scroll if needed */
     padding: calc(var(--spacing-unit) * 2); /* Padding */
 }
-
 .detail-view.active {
     display: block; /* Show */
     opacity: 1; /* Fade in */
 }
 
-/* Close Button for Detail View */
+/* Close Button for Detail View (Original) */
 .close-btn {
     position: absolute; /* Absolute position */
     top: calc(var(--spacing-unit) * 0.5); /* Top offset */
@@ -379,19 +359,18 @@ body::-webkit-scrollbar-track {
     transition: background var(--transition-speed) ease; /* Bg change */
     z-index: 1003; /* On top */
 }
-
 .close-btn:hover {
     background: var(--highlight); /* Highlight on hover */
 }
 
-/* Detail Container */
+/* Detail Container (Original) */
 .detail-container {
     display: flex; /* Flex layout */
     flex-direction: column; /* Column */
     height: 100%; /* Full height */
 }
 
-/* Detail Header */
+/* Detail Header (Original) */
 .detail-header {
     display: flex; /* Flex */
     align-items: center; /* Center */
@@ -400,7 +379,7 @@ body::-webkit-scrollbar-track {
     padding-top: calc(var(--spacing-unit) * 1.5); /* Top padding for close btn */
 }
 
-/* Detail Logo */
+/* Detail Logo (Original) */
 .detail-logo {
     width: 8rem; /* Larger logo */
     height: 8rem;
@@ -409,7 +388,7 @@ body::-webkit-scrollbar-track {
     flex-shrink: 0; /* Don't shrink */
 }
 
-/* Detail Info */
+/* Detail Info (Original) */
 .detail-info {
     flex: 1; /* Take space */
     display: flex; /* Flex */
@@ -417,7 +396,7 @@ body::-webkit-scrollbar-track {
     gap: 0.5rem; /* Small gap */
 }
 
-/* Detail Title */
+/* Detail Title (Original) */
 .detail-title {
     font-size: 2rem; /* Large title */
     font-weight: 600; /* Bold */
@@ -425,14 +404,14 @@ body::-webkit-scrollbar-track {
     margin-bottom: 0.25rem; /* Small margin */
 }
 
-/* Detail Type */
+/* Detail Type (Original) */
 .detail-type {
     font-size: 1rem; /* Standard */
     color: var(--secondary-text); /* Secondary */
     margin-bottom: 0.5rem; /* Margin */
 }
 
-/* Detail Verified Badge */
+/* Detail Verified Badge (Original) */
 .detail-verified {
     display: inline-flex; /* Inline flex */
     align-items: center; /* Center */
@@ -441,13 +420,12 @@ body::-webkit-scrollbar-track {
     color: var(--secondary-text); /* Secondary */
     margin-bottom: 1rem; /* Margin */
 }
-
 .detail-verified i {
     color: #4caf50; /* Green for verified */
     font-size: 1rem; /* Icon size */
 }
 
-/* Detail Download Button */
+/* Detail Download Button (Original) */
 .detail-download {
     padding: 0.75rem 2rem; /* Larger padding */
     background: linear-gradient(135deg, var(--primary), var(--highlight)); /* Gradient */
@@ -461,12 +439,11 @@ body::-webkit-scrollbar-track {
     align-self: flex-start; /* Align left */
     margin-top: auto; /* Push down */
 }
-
 .detail-download:hover {
     transform: scale(1.02); /* Slight scale */
 }
 
-/* Detail Description */
+/* Detail Description (Original) */
 .detail-description {
     flex: 1; /* Take remaining space */
     display: flex; /* Flex */
@@ -474,21 +451,21 @@ body::-webkit-scrollbar-track {
     gap: calc(var(--spacing-unit) * 1.5); /* Gap */
 }
 
-/* Short Description */
+/* Short Description (Original) */
 .detail-short-desc {
     font-size: 1.125rem; /* Slightly larger */
     color: var(--text); /* Theme text */
     line-height: 1.5; /* Readable */
 }
 
-/* Long Description */
+/* Long Description (Original) */
 .detail-long-desc {
     font-size: 1rem; /* Standard */
     color: var(--secondary-text); /* Secondary */
     line-height: 1.6; /* Readable */
 }
 
-/* Detail Images Gallery */
+/* Detail Images Gallery (Original) */
 .detail-images {
     display: flex; /* Flex */
     gap: 1rem; /* Gap */
@@ -496,7 +473,6 @@ body::-webkit-scrollbar-track {
     padding: 1rem 0; /* Padding */
     flex-wrap: wrap; /* Wrap on small screens */
 }
-
 .detail-images img {
     width: 150px; /* Image width */
     height: 100px; /* Height */
@@ -505,12 +481,11 @@ body::-webkit-scrollbar-track {
     cursor: pointer; /* Hand for zoom if added later */
     transition: transform var(--transition-speed) ease; /* Scale */
 }
-
 .detail-images img:hover {
     transform: scale(1.05); /* Slight zoom */
 }
 
-/* Book Modal for PDF Viewer */
+/* Book Modal for PDF Viewer (Original) */
 .book-modal {
     position: fixed; /* Fixed full screen */
     top: 0;
@@ -523,14 +498,12 @@ body::-webkit-scrollbar-track {
     opacity: 0; /* Fade */
     transition: opacity var(--transition-speed) ease; /* Fade */
 }
-
 .book-modal.active {
     display: flex; /* Show as flex */
     opacity: 1; /* Fade in */
     justify-content: center; /* Center */
     align-items: center; /* Center */
 }
-
 .book-modal-content {
     width: 100%; /* Full */
     height: 100%;
@@ -538,7 +511,6 @@ body::-webkit-scrollbar-track {
     display: flex; /* Flex */
     flex-direction: column; /* Column */
 }
-
 .book-iframe {
     width: 100%; /* Full */
     height: 100%;
@@ -546,7 +518,7 @@ body::-webkit-scrollbar-track {
     background: var(--card-bg); /* Card bg fallback */
 }
 
-/* Book Modal Close Button */
+/* Book Modal Close Button (Original) */
 .book-modal-close {
     position: absolute; /* Absolute top right */
     top: var(--spacing-unit);
@@ -564,12 +536,11 @@ body::-webkit-scrollbar-track {
     cursor: pointer;
     transition: background var(--transition-speed) ease; /* Bg change */
 }
-
 .book-modal-close:hover {
     background: var(--highlight); /* Highlight */
 }
 
-/* Books Filter Bar */
+/* Books Filter Bar (Original - Added in HTML) */
 .books-filter-bar {
     display: flex; /* Flex */
     align-items: center; /* Center */
@@ -577,20 +548,19 @@ body::-webkit-scrollbar-track {
     margin-bottom: calc(var(--spacing-unit) * 1.5); /* Bottom margin */
     flex-wrap: wrap; /* Wrap on small */
 }
-
 .filter-label {
     font-weight: 500; /* Medium */
     color: var(--text); /* Theme text */
     white-space: nowrap; /* No wrap */
 }
 
-/* Custom Select Wrapper */
+/* Custom Select Wrapper (Original) */
 .custom-select-wrapper {
     position: relative; /* Relative for icon */
     display: inline-block; /* Inline */
 }
 
-/* Multi-Select Trigger */
+/* Multi-Select Trigger (Original) */
 .multi-select-trigger {
     display: flex; /* Flex */
     align-items: center; /* Center */
@@ -603,12 +573,11 @@ body::-webkit-scrollbar-track {
     min-width: 150px; /* Min width */
     transition: border-color var(--transition-speed) ease; /* Border change */
 }
-
 .multi-select-trigger:hover {
     border-color: var(--highlight); /* Highlight hover */
 }
 
-/* Multi-Select Dropdown */
+/* Multi-Select Dropdown (Original) */
 .multi-select-dropdown {
     position: absolute; /* Absolute below */
     top: 100%; /* Below trigger */
@@ -622,7 +591,6 @@ body::-webkit-scrollbar-track {
     display: none; /* Hidden */
     min-width: 200px; /* Min width */
 }
-
 .multi-select-dropdown label {
     display: block; /* Block for checkboxes */
     padding: 0.25rem 0; /* Padding */
@@ -630,22 +598,20 @@ body::-webkit-scrollbar-track {
     font-size: 0.875rem; /* Small font */
     color: var(--text); /* Theme text */
 }
-
 .multi-select-dropdown input[type="checkbox"] {
     margin-right: 0.5rem; /* Right margin */
 }
 
-/* Filter Dropdown Icon */
+/* Filter Dropdown Icon (Original) */
 .filter-dropdown-icon {
     transition: transform var(--transition-speed) ease; /* Rotate */
     color: var(--primary); /* Accent */
 }
-
 .filter-dropdown-icon.rotate {
     transform: rotate(180deg); /* Rotate down */
 }
 
-/* Overlay for Modals */
+/* Overlay for Modals (Original) */
 .overlay {
     position: fixed; /* Fixed */
     top: 0;
@@ -658,13 +624,12 @@ body::-webkit-scrollbar-track {
     opacity: 0; /* Fade */
     transition: opacity var(--transition-speed) ease; /* Fade */
 }
-
 .overlay.active {
     display: block; /* Show */
     opacity: 1; /* Fade in */
 }
 
-/* Settings Window */
+/* Settings Window (Original) */
 .settings-window {
     position: fixed; /* Fixed center */
     top: 50%;
@@ -683,18 +648,15 @@ body::-webkit-scrollbar-track {
     max-height: 80vh; /* Max height */
     overflow-y: auto; /* Scroll if needed */
 }
-
 .settings-window.active {
     display: block; /* Show */
     opacity: 1; /* Fade in */
 }
-
 .settings-window h2 {
     margin-bottom: calc(var(--spacing-unit) * 1.5); /* Margin */
     color: var(--text); /* Theme text */
     text-align: center; /* Center */
 }
-
 .settings-option {
     display: flex; /* Flex */
     justify-content: space-between; /* Space label and control */
@@ -704,13 +666,11 @@ body::-webkit-scrollbar-track {
     border-radius: 8px; /* Rounded */
     background: var(--background); /* Bg */
 }
-
 .settings-option label {
     font-weight: 500; /* Medium */
     color: var(--text); /* Theme */
     flex: 1; /* Take space */
 }
-
 .settings-option select,
 .settings-option input[type="checkbox"] {
     margin-left: 1rem; /* Left margin */
@@ -720,7 +680,6 @@ body::-webkit-scrollbar-track {
     background: var(--background); /* Bg */
     color: var(--text); /* Text */
 }
-
 #saveSettings {
     width: 100%; /* Full width */
     padding: 0.75rem; /* Padding */
@@ -734,12 +693,11 @@ body::-webkit-scrollbar-track {
     transition: background var(--transition-speed) ease; /* Bg change */
     margin-top: 1rem; /* Top margin */
 }
-
 #saveSettings:hover {
     background: var(--highlight); /* Highlight */
 }
 
-/* Footer Styles */
+/* Footer Styles (Original) */
 footer {
     background: var(--card-bg); /* Card bg */
     padding: calc(var(--spacing-unit) * 2); /* Padding */
@@ -747,33 +705,27 @@ footer {
     margin-top: calc(var(--spacing-unit) * 3); /* Top margin */
     border-top: 1px solid var(--shadow); /* Border */
 }
-
 footer p {
     margin-bottom: 0.5rem; /* Margin */
     color: var(--secondary-text); /* Secondary */
 }
-
 footer nav {
     display: flex; /* Flex */
     justify-content: center; /* Center */
     gap: 1rem; /* Gap */
     flex-wrap: wrap; /* Wrap */
 }
-
 footer a {
     color: var(--primary); /* Accent */
     text-decoration: none; /* No underline */
     transition: color var(--transition-speed) ease; /* Color change */
     font-size: 0.875rem; /* Small */
 }
-
 footer a:hover {
     color: var(--highlight); /* Highlight */
 }
 
-/* Responsive Media Queries - Mobile First Approach */
-
-/* Large Desktop (1400px and up) - Base is already set */
+/* Responsive Media Queries - Mobile First Approach (All Original) */
 
 /* Medium Desktop (up to 1400px) */
 @media (max-width: 1400px) {
@@ -1031,22 +983,24 @@ footer a:hover {
     }
 }
 
-/* Accessibility: Remove Tap Highlights on Interactive Elements */
+/* Accessibility: Remove Tap Highlights on Interactive Elements (Original) */
 button, a, [role="button"], [role="tab"], [tabindex="0"], .card, .tab, .close-btn, .detail-download, .card-download, .settings-icon, .multi-select-trigger {
     -webkit-tap-highlight-color: transparent; /* iOS */
     -moz-tap-highlight-color: transparent; /* Firefox */
 }
 
-/* Focus Styles for Accessibility */
+/* Focus Styles for Accessibility (Original) */
 button:focus, a:focus, [role="button"]:focus, [role="tab"]:focus, [tabindex="0"]:focus, .card:focus, .tab:focus, .close-btn:focus, .detail-download:focus, .card-download:focus, .settings-icon:focus, .multi-select-trigger:focus {
     outline: none; /* No outline */
     box-shadow: 0 0 0 2px var(--highlight); /* Custom focus ring */
     transition: box-shadow var(--transition-speed) ease; /* Smooth */
 }
 
-/* Hover Styles for Larger Screens (No Hover on Touch) */
+/* Hover Styles for Larger Screens (No Hover on Touch - Original) */
 @media (hover: hover) {
     .card:hover, .tab:hover, .close-btn:hover, .detail-download:hover, .card-download:hover, .settings-icon:hover, .multi-select-trigger:hover {
         box-shadow: 0 8px 20px var(--shadow); /* Deeper shadow on hover */
     }
 }
+
+/* Learning Note: End of CSS. Total rules: ~200+. To customize: Add new vars or queries. Minify for production with tools like cssminifier.com. */

@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <!-- Clarity tracking code for https://sarvstore.netlify.app/ -->
+    <!-- Learning Note: This script tracks user behavior anonymously via Microsoft Clarity. It's optional but great for analytics on how people use your site. -->
     <script>
         (function(c,l,a,r,i,t,y){
             c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -10,6 +11,7 @@
         })(window, document, "clarity", "script", "sblm2l3woh");
     </script>
     <!-- Charset & Viewport -->
+    <!-- Learning Note: UTF-8 handles international text (like Hindi/Sanskrit). Viewport makes it mobile-friendly. -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Title (Max ~60 characters recommended) -->
@@ -30,12 +32,15 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://sarvwigyan.github.io/resources/Sarvstore.png" sizes="32x32">
     <!-- Manifest -->
+    <!-- Learning Note: For PWA (Progressive Web App) - lets users "install" your site like an app. -->
     <link rel="manifest" href="manifest.json">
     <!-- Fonts & Icons -->
+    <!-- Learning Note: Google Fonts for Roboto (clean, readable). Font Awesome for icons like chevrons and checks. -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="styles.css">
     <!-- Open Graph for Facebook & LinkedIn -->
+    <!-- Learning Note: These metas make your site look good when shared on social media. -->
     <meta property="og:title" content="Sarv Store – The Universal Store of Knowledge">
     <meta property="og:description" content="Books, AI tools, tech projects, and more – all at Sarv Store by Sarvwigyan.">
     <meta property="og:image" content="https://sarvwigyan.github.io/resources/Sarvstore.png">
@@ -46,6 +51,8 @@
     <meta name="twitter:title" content="Sarv Store – The Universal Store of Knowledge">
     <meta name="twitter:description" content="A one-stop platform by Sarvwigyan for books, science, AI, and education.">
     <meta name="twitter:image" content="https://sarvwigyan.github.io/resources/Sarvstore.png">
+    <!-- Structured Data (JSON-LD for SEO) -->
+    <!-- Learning Note: Helps search engines understand your site as an Organization. -->
     <script type="application/ld+json">
         {
           "@context": "https://schema.org",
@@ -62,7 +69,8 @@
     </script>
 </head>
 <body>
-    <!-- Main Header with Logo, Search, and Settings -->
+    <!-- Main Header: Logo, Search Bar, Settings Gear -->
+    <!-- Learning Note: Sticky header stays on top when scrolling. Flexbox aligns items nicely. -->
     <div class="header">
         <div class="header-logo">
             <img src="https://sarvwigyan.github.io/resources/Sarvstore.png" style="width: auto; height: 1.5em;" alt="Sarv Store logo">
@@ -74,7 +82,8 @@
         <div class="settings-icon" id="settingsIcon" role="button" aria-label="Open settings"><span class="gear-icon">⚙️</span></div>
     </div>
 
-    <!-- Navigation Tabs for Different Sections -->
+    <!-- Navigation Tabs -->
+    <!-- Learning Note: ARIA roles for accessibility (screen readers). Tabs switch sections via JS. CodeX tab removed. -->
     <div class="tabs" role="tablist">
         <div class="tab-list">
             <div class="tab active" data-tab="all" role="tab" aria-selected="true" tabindex="0">All</div>
@@ -86,16 +95,18 @@
         </div>
     </div>
 
-    <!-- Main Content Area with Sections -->
+    <!-- Main Content Sections -->
+    <!-- Learning Note: Each .section is hidden/shown by JS. Grid layout for cards is responsive. -->
     <div class="content">
-        <!-- All Items Section -->
+        <!-- All Section (Active by Default) -->
         <div class="section active" id="all" role="tabpanel" aria-labelledby="all-tab">
             <h2 class="section-title">All Apps</h2>
             <div class="card-grid" id="allGrid"></div>
             <div class="no-results" id="allNoResults">No results found</div>
         </div>
 
-        <!-- Books Section with Filters -->
+        <!-- Books Section (With Filter Bar) -->
+        <!-- Learning Note: Added filter bar here for books only. JS handles dropdowns and filtering. -->
         <div class="section" id="books" role="tabpanel" aria-labelledby="books-tab">
             <h2 class="section-title">Books</h2>
             <div class="books-filter-bar">
@@ -154,14 +165,16 @@
             <div class="no-results" id="favoritesNoResults">No favorite items yet</div>
         </div>
 
-        <!-- Featured Section (Shows when All is Active) -->
+        <!-- Featured Section (Shows Under All) -->
+        <!-- Learning Note: Horizontal scroll for featured items. CSS hides it unless "All" is active. -->
         <div class="featured-section">
             <h2 class="section-title">Featured Apps</h2>
             <div class="card-grid" id="featuredGrid"></div>
         </div>
     </div>
 
-    <!-- Detail View Modal for Item Details -->
+    <!-- Detail View Modal (For Item Details) -->
+    <!-- Learning Note: Role="dialog" for accessibility. JS populates this on card click. -->
     <div class="detail-view" id="detailView" role="dialog" aria-modal="true">
         <button class="close-btn" id="closeBtn" aria-label="Close details">×</button>
         <div class="detail-container">
@@ -182,7 +195,8 @@
         </div>
     </div>
 
-    <!-- Book Viewer Modal -->
+    <!-- Book Viewer Modal (For PDFs) -->
+    <!-- Learning Note: Iframe embeds PDF viewer. JS sets src on download click for books. -->
     <div class="book-modal" id="bookModal" role="dialog" aria-modal="true">
         <div class="book-modal-content">
             <button class="book-modal-close" id="bookModalClose" aria-label="Close book viewer">×</button>
@@ -190,10 +204,11 @@
         </div>
     </div>
 
-    <!-- Overlay for Modals -->
+    <!-- Overlay (Darkens Background for Modals) -->
     <div class="overlay" id="overlay"></div>
 
-    <!-- Settings Window Modal -->
+    <!-- Settings Modal -->
+    <!-- Learning Note: Theme selector and favorites toggle. JS saves to localStorage. -->
     <div class="settings-window" id="settingsWindow" role="dialog" aria-modal="true">
         <h2>Settings</h2>
         <div class="settings-option">
@@ -212,6 +227,7 @@
     </div>
 
     <!-- Footer -->
+    <!-- Learning Note: Simple links - make them real hrefs later for About/Contact pages. -->
     <footer>
         <p>© 2023 Sarv Store. All rights reserved.</p>
         <nav>
@@ -223,7 +239,8 @@
         </nav>
     </footer>
 
-    <!-- Main JavaScript File -->
+    <!-- Load Main Script -->
+    <!-- Learning Note: script.js handles all dynamic stuff: tabs, search, modals, data rendering. -->
     <script src="script.js"></script>
 </body>
 </html>

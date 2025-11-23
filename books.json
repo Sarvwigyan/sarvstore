@@ -38,34 +38,78 @@
             "https://ia600404.us.archive.org/BookReader/BookReaderImages.php?zip=/26/items/the-art-of-being-perfect_20250630/The%20Art%20Of%20Being%20Perfect_jp2.zip&file=The%20Art%20Of%20Being%20Perfect_jp2/The%20Art%20Of%20Being%20Perfect_0000.jp2&id=the-art-of-being-perfect_20250630&scale=4&rotate=0",
             "https://sarvwigyan.github.io/resources/TheArtOfBeingPerfect.jpg",
             "https://ia600404.us.archive.org/BookReader/BookReaderImages.php?zip=/26/items/the-art-of-being-perfect_20250630/The%20Art%20Of%20Being%20Perfect_jp2.zip&file=The%20Art%20Of%20Being%20Perfect_jp2/The%20Art%20Of%20Being%20Perfect_0001.jp2&id=the-art-of-being-perfect_20250630&scale=4&rotate=0",
-            "https://ia600404.us.archive.org/BookReader/BookReaderImages.php?zip=/26/items/the-art-of-being-perfect_20250630/The%20Art%20Of%20Being%20Perfect_jp2.zip&file=The%20Art%20Of%20Being%20Perfect_jp2/The%20Art%20Of%20Being%20Perfect_0002.jp2&id=the-art-of-being-perfect_20250630&scale=4&rotate=0"
+            "https://ia600404.us.archive.org/BookReader/BookReaderImages.php?zip=/26/items/the-art-of-being-perfect_20250630/The%20Art%20Of%20Being%20Perfect_jp2.zip&file=The%20Art%20Of%20Being%20Perfect_jp2/The%20Art%20Of%20Being%20Perfect_0002.jp2&id=the-art-of-being-perfect_20250630&scale=4&rotate=0",
+            "https://ia600404.us.archive.org/BookReader/BookReaderImages.php?zip=/26/items/the-art-of-being-perfect_20250630/The%20Art%20Of%20Being%20Perfect_jp2.zip&file=The%20Art%20Of%20Being%20Perfect_jp2/The%20Art%20Of%20Being%20Perfect_0003.jp2&id=the-art-of-being-perfect_20250630&scale=4&rotate=0",
+            "https://ia600404.us.archive.org/BookReader/BookReaderImages.php?zip=/26/items/the-art-of-being-perfect_20250630/The%20Art%20Of%20Being%20Perfect_jp2.zip&file=The%20Art%20Of%20Being%20Perfect_jp2/The%20Art%20Of%20Being%20Perfect_0053.jp2&id=the-art-of-being-perfect_20250630&scale=4&rotate=0"
         ],
         "imageAlts": [
             "Cover page of The Art of Being Perfect in Hindi",
             "Illustration from The Art of Being Perfect in Hindi",
             "First page of The Art of Being Perfect in Hindi",
-            "Second page of The Art of Being Perfect in Hindi"
+            "Second page of The Art of Being Perfect in Hindi",
+            "Page 3 of The Art of Being Perfect in Hindi",
+            "Page 53 of The Art of Being Perfect in Hindi"
         ],
         "file": "https://sarvwigyan.github.io/resources/Books/The%20Art%20Of%20Being%20Perfect%20Hindi.pdf",
         "language": "Hindi"
     },
     {
-        "id": 9,
-        "title": "श्रीमद्भगवद्गीता",
+        "id": 3,
+        "title": "Bhagwad Geeta",
         "type": "Books",
         "verified": true,
-        "logo": "https://sarvwigyan.github.io/resources/bhagwadgeeta.png",
+        "logo": "https://sarvwigyan.github.io/resources/Bhagwadgeeta.jpg",
         "shortDesc": "श्रीमद्भगवद्गीता एक दिव्य ग्रंथ है जो कर्म, ज्ञान और भक्ति के माध्यम से जीवन के धर्म, उद्देश्य और मोक्ष की दिशा प्रदान करता है।",
         "longDesc": "श्रीमद्भगवद्गीता हिंदू धर्म का एक प्रमुख ग्रंथ है, जो भगवान कृष्ण और अर्जुन के बीच कुरुक्षेत्र के युद्धक्षेत्र में हुए संवाद के रूप में प्रस्तुत है। यह कर्मयोग, भक्तियोग, ज्ञानयोग और जीवन के विभिन्न पहलुओं पर गहन दार्शनिक शिक्षाएं देता है।",
         "images": [
-            "https://example.com/bhagwadgeeta-cover.jpg",
-            "https://example.com/bhagwadgeeta-page1.jpg"
+            "https://ia800903.us.archive.org/BookReader/BookReaderImages.php?zip=/3/items/bhagavadgita00unkngoog/bhagavadgita00unkngoog_jp2.zip&file=bhagavadgita00unkngoog_jp2/bhagavadgita00unkngoog_0000.jp2&id=/3/items/bhagavadgita00unkngoog&scale=4&rotate=0",
+            "https://sarvwigyan.github.io/resources/Bhagwadgeeta.jpg",
+            "https://ia800903.us.archive.org/BookReader/BookReaderImages.php?zip=/3/items/bhagavadgita00unkngoog/bhagavadgita00unkngoog_jp2.zip&file=bhagavadgita00unkngoog_jp2/bhagavadgita00unkngoog_0001.jp2&id=/3/items/bhagavadgita00unkngoog&scale=4&rotate=0"
         ],
         "imageAlts": [
-            "Cover of Bhagwad Geeta",
+            "Cover page of Bhagwad Geeta",
+            "Illustration from Bhagwad Geeta",
             "First page of Bhagwad Geeta"
         ],
         "file": "https://sarvwigyan.github.io/resources/Books/Bhagwadgeeta.pdf",
         "language": "Sanskrit"
+    },
+    {
+        "id": 4,
+        "title": "Skand Puran Hindi",
+        "type": "Books",
+        "verified": false,
+        "logo": "https://sarvwigyan.github.io/resources/Skandpuranhindi.jpg",
+        "shortDesc": "स्कंद पुराण हिंदू धर्म का एक प्रमुख पुराण है जो शिव भक्ति, तीर्थों और धार्मिक कथाओं का वर्णन करता है।",
+        "longDesc": "स्कंद पुराण शिव पुराण के समान ही एक विस्तृत ग्रंथ है जो स्कंद (कार्तिकेय) को केंद्र में रखकर विभिन्न तीर्थों, व्रतों और पौराणिक कथाओं का वर्णन करता है। यह भक्तों को आध्यात्मिक मार्गदर्शन प्रदान करता है।",
+        "images": [
+            "https://example.com/skandpuran-cover.jpg", 
+            "https://sarvwigyan.github.io/resources/Skandpuranhindi.jpg"
+        ],
+        "imageAlts": [
+            "Cover page of Skand Puran Hindi",
+            "Illustration from Skand Puran Hindi"
+        ],
+        "file": "https://sarvwigyan.github.io/resources/Books/Skandpuranhindi.pdf",
+        "language": "Hindi"
+    },
+    {
+        "id": 5,
+        "title": "Bhavishya Puran Hindi",
+        "type": "Books",
+        "verified": true,
+        "logo": "https://sarvwigyan.github.io/resources/BhavishyaPuranHindi.jpg",
+        "shortDesc": "भविष्य पुराण भविष्यवाणियों और कलियुग के घटनाक्रम का वर्णन करने वाला पुराण है।",
+        "longDesc": "भविष्य पुराण हिंदू पुराणों में से एक है जो भविष्य की घटनाओं, राजवंशों और धार्मिक महत्व की कथाओं का उल्लेख करता है। यह भक्तों को भविष्य के प्रति जागरूकता प्रदान करता है।",
+        "images": [
+            "https://example.com/bhavishyapuran-cover.jpg", 
+            "https://sarvwigyan.github.io/resources/BhavishyaPuranHindi.jpg"
+        ],
+        "imageAlts": [
+            "Cover page of Bhavishya Puran Hindi",
+            "Illustration from Bhavishya Puran Hindi"
+        ],
+        "file": "https://sarvwigyan.github.io/resources/Books/BhavishyaPuranHindi.pdf",
+        "language": "Hindi"
     }
 ]
