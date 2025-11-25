@@ -1,57 +1,74 @@
 [
-    {
-        "id": 20,
-        "title": "TaskMaster Pro",
-        "type": "Productivity",
-        "verified": true,
-        "logo": "https://sarvwigyan.github.io/resources/taskmaster-logo.png",
-        "shortDesc": "Advanced task manager with reminders and collaboration features.",
-        "longDesc": "TaskMaster Pro helps you organize life with intuitive lists, deadlines, and team sharing. Sync across devices for seamless productivity.",
-        "images": [
-            "https://sarvwigyan.github.io/resources/taskmaster-screenshot1.jpg",
-            "https://sarvwigyan.github.io/resources/taskmaster-screenshot2.jpg"
-        ],
-        "imageAlts": [
-            "Task list in TaskMaster Pro",
-            "Reminder setup in TaskMaster Pro"
-        ],
-        "downloadUrl": "https://sarvwigyan.github.io/resources/Productivity/TaskMaster.apk",
-        "language": "English"
-    },
-    {
-        "id": 21,
-        "title": "NoteVault Secure",
-        "type": "Productivity",
-        "verified": false,
-        "logo": "https://sarvwigyan.github.io/resources/notevault-logo.png",
-        "shortDesc": "Encrypted note-taking app with cloud backup.",
-        "longDesc": "NoteVault Secure keeps your ideas safe with end-to-end encryption. Organize notes by tags, search instantly, and backup worry-free.",
-        "images": [
-            "https://sarvwigyan.github.io/resources/notevault-screenshot1.jpg"
-        ],
-        "imageAlts": [
-            "Note editor in NoteVault Secure"
-        ],
-        "downloadUrl": "https://sarvwigyan.github.io/resources/Productivity/NoteVault.apk",
-        "language": "English"
-    },
-    {
-        "id": 22,
-        "title": "CalcPro Hindi",
-        "type": "Productivity",
-        "verified": true,
-        "logo": "https://sarvwigyan.github.io/resources/calcpro-logo.png",
-        "shortDesc": "हिंदी इंटरफेस वाला उन्नत कैलकुलेटर ऐप।",
-        "longDesc": "CalcPro Hindi वैज्ञानिक और दैनिक गणनाओं के लिए हिंदी में उपलब्ध है। फॉर्मूला स्टोरेज और इतिहास के साथ।",
-        "images": [
-            "https://sarvwigyan.github.io/resources/calcpro-screenshot1.jpg",
-            "https://sarvwigyan.github.io/resources/calcpro-screenshot2.jpg"
-        ],
-        "imageAlts": [
-            "Calculator interface in CalcPro Hindi",
-            "History view in CalcPro Hindi"
-        ],
-        "downloadUrl": "https://sarvwigyan.github.io/resources/Productivity/CalcPro.apk",
-        "language": "Hindi"
-    }
- ]
+  {
+    "id": "p1",
+    "title": "Task Manager",
+    "type": "Productivity",
+    "verified": false,
+    "logo": "https://via.placeholder.com/64",
+    "shortDesc": "Organize your tasks.",
+    "longDesc": "Stay organized with this powerful task manager.",
+    "images": ["https://via.placeholder.com/200x120"],
+    "imageAlts": ["Screenshot of Task Manager app"],
+    "file": "taskmanager.apk"
+  },
+  {
+    "id": "p2",
+    "title": "Note Taker",
+    "type": "Productivity",
+    "verified": false,
+    "logo": "https://via.placeholder.com/64",
+    "shortDesc": "Take notes easily.",
+    "longDesc": "Capture your thoughts with this simple note-taking app.",
+    "images": ["https://via.placeholder.com/200x120"],
+    "imageAlts": ["Screenshot of Note Taker app"],
+    "file": "notetaker.apk"
+  },
+  {
+    "id": "p3",
+    "title": "Time Tracker",
+    "type": "Productivity",
+    "verified": false,
+    "logo": "https://via.placeholder.com/64",
+    "shortDesc": "Track your time.",
+    "longDesc": "Monitor your productivity with this tool.",
+    "images": ["https://via.placeholder.com/200x120"],
+    "imageAlts": ["Screenshot of Time Tracker app"],
+    "file": "timetracker.apk"
+  },
+  {
+    "id": "p4",
+    "title": "Goal Setter",
+    "type": "Productivity",
+    "verified": false,
+    "logo": "https://via.placeholder.com/64",
+    "shortDesc": "Set your goals.",
+    "longDesc": "Plan and achieve your objectives.",
+    "images": ["https://via.placeholder.com/200x120"],
+    "imageAlts": ["Screenshot of Goal Setter app"],
+    "file": "goalsetter.apk"
+  },
+  {
+    "id": "p5",
+    "title": "Calendar Pro",
+    "type": "Productivity",
+    "verified": false,
+    "logo": "https://via.placeholder.com/64",
+    "shortDesc": "Manage events.",
+    "longDesc": "Keep your schedule in check.",
+    "images": ["https://via.placeholder.com/200x120"],
+    "imageAlts": ["Screenshot of Calendar Pro app"],
+    "file": "calendarpro.apk"
+  },
+  {
+    "id": "p6",
+    "title": "Focus Timer",
+    "type": "Productivity",
+    "verified": false,
+    "logo": "https://via.placeholder.com/64",
+    "shortDesc": "Boost focus.",
+    "longDesc": "Use Pomodoro technique to stay focused.",
+    "images": ["https://via.placeholder.com/200x120"],
+    "imageAlts": ["Screenshot of Focus Timer app"],
+    "file": "focustimer.apk"
+  }
+]

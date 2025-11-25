@@ -1,59 +1,74 @@
 [
-    {
-        "id": 10,
-        "title": "Puzzle Quest Adventure",
-        "type": "Games",
-        "verified": true,
-        "logo": "https://sarvwigyan.github.io/resources/puzzlequest-logo.png",
-        "shortDesc": "An engaging puzzle game with adventure elements to challenge your mind and strategy.",
-        "longDesc": "Dive into Puzzle Quest Adventure, a thrilling match-3 game combined with RPG elements. Solve puzzles to battle monsters, collect treasures, and level up your heroes. Perfect for casual gamers seeking depth.",
-        "images": [
-            "https://sarvwigyan.github.io/resources/puzzlequest-screenshot1.jpg",
-            "https://sarvwigyan.github.io/resources/puzzlequest-screenshot2.jpg",
-            "https://sarvwigyan.github.io/resources/puzzlequest-screenshot3.jpg"
-        ],
-        "imageAlts": [
-            "Main menu of Puzzle Quest Adventure",
-            "Puzzle battle screen in Puzzle Quest Adventure",
-            "Treasure collection in Puzzle Quest Adventure"
-        ],
-        "downloadUrl": "https://sarvwigyan.github.io/resources/Games/PuzzleQuest.apk",
-        "language": "English"
-    },
-    {
-        "id": 11,
-        "title": "Racing Fury",
-        "type": "Games",
-        "verified": false,
-        "logo": "https://sarvwigyan.github.io/resources/racingfury-logo.png",
-        "shortDesc": "High-speed racing game with realistic physics and multiple tracks.",
-        "longDesc": "Racing Fury brings adrenaline-pumping races to your device. Customize cars, compete on global tracks, and upgrade engines for victory. Ideal for speed enthusiasts.",
-        "images": [
-            "https://sarvwigyan.github.io/resources/racingfury-screenshot1.jpg",
-            "https://sarvwigyan.github.io/resources/racingfury-screenshot2.jpg"
-        ],
-        "imageAlts": [
-            "Car selection in Racing Fury",
-            "High-speed race in Racing Fury"
-        ],
-        "downloadUrl": "https://sarvwigyan.github.io/resources/Games/RacingFury.apk",
-        "language": "English"
-    },
-    {
-        "id": 12,
-        "title": "Word Wizard Hindi",
-        "type": "Games",
-        "verified": true,
-        "logo": "https://sarvwigyan.github.io/resources/wordwizard-logo.png",
-        "shortDesc": "शब्दों से भरा मजेदार गेम जो हिंदी शब्दावली बढ़ाता है।",
-        "longDesc": "Word Wizard Hindi एक शब्द पहेली गेम है जो हिंदी भाषा सीखने में मदद करता है। विभिन्न स्तरों पर शब्द बनाएं और अंक कमाएं।",
-        "images": [
-            "https://sarvwigyan.github.io/resources/wordwizard-screenshot1.jpg"
-        ],
-        "imageAlts": [
-            "Gameplay screen of Word Wizard Hindi"
-        ],
-        "downloadUrl": "https://sarvwigyan.github.io/resources/Games/WordWizard.apk",
-        "language": "Hindi"
-    }
+  {
+    "id": "g1",
+    "title": "Puzzle Master",
+    "type": "Games",
+    "verified": false,
+    "logo": "https://via.placeholder.com/64",
+    "shortDesc": "Challenging puzzles.",
+    "longDesc": "Test your brain with these challenging puzzles.",
+    "images": ["https://via.placeholder.com/200x120"],
+    "imageAlts": ["Screenshot of Puzzle Master game"],
+    "file": "puzzle.apk"
+  },
+  {
+    "id": "g2",
+    "title": "Adventure Quest",
+    "type": "Games",
+    "verified": false,
+    "logo": "https://via.placeholder.com/64",
+    "shortDesc": "Epic adventures await.",
+    "longDesc": "Embark on epic adventures in this RPG game.",
+    "images": ["https://via.placeholder.com/200x120"],
+    "imageAlts": ["Screenshot of Adventure Quest game"],
+    "file": "adventure.apk"
+  },
+  {
+    "id": "g3",
+    "title": "Space Shooter",
+    "type": "Games",
+    "verified": false,
+    "logo": "https://via.placeholder.com/64",
+    "shortDesc": "Shoot aliens!",
+    "longDesc": "Defend the galaxy in this action-packed shooter.",
+    "images": ["https://via.placeholder.com/200x120"],
+    "imageAlts": ["Screenshot of Space Shooter game"],
+    "file": "spaceshooter.apk"
+  },
+  {
+    "id": "g4",
+    "title": "Racing Rush",
+    "type": "Games",
+    "verified": false,
+    "logo": "https://via.placeholder.com/64",
+    "shortDesc": "Race to win.",
+    "longDesc": "Speed through tracks in this racing game.",
+    "images": ["https://via.placeholder.com/200x120"],
+    "imageAlts": ["Screenshot of Racing Rush game"],
+    "file": "racingrush.apk"
+  },
+  {
+    "id": "g5",
+    "title": "Trivia King",
+    "type": "Games",
+    "verified": false,
+    "logo": "https://via.placeholder.com/64",
+    "shortDesc": "Test your knowledge.",
+    "longDesc": "Challenge yourself with trivia questions.",
+    "images": ["https://via.placeholder.com/200x120"],
+    "imageAlts": ["Screenshot of Trivia King game"],
+    "file": "triviaking.apk"
+  },
+  {
+    "id": "g6",
+    "title": "Platform Jumper",
+    "type": "Games",
+    "verified": false,
+    "logo": "https://via.placeholder.com/64",
+    "shortDesc": "Jump to survive.",
+    "longDesc": "Navigate platforms in this fun game.",
+    "images": ["https://via.placeholder.com/200x120"],
+    "imageAlts": ["Screenshot of Platform Jumper game"],
+    "file": "platformjumper.apk"
+  }
 ]
