@@ -11,15 +11,26 @@ let featured = [
     // Learning Note: This is for the horizontal "Featured Apps" section under "All". Make it dynamic from a featured.json later.
 ];
 
-// Helpers for Scroll Lock (Prevents background scroll when modals open)
+// NEW: Global Counter for Nested Scroll Locks
+let scrollLockCount = 0;
+
+// Updated Helpers for Scroll Lock (Now Handles Nesting with Reference Counting)
 function lockBodyScroll() {
-    // Learning Note: Adds CSS class to body. CSS (in styles.css) handles overflow: hidden.
-    document.body.classList.add('modal-open');
+    // Learning Note: Increments count; adds class only on first lock (prevents redundant adds).
+    scrollLockCount++;
+    if (scrollLockCount === 1) {
+        document.body.classList.add('modal-open');
+    }
+    // Debug: console.log('Locked! Count:', scrollLockCount); // Uncomment to watch in Console
 }
 
 function unlockBodyScroll() {
-    // Learning Note: Removes class to restore scroll. Call on every close.
-    document.body.classList.remove('modal-open');
+    // Learning Note: Decrements count; removes class only when all modals closed (hits 0).
+    scrollLockCount = Math.max(0, scrollLockCount - 1); // Safety: Never go negative
+    if (scrollLockCount === 0) {
+        document.body.classList.remove('modal-open');
+    }
+    // Debug: console.log('Unlocked! Count:', scrollLockCount); // Uncomment to watch
 }
 
 // Function to Render Cards in a Grid (Updated: Dynamic Button Text – "Read" for Books)
@@ -355,7 +366,7 @@ async function loadDataFromJSON() {
     }
 }
 
-// Main Initialization (Original DOMContentLoaded - Now Awaits Data Load + popstate Listener)
+// Main Initialization (Original DOMContentLoaded - Now Awaits Data Load + Updated popstate Listener)
 document.addEventListener('DOMContentLoaded', async () => {
     // Learning Note: Awaits data before rendering (async). Then runs all original init/renders.
     await loadDataFromJSON();
@@ -404,20 +415,21 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     });
 
-    // Handle Browser Back/Forward for Modals (Closes on popstate)
+    // UPDATED: Handle Browser Back/Forward for Modals (Closes Innermost First for Nesting)
     window.addEventListener('popstate', (event) => {
-        // Learning Note: Fires on back/forward. Checks open modals and closes the right one.
-        const detailView = document.getElementById('detailView');
+        // Learning Note: Fires on back/forward. Prioritizes closing innermost (book > detail > settings) to match count drops.
         const bookModal = document.getElementById('bookModal');
+        const detailView = document.getElementById('detailView');
         const settingsWindow = document.getElementById('settingsWindow');
 
-        if (detailView.classList.contains('active')) {
+        if (bookModal.classList.contains('active')) {
+            closeBookModal();  // Close inner first
+        } else if (detailView.classList.contains('active')) {
             closeDetail();
-        } else if (bookModal.classList.contains('active')) {
-            closeBookModal();
         } else if (settingsWindow.classList.contains('active')) {
             toggleSettings();  // Since it's a toggle
         }
+        // Safety: If deep nest (rare), this chains—back once closes one layer.
     });
 
     // Escape key (closes modals/dropdowns)
