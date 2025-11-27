@@ -14,6 +14,28 @@ let featured = [
 // NEW: Global Counter for Nested Scroll Locks
 let scrollLockCount = 0;
 
+// NEW: Function to Add Item to Recently Viewed
+function addToRecentItems(item) {
+    let recentItems = JSON.parse(localStorage.getItem('recentItems') || '[]');
+    
+    // Remove if already exists (to avoid duplicates)
+    recentItems = recentItems.filter(recentItem => recentItem.id !== item.id);
+    
+    // Add to beginning of array (most recent first)
+    recentItems.unshift(item);
+    
+    // Keep only last 10 items
+    recentItems = recentItems.slice(0, 10);
+    
+    // Save back to localStorage
+    localStorage.setItem('recentItems', JSON.stringify(recentItems));
+    
+    // Update recent grid if we're on the recent tab
+    if (document.getElementById('recent').classList.contains('active')) {
+        renderCards(recentItems, 'recentGrid');
+    }
+}
+
 // Updated Helpers for Scroll Lock (Now Handles Nesting with Reference Counting)
 function lockBodyScroll() {
     // Learning Note: Increments count; adds class only on first lock (prevents redundant adds).
@@ -83,7 +105,7 @@ function renderCards(items, gridId) {
     });
 }
 
-// Tab Switching Function (Original - initTabs Calls This)
+// Tab Switching Function (Updated: Refresh Recent Tab when switching to it)
 function switchTab(tabId) {
     // Learning Note: Hides all sections/tabs, shows selected one. Featured shows only under "All".
     document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
@@ -99,6 +121,12 @@ function switchTab(tabId) {
     if (tab) {
         tab.classList.add('active');
         tab.setAttribute('aria-selected', 'true');
+    }
+
+    // NEW: Refresh recent items when switching to recent tab
+    if (tabId === 'recent') {
+        const recentItems = JSON.parse(localStorage.getItem('recentItems') || '[]');
+        renderCards(recentItems, 'recentGrid');
     }
 
     // Show featured only for "all"
@@ -192,8 +220,11 @@ function saveSettings() {
     toggleSettings();
 }
 
-// Open Detail Modal (Updated: Dynamic Button Text – "Read" for Books)
+// Open Detail Modal (Updated: Adds item to recent items when opened)
 function openDetail(item) {
+    // NEW: Add this item to recently viewed
+    addToRecentItems(item);
+
     // Learning Note: Fills modal fields, sets download onclick, shows modal/overlay. Now locks scroll/history + dynamic text.
     document.getElementById('detailLogo').src = item.logo;
     document.getElementById('detailLogo').alt = `${item.title} logo`;
@@ -240,9 +271,22 @@ function closeDetail() {
     history.replaceState(null, '', window.location.pathname);  // Clean up URL (remove #detail)
 }
 
-// Handle Download Click (Original + For PDFs, Lock Scroll & History)
+// Handle Download Click (Updated: Add downloaded items to recent)
 function handleDownloadClick(event, url) {
     if (event) event.stopPropagation(); // Prevent card click if from card button
+    
+    // NEW: Get the item that was clicked and add to recent
+    if (event) {
+        const card = event.target.closest('.card');
+        if (card) {
+            const itemId = card.dataset.itemId;
+            const item = [...storeData.books, ...storeData.games, ...storeData.productivity].find(i => i.id == itemId);
+            if (item) {
+                addToRecentItems(item);
+            }
+        }
+    }
+    
     if (!url) {
         alert('Download not available yet.'); // Placeholder
         return;
@@ -354,7 +398,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderCards(storeData.games, 'gamesGrid');
     renderCards(storeData.productivity, 'productivityGrid');
     renderCards(featured, 'featuredGrid'); // If featured is empty, no cards
-    renderCards(JSON.parse(localStorage.getItem('recentItems') || '[]'), 'recentGrid');
+    
+    // NEW: Initialize recent items from localStorage
+    const recentItems = JSON.parse(localStorage.getItem('recentItems') || '[]');
+    renderCards(recentItems, 'recentGrid');
 
     // Original inits
     initTabs();
