@@ -1,9 +1,9 @@
 :root {
     /* Colors */
     --background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
-    --card-bg: rgba(255, 255, 255, 0.1);
+    --card-bg: rgba(255, 255, 255, 0.18);
     --text: #e0e0e0;
-    --secondary-text: rgba(224, 224, 224, 0.8); /* Improved contrast */
+    --secondary-text: rgba(224, 224, 224, 0.8);
     --primary: #1a73e8;
     --highlight: #00ffcc;
     --shadow: rgba(0, 0, 0, 0.3);
@@ -13,8 +13,8 @@
     --transition-speed: 0.3s;
     
     /* Effects */
-    --blur: blur(10px); /* Reduced for performance */
-    --border: 1px solid rgba(255, 255, 255, 0.1);
+    --blur: blur(10px);
+    --border: 1px solid rgba(255, 255, 255, 0.18);
     
     /* Z-index System */
     --z-base: 1;
@@ -28,24 +28,24 @@
 
 [data-theme="light"] {
     --background: linear-gradient(135deg, #f0f0f0 0%, #e3f2fd 50%, #bbdefb 100%);
-    --card-bg: rgba(255, 255, 255, 0.9);
+    --card-bg: rgba(255, 255, 255, 0.75);
     --text: #222222;
     --secondary-text: rgba(34, 34, 34, 0.8);
     --primary: #1a73e8;
     --highlight: #00aa88;
-    --shadow: rgba(0, 0, 0, 0.15);
-    --border: 1px solid rgba(255, 255, 255, 0.3);
+    --shadow: rgba(0, 0, 0, 0.3);
+    --border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
 [data-theme="pure"] {
     --background: linear-gradient(135deg, #fff6e6 0%, #ffeccc 50%, #ffdd99 100%);
-    --card-bg: rgba(255, 240, 204, 0.9);
+    --card-bg: rgba(255, 240, 204, 0.75);
     --text: #3a1400;
     --secondary-text: rgba(58, 20, 0, 0.8);
     --primary: #cc3300;
     --highlight: #e67300;
     --shadow: rgba(204, 102, 0, 0.3);
-    --border: 1px solid rgba(255, 153, 0, 0.2);
+    --border: 1px solid rgba(255, 153, 0, 0.3);
 }
 
 /* Reset & Base Styles */
@@ -54,6 +54,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -67,7 +68,7 @@ body {
     min-height: 100vh;
 }
 
-/* Performance: Reduced background effects */
+/* Apple-style glass background */
 body::before {
     content: '';
     position: fixed;
@@ -76,8 +77,8 @@ body::before {
     width: 100%;
     height: 100%;
     background: 
-        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.05) 0%, transparent 50%);
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.08) 0%, transparent 50%);
     pointer-events: none;
     z-index: -1;
 }
@@ -96,15 +97,19 @@ body::-webkit-scrollbar-track {
     background: rgba(255, 255, 255, 0.1);
 }
 
-/* Header */
+/* Apple-style Glass Header */
 .header {
     padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 2);
     display: flex;
     align-items: center;
     justify-content: space-between;
     background: var(--card-bg);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
     border-bottom: var(--border);
-    box-shadow: 0 4px 16px var(--shadow);
+    box-shadow: 
+        0 4px 16px rgba(0, 0, 0, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
     position: sticky;
     top: 0;
     z-index: var(--z-header);
@@ -153,6 +158,8 @@ body::-webkit-scrollbar-track {
     border: var(--border);
     border-radius: 25px;
     background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
     color: var(--text);
     font-size: 1rem;
     outline: none;
@@ -183,6 +190,8 @@ body::-webkit-scrollbar-track {
     align-items: center;
     justify-content: center;
     background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
     border-radius: 50%;
     width: 3rem;
     height: 3rem;
@@ -203,15 +212,20 @@ body::-webkit-scrollbar-track {
     transform: rotate(90deg);
 }
 
-/* Tabs */
+/* Apple-style Glass Tabs */
 .tabs {
     background: var(--card-bg);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
     padding: calc(var(--spacing-unit) * 0.75) calc(var(--spacing-unit) * 1.5);
     border-bottom: var(--border);
     overflow-x: auto;
     white-space: nowrap;
     z-index: var(--z-tabs);
     position: relative;
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .tab-list {
@@ -229,6 +243,8 @@ body::-webkit-scrollbar-track {
     transition: all var(--transition-speed) ease;
     border-radius: 25px;
     background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
     border: var(--border);
 }
 
@@ -273,7 +289,7 @@ body::-webkit-scrollbar-track {
     color: transparent;
 }
 
-/* Cards */
+/* Apple-style Glass Cards */
 .card-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -283,10 +299,14 @@ body::-webkit-scrollbar-track {
 
 .card {
     background: var(--card-bg);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
     border-radius: 16px;
     padding: calc(var(--spacing-unit) * 1.5);
     text-align: center;
-    box-shadow: 0 4px 16px var(--shadow);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.07);
     transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
     cursor: pointer;
     display: flex;
@@ -311,7 +331,9 @@ body::-webkit-scrollbar-track {
 
 .card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 24px var(--shadow);
+    box-shadow: 
+        0 12px 40px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .card:hover::before {
@@ -326,6 +348,8 @@ body::-webkit-scrollbar-track {
     margin: 0 auto calc(var(--spacing-unit) * 1);
     border: var(--border);
     background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
     padding: 0.5rem;
 }
 
@@ -404,7 +428,7 @@ body::-webkit-scrollbar-track {
     min-width: 200px;
 }
 
-/* Books Filter */
+/* Apple-style Glass Filter Bar */
 .books-filter-bar {
     display: flex;
     align-items: center;
@@ -412,9 +436,13 @@ body::-webkit-scrollbar-track {
     margin-bottom: 1.5rem;
     flex-wrap: wrap;
     background: var(--card-bg);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
     padding: 1rem 1.5rem;
     border-radius: 16px;
-    box-shadow: 0 4px 16px var(--shadow);
+    box-shadow: 
+        0 4px 16px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
     border: var(--border);
     position: relative;
     z-index: var(--z-base);
@@ -441,6 +469,8 @@ body::-webkit-scrollbar-track {
     font-weight: 500;
     border-radius: 12px;
     background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
     color: var(--text);
     border: var(--border);
     appearance: none;
@@ -477,6 +507,8 @@ body::-webkit-scrollbar-track {
 .multi-select-trigger {
     padding: 0.6rem 2.5rem 0.6rem 1rem;
     background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
     color: var(--text);
     border: var(--border);
     border-radius: 12px;
@@ -499,6 +531,8 @@ body::-webkit-scrollbar-track {
     left: 0;
     right: 0;
     background: var(--card-bg);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
     color: var(--text);
     border: var(--border);
     border-radius: 12px;
@@ -535,6 +569,8 @@ body::-webkit-scrollbar-track {
     margin-top: calc(var(--spacing-unit) * 2);
     display: none;
     background: var(--card-bg);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
     padding: 2rem;
     border-radius: 16px;
     border: var(--border);
@@ -548,6 +584,8 @@ body::-webkit-scrollbar-track {
     width: 100%;
     height: 100%;
     background: rgba(0,0,0,0.7);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
     z-index: var(--z-overlay);
     opacity: 0;
     transition: opacity var(--transition-speed) ease;
@@ -559,7 +597,7 @@ body::-webkit-scrollbar-track {
     opacity: 1;
 }
 
-/* Detail View */
+/* Apple-style Glass Detail View */
 .detail-view {
     position: fixed;
     top: 50%;
@@ -570,9 +608,13 @@ body::-webkit-scrollbar-track {
     max-height: 85vh;
     overflow-y: auto;
     background: var(--card-bg);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
     padding: calc(var(--spacing-unit) * 2);
     border-radius: 20px;
-    box-shadow: 0 20px 40px var(--shadow);
+    box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
     opacity: 0;
     transition: opacity var(--transition-speed) ease, transform var(--transition-speed) ease;
     display: none;
@@ -602,6 +644,8 @@ body::-webkit-scrollbar-track {
     justify-content: center;
     cursor: pointer;
     transition: transform var(--transition-speed) ease;
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
     border: var(--border);
 }
 
@@ -626,6 +670,8 @@ body::-webkit-scrollbar-track {
     flex-shrink: 0;
     border: var(--border);
     background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
     padding: 0.5rem;
 }
 
@@ -691,6 +737,8 @@ body::-webkit-scrollbar-track {
     gap: calc(var(--spacing-unit) * 1.5);
     padding: calc(var(--spacing-unit) * 1.5);
     background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
     border-radius: 16px;
     box-shadow: inset 0 2px 8px var(--shadow);
     border: var(--border);
@@ -720,6 +768,8 @@ body::-webkit-scrollbar-track {
     width: 100%;
     height: 100%;
     background: var(--background);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
     z-index: calc(var(--z-modal) + 10);
     display: none;
     opacity: 0;
@@ -765,6 +815,8 @@ body::-webkit-scrollbar-track {
     justify-content: center;
     cursor: pointer;
     transition: transform var(--transition-speed) ease;
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
     border: var(--border);
     z-index: var(--z-base);
 }
@@ -773,16 +825,20 @@ body::-webkit-scrollbar-track {
     transform: scale(1.1);
 }
 
-/* Settings */
+/* Apple-style Glass Settings */
 .settings-window {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     background: var(--card-bg);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
     padding: calc(var(--spacing-unit) * 2);
     border-radius: 20px;
-    box-shadow: 0 20px 40px var(--shadow);
+    box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
     z-index: var(--z-modal);
     width: 90vw;
     max-width: 450px;
@@ -829,6 +885,8 @@ body::-webkit-scrollbar-track {
     border-radius: 12px;
     font-size: 1rem;
     background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
     color: var(--text);
     outline: none;
     transition: border-color var(--transition-speed) ease;
@@ -872,9 +930,11 @@ body::-webkit-scrollbar-track {
     transform: scale(1.02);
 }
 
-/* Footer */
+/* Apple-style Glass Footer */
 footer {
     background: var(--card-bg);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
     padding: var(--spacing-unit);
     text-align: center;
     color: var(--secondary-text);
@@ -898,6 +958,8 @@ footer a {
     padding: 0.5rem 1rem;
     border-radius: 16px;
     background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
 }
 
 footer a:hover {
@@ -919,11 +981,7 @@ footer a:hover {
     animation: rainbowGlow 3s infinite;
 }
 
-/* Accessibility & Interactions */
-button, a, [role="button"], .card, .tab {
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
-}
-
+/* Accessibility */
 button:focus-visible, 
 a:focus-visible, 
 [role="button"]:focus-visible,
@@ -933,10 +991,9 @@ input:focus-visible {
     outline-offset: 2px;
 }
 
-/* Scroll Lock - Fixed */
+/* Scroll Lock */
 body.modal-open {
     overflow: hidden;
-    /* Removed height: 100vh to prevent layout shifts */
 }
 
 /* ==================== RESPONSIVE DESIGN ==================== */
@@ -1259,23 +1316,4 @@ body.modal-open {
         width: 180px;
         height: 100px;
     }
-}
-/* Remove blue tap highlight on mobile */
-* {
-    -webkit-tap-highlight-color: transparent;
-}
-
-/* Keep focus styles for accessibility but make them subtle */
-button:focus-visible, 
-a:focus-visible, 
-[role="button"]:focus-visible,
-.tab:focus-visible,
-input:focus-visible {
-    outline: 2px solid var(--highlight);
-    outline-offset: 2px;
-}
-
-/* Remove the tap highlight but keep the hover effects */
-button, a, [role="button"], .card, .tab {
-    -webkit-tap-highlight-color: transparent;
 }
