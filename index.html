@@ -91,7 +91,6 @@
             <div class="tab" data-tab="games" role="tab" aria-selected="false" tabindex="0">Games</div>
             <div class="tab" data-tab="productivity" role="tab" aria-selected="false" tabindex="0">Productivity</div>
             <div class="tab" data-tab="recent" role="tab" aria-selected="false" tabindex="0">Recently Viewed</div>
-            <div class="tab hidden" data-tab="favorites" role="tab" aria-selected="false" tabindex="0">Favorites</div>
         </div>
     </div>
 
@@ -152,13 +151,6 @@
             <div class="no-results" id="recentNoResults">No recently viewed items</div>
         </div>
 
-        <!-- Favorites Section (Hidden by Default) -->
-        <div class="section" id="favorites" role="tabpanel" aria-labelledby="favorites-tab">
-            <h2 class="section-title">Favorites</h2>
-            <div class="card-grid" id="favoritesGrid"></div>
-            <div class="no-results" id="favoritesNoResults">No favorite items yet</div>
-        </div>
-
         <!-- Featured Section (Shows Under All) -->
         <!-- Learning Note: Horizontal scroll for featured items. CSS hides it unless "All" is active. -->
         <div class="featured-section">
@@ -212,10 +204,6 @@
                 <option value="light">Light</option>
                 <option value="pure">Pure</option>
             </select>
-        </div>
-        <div class="settings-option">
-            <label for="enableFavorites">Enable Favorites Tab</label>
-            <input type="checkbox" id="enableFavorites" aria-label="Enable Favorites tab">
         </div>
         <button id="saveSettings">Save</button>
     </div>
