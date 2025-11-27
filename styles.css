@@ -1332,9 +1332,9 @@ body.modal-open {
     padding: 30px;
     color: #666;
     width: 100%;
-    grid-column: 1 / -1; /* Makes it span full grid width */
+    grid-column: 1 / -1;
+    display: none; /* NEW: Hide by default */
 }
-
 .loading-spinner {
     border: 3px solid #f3f3f3;
     border-top: 3px solid #007bff;

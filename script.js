@@ -33,12 +33,18 @@ function unlockBodyScroll() {
     // Debug: console.log('Unlocked! Count:', scrollLockCount); // Uncomment to watch
 }
 
-// Function to Render Cards in a Grid (Updated: Dynamic Button Text – "Read" for Books)
+// Function to Render Cards in a Grid (Updated: Dynamic Button Text – "Read" for Books + Loading Indicator Fix)
 function renderCards(items, gridId) {
     // Learning Note: Clears the grid div, loops through items, builds HTML for each card, adds to DOM.
     // Items is an array like storeData.books; gridId is 'booksGrid', etc.
     const grid = document.getElementById(gridId);
     const noResults = document.getElementById(gridId.replace('Grid', 'NoResults')) || null; // Fallback if no no-results div
+    
+    // NEW: Hide loading indicator when rendering books
+    const loadingIndicator = document.getElementById('loadingIndicator');
+    if (gridId === 'booksGrid' && loadingIndicator) {
+        loadingIndicator.style.display = 'none';
+    }
 
     grid.innerHTML = ''; // Clear existing cards
 
