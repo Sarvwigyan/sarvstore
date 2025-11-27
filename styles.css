@@ -350,7 +350,8 @@ body::-webkit-scrollbar-track {
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: var(--blur);
     -webkit-backdrop-filter: var(--blur);
-    padding: 0.5rem;
+    /* FIXED: Remove padding to eliminate logo gap */
+    padding: 0;
 }
 
 .card-title {
@@ -672,7 +673,8 @@ body::-webkit-scrollbar-track {
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: var(--blur);
     -webkit-backdrop-filter: var(--blur);
-    padding: 0.5rem;
+    /* FIXED: Remove padding to eliminate logo gap */
+    padding: 0;
 }
 
 .detail-info {
@@ -1138,10 +1140,13 @@ body.modal-open {
     }
     
     .card-logo {
-        width: 100%;
-        height: auto;
+        width: 3rem;
+        height: 3rem;
+        border-radius: 10px;
+        margin-bottom: 0.75rem;
+        /* FIXED: Remove padding for mobile too */
+        padding: 0;
     }
-    
     
     .card-title {
         font-size: 0.85rem;
@@ -1169,6 +1174,8 @@ body.modal-open {
     .featured-section .card-logo {
         width: 3rem;
         height: 3rem;
+        /* FIXED: Remove padding for featured cards too */
+        padding: 0;
     }
     
     .featured-section .card-title {
@@ -1243,8 +1250,10 @@ body.modal-open {
     }
     
     .card-logo {
-        width: 100%;
-        height: auto;
+        width: 2.5rem;
+        height: 2.5rem;
+        /* FIXED: Remove padding for small mobile */
+        padding: 0;
     }
     
     .card-title {
@@ -1294,8 +1303,10 @@ body.modal-open {
     }
     
     .card-logo {
-        width: 100%;
-        height: auto;
+        width: 2.2rem;
+        height: 2.2rem;
+        /* FIXED: Remove padding for extra small mobile */
+        padding: 0;
     }
     
     .card-title {
@@ -1315,4 +1326,4 @@ body.modal-open {
         width: 180px;
         height: 100px;
     }
-} 
+}
