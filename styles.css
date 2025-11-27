@@ -144,7 +144,7 @@ body::-webkit-scrollbar-track {
 }
 .tab.active {
     color: var(--highlight);
-    background-color: var(--primary); /* Fixed: Was 'full-screen' (invalid) → now var(--primary) for consistency */
+    background-color: var(--primary);
 }
 .tab.hidden {
     display: none;
@@ -238,6 +238,13 @@ body::-webkit-scrollbar-track {
     white-space: normal;
     overflow-wrap: break-word;
     max-height: 3.75rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
 }
 .card-type {
     font-size: 0.875rem;
@@ -672,6 +679,132 @@ footer a:hover {
 .book-modal-close:hover {
     background: var(--highlight);
 }
+
+/* Mobile Card Size Adjustments */
+@media (max-width: 600px) {
+    .card-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+    }
+    
+    .card {
+        padding: 0.75rem;
+        border-radius: 12px;
+    }
+    
+    .card-logo {
+        width: 3rem;
+        height: 3rem;
+        border-radius: 16px;
+        margin-bottom: 0.75rem;
+    }
+    
+    .card-title {
+        font-size: 0.9rem;
+        margin-bottom: 0.4rem;
+        max-height: 2.8rem;
+        line-height: 1.3;
+    }
+    
+    .card-type {
+        font-size: 0.75rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    .card-download {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+        border-radius: 20px;
+    }
+    
+    /* Featured section cards for mobile */
+    .featured-section .card {
+        width: 130px;
+        min-width: 130px;
+        padding: 0.75rem;
+    }
+    
+    .featured-section .card-logo {
+        width: 3rem;
+        height: 3rem;
+    }
+    
+    .featured-section .card-title {
+        font-size: 0.9rem;
+        max-height: 2.8rem;
+    }
+    
+    .featured-section .card-type {
+        font-size: 0.75rem;
+    }
+    
+    .featured-section .card-download {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .card-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.6rem;
+    }
+    
+    .card {
+        padding: 0.6rem;
+    }
+    
+    .card-logo {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 12px;
+        margin-bottom: 0.6rem;
+    }
+    
+    .card-title {
+        font-size: 0.85rem;
+        max-height: 2.6rem;
+        line-height: 1.2;
+    }
+    
+    .card-type {
+        font-size: 0.7rem;
+        margin-bottom: 0.6rem;
+    }
+    
+    .card-download {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.75rem;
+    }
+    
+    /* Featured section cards for very small screens */
+    .featured-section .card {
+        width: 110px;
+        min-width: 110px;
+        padding: 0.6rem;
+    }
+    
+    .featured-section .card-logo {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+    
+    .featured-section .card-title {
+        font-size: 0.85rem;
+        max-height: 2.6rem;
+    }
+    
+    .featured-section .card-type {
+        font-size: 0.7rem;
+    }
+    
+    .featured-section .card-download {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.75rem;
+    }
+}
+
+/* Existing responsive design */
 @media (max-width: 1400px) {
     .content {
         max-width: 1200px;
@@ -782,20 +915,9 @@ footer a:hover {
     .content {
         padding: var(--spacing-unit);
     }
-    .card-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: var(--spacing-unit);
-    }
     .featured-section .card {
         width: 140px;
         min-width: 140px;
-    }
-    .card {
-        padding: var(--spacing-unit);
-    }
-    .card-logo {
-        width: 3.5rem;
-        height: 3.5rem;
     }
     .detail-view {
         padding: var(--spacing-unit);
@@ -824,10 +946,6 @@ footer a:hover {
     .section-title {
         font-size: 1.5rem;
     }
-    .card-title {
-        font-size: 1rem;
-        max-height: 3rem;
-    }
     .detail-title {
         font-size: 1.25rem;
     }
@@ -846,20 +964,6 @@ footer a:hover {
     }
     .settings-icon {
         font-size: 1rem;
-    }
-    .card-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    .featured-section .card {
-        width: 120px;
-        min-width: 120px;
-    }
-    .card {
-        padding: calc(var(--spacing-unit) * 0.75);
-    }
-    .card-logo {
-        width: 3rem;
-        height: 3rem;
     }
     .tab {
         font-size: 0.75rem;
@@ -885,18 +989,19 @@ footer a:hover {
         padding: 0.4rem;
         font-size: 0.75rem;
     }
-    .card-title {
-        font-size: 0.875rem;
-        max-height: 2.625rem;
-    }
-    .card-type {
-        font-size: 0.75rem;
-    }
     .detail-images img {
         width: 160px;
         height: 96px;
     }
 }
+
+/* Scroll lock for modals */
+body.modal-open {
+    overflow: hidden;
+    height: 100vh;
+}
+
+/* Accessibility and interaction enhancements */
 button, a, [role="button"], [role="tab"], [tabindex="0"], .card, .tab, .close-btn, .detail-download, .card-download, .settings-icon, .multi-select-trigger {
     -webkit-tap-highlight-color: transparent;
     -moz-tap-highlight-color: transparent;
@@ -909,15 +1014,3 @@ button:focus, a:focus, [role="button"]:focus, [role="tab"]:focus, [tabindex="0"]
 .card:hover, .tab:hover, .close-btn:hover, .detail-download:hover, .card-download:hover, .settings-icon:hover, .multi-select-trigger:hover {
     box-shadow: 0 8px 20px var(--shadow);
 }
-
-/* NEW: Scroll Lock for Modals - Prevents background scroll when any modal is open */
-body.modal-open {
-    overflow: hidden; /* Locks vertical scroll */
-    height: 100vh;    /* Optional: Locks viewport height too (prevents iOS bounce) */
-}
-
-/* Learning Note: End of styles.css. The new body.modal-open rule is added at the bottom for easy spotting and debugging.
-   - Why here? Global overrides like this go last to ensure they apply after base body styles.
-   - Test Tip: Inspect body in DevTools (F12) when a modal opens—check if 'modal-open' class is added and overflow is 'hidden'.
-   - Pro Tip: If you need horizontal scroll (e.g., long tables), change to 'overflow-y: hidden; overflow-x: auto;'.
-   - Fixed the .tab.active background too (was invalid 'full-screen' → now var(--primary)). Save, reload, and open a modal—scroll should lock on PC/mobile! */
