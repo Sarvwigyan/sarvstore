@@ -153,5 +153,62 @@
         "imageAlts": ["विष्णु पुराण का मुखपृष्ठ"],
         "file": "https://archive.org/embed/vishnu-puran-illustrated-with-hindi-translations-gita-press-gorakhpur",
         "language": "Hindi"
-    }
+    },
+    {
+        "id": "b8",
+        "title": "यंत्र, मंत्र तंत्र विद्या",
+        "type": "Books",
+        "verified": true,
+        "logo": "https://ia601802.us.archive.org/BookReader/BookReaderImages.php?zip=/16/items/in.ernet.dli.2015.538688/2015.538688.Yantra-Mantra_jp2.zip&file=2015.538688.Yantra-Mantra_jp2/2015.538688.Yantra-Mantra_0001.jp2&id=in.ernet.dli.2015.538688&scale=4&rotate=0",
+        "shortDesc": "by Dediyar | Vladimir, Publication date: 1954, Topics: Banasthali",
+        "longDesc": "No official description available.",
+        "images": ["https://ia601802.us.archive.org/BookReader/BookReaderImages.php?zip=/16/items/in.ernet.dli.2015.538688/2015.538688.Yantra-Mantra_jp2.zip&file=2015.538688.Yantra-Mantra_jp2/2015.538688.Yantra-Mantra_0073.jp2&id=in.ernet.dli.2015.538688&scale=4&rotate=0",
+        "https://ia601802.us.archive.org/BookReader/BookReaderImages.php?zip=/16/items/in.ernet.dli.2015.538688/2015.538688.Yantra-Mantra_jp2.zip&file=2015.538688.Yantra-Mantra_jp2/2015.538688.Yantra-Mantra_0486.jp2&id=in.ernet.dli.2015.538688&scale=4&rotate=0",
+        "https://ia601802.us.archive.org/BookReader/BookReaderImages.php?zip=/16/items/in.ernet.dli.2015.538688/2015.538688.Yantra-Mantra_jp2.zip&file=2015.538688.Yantra-Mantra_jp2/2015.538688.Yantra-Mantra_0485.jp2&id=in.ernet.dli.2015.538688&scale=4&rotate=0"],
+        "imageAlts": ["Illustration from the book Yantra, Mantra, Tantra Vidya","Illustration from the book Yantra, Mantra, Tantra Vidya","Illustration from the book Yantra, Mantra, Tantra Vidya"],
+        "file": "https://archive.org/embed/in.ernet.dli.2015.538688",
+        "language": "Hindi"
+    },
+    {
+    "id": "b9",
+    "title": "The Great Chola Temples",
+    "type": "Books",
+    "verified": true,
+    "logo": "https://ia601408.us.archive.org/BookReader/BookReaderImages.php?zip=/3/items/greatcholatemple00siva/greatcholatemple00siva_jp2.zip&file=greatcholatemple00siva_jp2/greatcholatemple00siva_0001.jp2&id=greatcholatemple00siva&scale=8&rotate=0",
+    "shortDesc": "By K. A. Nilakanta Sastri | 1925 | A scholarly exploration of the Chola dynasty's monumental temple architecture.",
+    "longDesc": "An authoritative and detailed historical work on the great temples built during the Chola dynasty, including Brihadeeswarar Temple, Gangaikonda Cholapuram, and Airavatesvara Temple. Contains rare photographs, architectural drawings, inscriptions, and cultural analysis.",
+    "images": [
+        "https://ia601408.us.archive.org/BookReader/BookReaderImages.php?zip=/3/items/greatcholatemple00siva/greatcholatemple00siva_jp2.zip&file=greatcholatemple00siva_jp2/greatcholatemple00siva_0030.jp2&id=greatcholatemple00siva&scale=8&rotate=0",
+        "https://ia601408.us.archive.org/BookReader/BookReaderImages.php?zip=/3/items/greatcholatemple00siva/greatcholatemple00siva_jp2.zip&file=greatcholatemple00siva_jp2/greatcholatemple00siva_0060.jp2&id=greatcholatemple00siva&scale=8&rotate=0",
+        "https://ia601408.us.archive.org/BookReader/BookReaderImages.php?zip=/3/items/greatcholatemple00siva/greatcholatemple00siva_jp2.zip&file=greatcholatemple00siva_jp2/greatcholatemple00siva_0100.jp2&id=greatcholatemple00siva&scale=8&rotate=0"
+    ],
+    "imageAlts": [
+        "Temple illustration from The Great Chola Temples",
+        "Photograph from The Great Chola Temples",
+        "Sculpture details from The Great Chola Temples"
+    ],
+    "file": "https://archive.org/embed/greatcholatemple00siva",
+    "language": "English"
+},
+{
+    "id": "b10",
+    "title": "Living Dolls: A Story",
+    "type": "Books",
+    "verified": true,
+    "logo": "https://ia803100.us.archive.org/BookReader/BookReaderImages.php?zip=/34/items/livingdollsstory00pani/livingdollsstory00pani_jp2.zip&file=livingdollsstory00pani_jp2/livingdollsstory00pani_0001.jp2&id=livingdollsstory00pani&scale=4&rotate=0",
+    "shortDesc": "By Anna C. Panini | A classic illustrated children's story exploring imagination and fantasy.",
+    "longDesc": "An illustrated children's book that follows a charming and imaginative tale about living dolls and their adventures. The book features detailed drawings, storytelling suitable for young readers, and a whimsical narrative style characteristic of early 20th-century fantasy literature.",
+    "images": [
+        "https://ia803100.us.archive.org/BookReader/BookReaderImages.php?zip=/34/items/livingdollsstory00pani/livingdollsstory00pani_jp2.zip&file=livingdollsstory00pani_jp2/livingdollsstory00pani_0009.jp2&id=livingdollsstory00pani&scale=4&rotate=0",
+        "https://ia803100.us.archive.org/BookReader/BookReaderImages.php?zip=/34/items/livingdollsstory00pani/livingdollsstory00pani_jp2.zip&file=livingdollsstory00pani_jp2/livingdollsstory00pani_0015.jp2&id=livingdollsstory00pani&scale=4&rotate=0",
+        "https://ia803100.us.archive.org/BookReader/BookReaderImages.php?zip=/34/items/livingdollsstory00pani/livingdollsstory00pani_jp2.zip&file=livingdollsstory00pani_jp2/livingdollsstory00pani_0020.jp2&id=livingdollsstory00pani&scale=4&rotate=0"
+    ],
+    "imageAlts": [
+        "Illustration (page 9) from Living Dolls: A Story",
+        "Illustration (page 15) from Living Dolls: A Story",
+        "Illustration (page 20) from Living Dolls: A Story"
+    ],
+    "file": "https://archive.org/embed/livingdollsstory00pani",
+    "language": "English"
+}    
 ]
