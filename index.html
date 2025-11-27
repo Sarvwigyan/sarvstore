@@ -91,6 +91,7 @@
             <div class="tab" data-tab="games" role="tab" aria-selected="false" tabindex="0">Games</div>
             <div class="tab" data-tab="productivity" role="tab" aria-selected="false" tabindex="0">Productivity</div>
             <div class="tab" data-tab="recent" role="tab" aria-selected="false" tabindex="0">Recently Viewed</div>
+            <div class="tab hidden" data-tab="favorites" role="tab" aria-selected="false" tabindex="0">Favorites</div>
         </div>
     </div>
 
@@ -99,6 +100,7 @@
     <div class="content">
         <!-- All Section (Active by Default) -->
         <div class="section active" id="all" role="tabpanel" aria-labelledby="all-tab">
+            <h2 class="section-title">All Apps</h2>
             <div class="card-grid" id="allGrid"></div>
             <div class="no-results" id="allNoResults">No results found</div>
         </div>
@@ -106,12 +108,15 @@
         <!-- Books Section (With Filter Bar) -->
         <!-- Learning Note: Added filter bar here for books only. JS handles dropdowns and filtering. -->
         <div class="section" id="books" role="tabpanel" aria-labelledby="books-tab">
+            <h2 class="section-title">Books</h2>
             <div class="books-filter-bar">
                 <label for="booksFilter" class="filter-label">📚 Filter:</label>
                 <div class="custom-select-wrapper">
                     <select id="booksFilter" onchange="handleMainFilterChange()" aria-label="Filter books">
                         <option value="">All Categories</option>
                         <option value="language">Language</option>
+                        <option value="genre">Genre</option>
+                        <option value="author">Author</option>
                     </select>
                     <i class="fas fa-chevron-down filter-dropdown-icon" id="mainFilterArrow" aria-hidden="true"></i>
                 </div>
@@ -134,12 +139,14 @@
 
         <!-- Games Section -->
         <div class="section" id="games" role="tabpanel" aria-labelledby="games-tab">
+            <h2 class="section-title">Games</h2>
             <div class="card-grid" id="gamesGrid"></div>
             <div class="no-results" id="gamesNoResults">No results found</div>
         </div>
 
         <!-- Productivity Section -->
-        <div class="section" id="productivity" role="tabpanel" aria-labelledby="productivity-tab">>
+        <div class="section" id="productivity" role="tabpanel" aria-labelledby="productivity-tab">
+            <h2 class="section-title">Productivity</h2>
             <div class="card-grid" id="productivityGrid"></div>
             <div class="no-results" id="productivityNoResults">No results found</div>
         </div>
@@ -149,6 +156,13 @@
             <h2 class="section-title">Recently Viewed</h2>
             <div class="card-grid" id="recentGrid"></div>
             <div class="no-results" id="recentNoResults">No recently viewed items</div>
+        </div>
+
+        <!-- Favorites Section (Hidden by Default) -->
+        <div class="section" id="favorites" role="tabpanel" aria-labelledby="favorites-tab">
+            <h2 class="section-title">Favorites</h2>
+            <div class="card-grid" id="favoritesGrid"></div>
+            <div class="no-results" id="favoritesNoResults">No favorite items yet</div>
         </div>
 
         <!-- Featured Section (Shows Under All) -->
@@ -204,6 +218,10 @@
                 <option value="light">Light</option>
                 <option value="pure">Pure</option>
             </select>
+        </div>
+        <div class="settings-option">
+            <label for="enableFavorites">Enable Favorites Tab</label>
+            <input type="checkbox" id="enableFavorites" aria-label="Enable Favorites tab">
         </div>
         <button id="saveSettings">Save</button>
     </div>
