@@ -77,13 +77,6 @@ function renderCards(items, gridId) {
     });
 }
 
-// Function to Render Favorites (Original - From localStorage)
-function renderFavorites() {
-    // Learning Note: Loads favorites from localStorage, renders in favoritesGrid. Toggle via star icon (add if needed).
-    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-    renderCards(favorites, 'favoritesGrid');
-}
-
 // Tab Switching Function (Original - initTabs Calls This)
 function switchTab(tabId) {
     // Learning Note: Hides all sections/tabs, shows selected one. Featured shows only under "All".
@@ -104,10 +97,6 @@ function switchTab(tabId) {
 
     // Show featured only for "all"
     document.querySelector('.featured-section').style.display = tabId === 'all' ? 'block' : 'none';
-
-    // Handle favorites visibility (from settings)
-    const favoritesTab = document.querySelector('[data-tab="favorites"]');
-    if (favoritesTab) favoritesTab.classList.toggle('hidden', !localStorage.getItem('enableFavorites'));
 }
 
 // Initialize Tabs (Original - Adds Click/Keydown Listeners)
@@ -143,7 +132,6 @@ function initSearch() {
             case 'games': items = storeData.games; break;
             case 'productivity': items = storeData.productivity; break;
             case 'recent': items = JSON.parse(localStorage.getItem('recentItems') || '[]'); break;
-            case 'favorites': items = JSON.parse(localStorage.getItem('favorites') || '[]'); break;
         }
 
         // Filter by query
@@ -159,19 +147,12 @@ function initSearch() {
     });
 }
 
-// Settings Initialization (Original - Loads Theme/Favorites from localStorage)
+// Settings Initialization (Original - Loads Theme from localStorage)
 function initSettings() {
-    // Learning Note: Applies saved theme, shows/hides favorites tab.
+    // Learning Note: Applies saved theme.
     const theme = localStorage.getItem('theme') || 'dark';
     document.body.dataset.theme = theme;
     document.getElementById('theme').value = theme;
-    document.getElementById('enableFavorites').checked = localStorage.getItem('enableFavorites') === 'true';
-
-    // Update favorites tab visibility
-    const favoritesTab = document.querySelector('[data-tab="favorites"]');
-    if (favoritesTab) {
-        favoritesTab.classList.toggle('hidden', !document.getElementById('enableFavorites').checked);
-    }
 }
 
 // Toggle Settings Modal (Original + Scroll Lock & History for Back Button)
@@ -196,23 +177,13 @@ function toggleSettings() {
 
 // Save Settings (Original)
 function saveSettings() {
-    // Learning Note: Saves theme/favorites to localStorage, applies theme, closes modal.
+    // Learning Note: Saves theme to localStorage, applies theme, closes modal.
     const theme = document.getElementById('theme').value;
-    const enableFavorites = document.getElementById('enableFavorites').checked;
 
     localStorage.setItem('theme', theme);
-    localStorage.setItem('enableFavorites', enableFavorites);
-
     document.body.dataset.theme = theme;
 
-    // Update favorites tab
-    const favoritesTab = document.querySelector('[data-tab="favorites"]');
-    if (favoritesTab) {
-        favoritesTab.classList.toggle('hidden', !enableFavorites);
-    }
-
     toggleSettings();
-    renderFavorites(); // Refresh if tab shown
 }
 
 // Open Detail Modal (Updated: Dynamic Button Text – "Read" for Books)
@@ -371,14 +342,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Learning Note: Awaits data before rendering (async). Then runs all original init/renders.
     await loadDataFromJSON();
 
-    // Render all sections (chelp removed)
+    // Render all sections
     renderCards([...storeData.books, ...storeData.games, ...storeData.productivity], 'allGrid');
     renderCards(storeData.books, 'booksGrid');
     renderCards(storeData.games, 'gamesGrid');
     renderCards(storeData.productivity, 'productivityGrid');
     renderCards(featured, 'featuredGrid'); // If featured is empty, no cards
     renderCards(JSON.parse(localStorage.getItem('recentItems') || '[]'), 'recentGrid');
-    renderFavorites();
 
     // Original inits
     initTabs();
@@ -452,6 +422,3 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     console.log('Sarvstore ready! Check tabs and search.'); // Learning: Debug log - remove in production
 });
-
-// Learning Note: End of script.js. To add features: e.g., favorites toggle on cards (add star icon/button, call toggleFavorite(item.id)).
-// For JSON data: Ensure books.json/games.json/productivity.json match structure (id, title, type, logo, etc.). Test locally!
