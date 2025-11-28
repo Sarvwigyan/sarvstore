@@ -4,10 +4,10 @@ const storeData = {
     journals: [] // Populated from journals.json
 };
 
-// NEW: Global Counter for Nested Scroll Locks
-let scrollLockCount = 0;
+// FIXED: Improved Scroll Lock Management
+let activeModals = [];
 
-// NEW: Function to Add Item to Recently Viewed
+// FIXED: Function to Add Item to Recently Viewed
 function addToRecentItems(item) {
     let recentItems = JSON.parse(localStorage.getItem('recentItems') || '[]');
     
@@ -29,18 +29,44 @@ function addToRecentItems(item) {
     }
 }
 
-// Updated Helpers for Scroll Lock (Now Handles Nesting with Reference Counting)
+// FIXED: Improved Scroll Lock Management
 function lockBodyScroll() {
-    scrollLockCount++;
-    if (scrollLockCount === 1) {
+    if (activeModals.length === 0) {
         document.body.classList.add('modal-open');
     }
+    activeModals.push('lock');
 }
 
 function unlockBodyScroll() {
-    scrollLockCount = Math.max(0, scrollLockCount - 1);
-    if (scrollLockCount === 0) {
+    activeModals.pop();
+    if (activeModals.length === 0) {
         document.body.classList.remove('modal-open');
+    }
+}
+
+// FIXED: Function to close all modals properly
+function closeAllModals() {
+    const modals = ['bookModal', 'detailView', 'settingsWindow'];
+    let closedAny = false;
+    
+    modals.forEach(modalId => {
+        const modal = document.getElementById(modalId);
+        if (modal.classList.contains('active')) {
+            modal.classList.remove('active');
+            closedAny = true;
+        }
+    });
+    
+    // Close overlay only if we closed any modal
+    if (closedAny) {
+        document.getElementById('overlay').classList.remove('active');
+        // Reset scroll locks
+        activeModals = [];
+        document.body.classList.remove('modal-open');
+        // Clear iframe source to stop any loading
+        document.getElementById('bookIframe').src = '';
+        // Clear history state
+        history.replaceState(null, '', window.location.pathname);
     }
 }
 
@@ -170,6 +196,12 @@ function toggleSettings() {
     const settingsWindow = document.getElementById('settingsWindow');
     const overlay = document.getElementById('overlay');
     const wasOpen = settingsWindow.classList.contains('active');
+    
+    // FIXED: Close all modals first to avoid conflicts
+    if (!wasOpen) {
+        closeAllModals();
+    }
+    
     settingsWindow.classList.toggle('active');
     overlay.classList.toggle('active');
 
@@ -192,7 +224,7 @@ function saveSettings() {
     toggleSettings();
 }
 
-// Open Detail Modal (Updated: Always shows "Read" button)
+// FIXED: Open Detail Modal with proper modal management
 function openDetail(item) {
     addToRecentItems(item);
 
@@ -225,6 +257,9 @@ function openDetail(item) {
     // Read button
     detailButton.onclick = () => handleDownloadClick(null, item.file || item.downloadUrl || '');
 
+    // FIXED: Close any existing modals first
+    closeAllModals();
+    
     // Show modal + Lock scroll + Push history state
     document.getElementById('detailView').classList.add('active');
     document.getElementById('overlay').classList.add('active');
@@ -232,7 +267,7 @@ function openDetail(item) {
     history.pushState({ modal: 'detail' }, '', '#detail');
 }
 
-// Close Detail Modal
+// FIXED: Close Detail Modal properly
 function closeDetail() {
     document.getElementById('detailView').classList.remove('active');
     document.getElementById('overlay').classList.remove('active');
@@ -240,9 +275,12 @@ function closeDetail() {
     history.replaceState(null, '', window.location.pathname);
 }
 
-// Handle Download Click (Updated: Always "Read" functionality)
+// FIXED: Handle Download Click with proper modal management
 function handleDownloadClick(event, url) {
-    if (event) event.stopPropagation();
+    if (event) {
+        event.stopPropagation();
+        event.preventDefault();
+    }
     
     // Add to recent items
     if (event) {
@@ -261,6 +299,9 @@ function handleDownloadClick(event, url) {
         return;
     }
     
+    // FIXED: Close any existing modals first
+    closeAllModals();
+    
     // Open content in modal iframe (for PDFs and archive.org content)
     document.getElementById('bookIframe').src = url;
     document.getElementById('bookModal').classList.add('active');
@@ -269,7 +310,7 @@ function handleDownloadClick(event, url) {
     history.pushState({ modal: 'book' }, '', '#book');
 }
 
-// Close Book Modal
+// FIXED: Close Book Modal properly
 function closeBookModal() {
     document.getElementById('bookModal').classList.remove('active');
     document.getElementById('bookIframe').src = '';
@@ -337,6 +378,48 @@ async function loadDataFromJSON() {
     }
 }
 
+// FIXED: Improved overlay click handler
+function handleOverlayClick(e) {
+    if (e.target === document.getElementById('overlay')) {
+        // FIXED: Close only the top-most modal
+        if (document.getElementById('bookModal').classList.contains('active')) {
+            closeBookModal();
+        } else if (document.getElementById('detailView').classList.contains('active')) {
+            closeDetail();
+        } else if (document.getElementById('settingsWindow').classList.contains('active')) {
+            toggleSettings();
+        }
+    }
+}
+
+// FIXED: Improved browser back/forward handling
+function handlePopState(event) {
+    // FIXED: Close only the top-most modal
+    if (document.getElementById('bookModal').classList.contains('active')) {
+        closeBookModal();
+    } else if (document.getElementById('detailView').classList.contains('active')) {
+        closeDetail();
+    } else if (document.getElementById('settingsWindow').classList.contains('active')) {
+        toggleSettings();
+    }
+}
+
+// FIXED: Improved escape key handler
+function handleEscapeKey(e) {
+    if (e.key === 'Escape') {
+        // FIXED: Close only the top-most modal
+        if (document.getElementById('bookModal').classList.contains('active')) {
+            closeBookModal();
+        } else if (document.getElementById('detailView').classList.contains('active')) {
+            closeDetail();
+        } else if (document.getElementById('settingsWindow').classList.contains('active')) {
+            toggleSettings();
+        } else if (document.getElementById('languageCheckboxes').style.display === 'block') {
+            toggleLanguageDropdown();
+        }
+    }
+}
+
 // Main Initialization
 document.addEventListener('DOMContentLoaded', async () => {
     await loadDataFromJSON();
@@ -361,21 +444,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('settingsIcon').addEventListener('click', toggleSettings);
     document.getElementById('saveSettings').addEventListener('click', saveSettings);
 
-    // FIXED: Overlay click handler - checks ALL modals independently
-    document.getElementById('overlay').addEventListener('click', (e) => {
-        if (e.target === document.getElementById('overlay')) {
-            // Check each modal independently and close if active
-            if (document.getElementById('bookModal').classList.contains('active')) {
-                closeBookModal();
-            }
-            if (document.getElementById('detailView').classList.contains('active')) {
-                closeDetail();
-            }
-            if (document.getElementById('settingsWindow').classList.contains('active')) {
-                toggleSettings();
-            }
-        }
-    });
+    // FIXED: Use the improved overlay click handler
+    document.getElementById('overlay').addEventListener('click', handleOverlayClick);
 
     // Language checkboxes
     document.querySelectorAll('.lang-checkbox').forEach(cb => {
@@ -388,38 +458,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     });
 
-    // Handle Browser Back/Forward
-    window.addEventListener('popstate', (event) => {
-        // Check each modal independently and close if active
-        if (document.getElementById('bookModal').classList.contains('active')) {
-            closeBookModal();
-        }
-        if (document.getElementById('detailView').classList.contains('active')) {
-            closeDetail();
-        }
-        if (document.getElementById('settingsWindow').classList.contains('active')) {
-            toggleSettings();
-        }
-    });
+    // FIXED: Use improved browser back/forward handler
+    window.addEventListener('popstate', handlePopState);
 
-    // Escape key (closes modals/dropdowns)
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-            // Check each modal independently and close if active
-            if (document.getElementById('bookModal').classList.contains('active')) {
-                closeBookModal();
-            } else if (document.getElementById('detailView').classList.contains('active')) {
-                closeDetail();
-            } else if (document.getElementById('settingsWindow').classList.contains('active')) {
-                toggleSettings();
-            } else if (document.getElementById('languageCheckboxes').style.display === 'block') {
-                toggleLanguageDropdown();
-            }
-        }
-    });
+    // FIXED: Use improved escape key handler
+    document.addEventListener('keydown', handleEscapeKey);
 
     // Default to "All" tab
     switchTab('all');
 
-    console.log('Sarvstore ready! Now focused on educational content.');
+    console.log('Sarvstore ready! Modal system fixed and optimized.');
 });
