@@ -361,19 +361,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('settingsIcon').addEventListener('click', toggleSettings);
     document.getElementById('saveSettings').addEventListener('click', saveSettings);
 
-    // Overlay click (closes modals if clicking outside) - FIXED VERSION
+    // FIXED: Overlay click handler - checks ALL modals independently
     document.getElementById('overlay').addEventListener('click', (e) => {
         if (e.target === document.getElementById('overlay')) {
-            const bookModal = document.getElementById('bookModal');
-            const detailView = document.getElementById('detailView');
-            const settingsWindow = document.getElementById('settingsWindow');
-
-            // Close in reverse z-order (top-most modal first)
-            if (bookModal.classList.contains('active')) {
+            // Check each modal independently and close if active
+            if (document.getElementById('bookModal').classList.contains('active')) {
                 closeBookModal();
-            } else if (detailView.classList.contains('active')) {
+            }
+            if (document.getElementById('detailView').classList.contains('active')) {
                 closeDetail();
-            } else if (settingsWindow.classList.contains('active')) {
+            }
+            if (document.getElementById('settingsWindow').classList.contains('active')) {
                 toggleSettings();
             }
         }
@@ -392,15 +390,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Handle Browser Back/Forward
     window.addEventListener('popstate', (event) => {
-        const bookModal = document.getElementById('bookModal');
-        const detailView = document.getElementById('detailView');
-        const settingsWindow = document.getElementById('settingsWindow');
-
-        if (bookModal.classList.contains('active')) {
+        // Check each modal independently and close if active
+        if (document.getElementById('bookModal').classList.contains('active')) {
             closeBookModal();
-        } else if (detailView.classList.contains('active')) {
+        }
+        if (document.getElementById('detailView').classList.contains('active')) {
             closeDetail();
-        } else if (settingsWindow.classList.contains('active')) {
+        }
+        if (document.getElementById('settingsWindow').classList.contains('active')) {
             toggleSettings();
         }
     });
@@ -408,19 +405,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Escape key (closes modals/dropdowns)
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
-            const bookModal = document.getElementById('bookModal');
-            const settingsWindow = document.getElementById('settingsWindow');
-            const detailView = document.getElementById('detailView');
-            const dropdown = document.getElementById('languageCheckboxes');
-
-            // Close in reverse z-order
-            if (bookModal.classList.contains('active')) {
+            // Check each modal independently and close if active
+            if (document.getElementById('bookModal').classList.contains('active')) {
                 closeBookModal();
-            } else if (detailView.classList.contains('active')) {
+            } else if (document.getElementById('detailView').classList.contains('active')) {
                 closeDetail();
-            } else if (settingsWindow.classList.contains('active')) {
+            } else if (document.getElementById('settingsWindow').classList.contains('active')) {
                 toggleSettings();
-            } else if (dropdown.style.display === 'block') {
+            } else if (document.getElementById('languageCheckboxes').style.display === 'block') {
                 toggleLanguageDropdown();
             }
         }
