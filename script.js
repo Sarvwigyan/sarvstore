@@ -1,15 +1,8 @@
-// Global Data Object (Original Structure - Now Populated from JSONs)
+// Global Data Object (Now only Books and Journals)
 const storeData = {
     books: [], // Populated from books.json
-    games: [], // Populated from games.json
-    productivity: [] // Populated from productivity.json
+    journals: [] // Populated from journals.json (you'll need to create this)
 };
-
-// Featured Items (Original - Assuming hardcoded; add your featured data here if not defined elsewhere)
-let featured = [
-    // Example: { id: 1, title: 'Featured Book', type: 'Books', ... } - Add real ones!
-    // Learning Note: This is for the horizontal "Featured Apps" section under "All". Make it dynamic from a featured.json later.
-];
 
 // NEW: Global Counter for Nested Scroll Locks
 let scrollLockCount = 0;
@@ -38,29 +31,23 @@ function addToRecentItems(item) {
 
 // Updated Helpers for Scroll Lock (Now Handles Nesting with Reference Counting)
 function lockBodyScroll() {
-    // Learning Note: Increments count; adds class only on first lock (prevents redundant adds).
     scrollLockCount++;
     if (scrollLockCount === 1) {
         document.body.classList.add('modal-open');
     }
-    // Debug: console.log('Locked! Count:', scrollLockCount); // Uncomment to watch in Console
 }
 
 function unlockBodyScroll() {
-    // Learning Note: Decrements count; removes class only when all modals closed (hits 0).
-    scrollLockCount = Math.max(0, scrollLockCount - 1); // Safety: Never go negative
+    scrollLockCount = Math.max(0, scrollLockCount - 1);
     if (scrollLockCount === 0) {
         document.body.classList.remove('modal-open');
     }
-    // Debug: console.log('Unlocked! Count:', scrollLockCount); // Uncomment to watch
 }
 
-// Function to Render Cards in a Grid (Updated: Dynamic Button Text – "Read" for Books + Loading Indicator Fix)
+// Function to Render Cards in a Grid (Updated: Always show "Read" button)
 function renderCards(items, gridId) {
-    // Learning Note: Clears the grid div, loops through items, builds HTML for each card, adds to DOM.
-    // Items is an array like storeData.books; gridId is 'booksGrid', etc.
     const grid = document.getElementById(gridId);
-    const noResults = document.getElementById(gridId.replace('Grid', 'NoResults')) || null; // Fallback if no no-results div
+    const noResults = document.getElementById(gridId.replace('Grid', 'NoResults')) || null;
     
     // NEW: Hide loading indicator when rendering books
     const loadingIndicator = document.getElementById('loadingIndicator');
@@ -78,27 +65,24 @@ function renderCards(items, gridId) {
     if (noResults) noResults.style.display = 'none';
 
     items.forEach(item => {
-        // UPDATED: Button text – "Read" strictly for Books type, "Download" otherwise
-        const buttonText = item.type === 'Books' ? 'Read' : 'Download';
-
-        // Learning Note: Builds card HTML dynamically. data-item-id for JS clicks later.
+        // UPDATED: Always show "Read" button for all educational content
         const cardHtml = `
             <div class="card" data-item-id="${item.id}" role="button" tabindex="0">
-                <img src="${item.logo}" alt="${item.title} logo" class="card-logo" onerror="this.src='https://via.placeholder.com/80?text=Logo'"> <!-- Fallback img if logo fails -->
+                <img src="${item.logo}" alt="${item.title} logo" class="card-logo" onerror="this.src='https://via.placeholder.com/80?text=Logo'">
                 <div class="card-title">${item.title}</div>
                 <div class="card-type">${item.type}${item.verified ? ' <i class="fas fa-check-circle" style="color: #4caf50;"></i> Verified' : ''}</div>
-                <button class="card-download" onclick="handleDownloadClick(event, '${item.file || item.downloadUrl || ''}')">${buttonText}</button>
+                <button class="card-download" onclick="handleDownloadClick(event, '${item.file || item.downloadUrl || ''}')">Read</button>
             </div>
         `;
         grid.innerHTML += cardHtml;
     });
 
-    // Add click listeners to cards for detail view (Learning Note: Uses event delegation for efficiency)
+    // Add click listeners to cards for detail view
     document.querySelectorAll(`#${gridId} .card`).forEach(card => {
         card.addEventListener('click', (e) => {
-            if (!e.target.closest('.card-download')) { // Ignore if clicking download button
+            if (!e.target.closest('.card-download')) {
                 const itemId = card.dataset.itemId;
-                const item = [...storeData.books, ...storeData.games, ...storeData.productivity].find(i => i.id == itemId);
+                const item = [...storeData.books, ...storeData.journals].find(i => i.id == itemId);
                 if (item) openDetail(item);
             }
         });
@@ -107,7 +91,6 @@ function renderCards(items, gridId) {
 
 // Tab Switching Function (Updated: Refresh Recent Tab when switching to it)
 function switchTab(tabId) {
-    // Learning Note: Hides all sections/tabs, shows selected one. Featured shows only under "All".
     document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
     document.querySelectorAll('.tab').forEach(tab => {
         tab.classList.remove('active');
@@ -128,14 +111,10 @@ function switchTab(tabId) {
         const recentItems = JSON.parse(localStorage.getItem('recentItems') || '[]');
         renderCards(recentItems, 'recentGrid');
     }
-
-    // Show featured only for "all"
-    document.querySelector('.featured-section').style.display = tabId === 'all' ? 'block' : 'none';
 }
 
-// Initialize Tabs (Original - Adds Click/Keydown Listeners)
+// Initialize Tabs
 function initTabs() {
-    // Learning Note: Makes tabs keyboard-accessible (Enter/Space to switch).
     document.querySelectorAll('.tab').forEach(tab => {
         tab.addEventListener('click', (e) => {
             e.preventDefault();
@@ -150,21 +129,19 @@ function initTabs() {
     });
 }
 
-// Search Initialization (Original - Filters Current Section)
+// Search Initialization (Updated for new sections)
 function initSearch() {
-    // Learning Note: Listens to input on search bar, filters cards in active section by title/desc/type.
     const searchInput = document.getElementById('searchInput');
     searchInput.addEventListener('input', () => {
         const query = searchInput.value.toLowerCase().trim();
         const activeSectionId = document.querySelector('.section.active').id;
         let items = [];
 
-        // Get items based on active tab (Learning Note: Switch for each section)
+        // Get items based on active tab
         switch (activeSectionId) {
-            case 'all': items = [...storeData.books, ...storeData.games, ...storeData.productivity]; break;
+            case 'all': items = [...storeData.books, ...storeData.journals]; break;
             case 'books': items = storeData.books; break;
-            case 'games': items = storeData.games; break;
-            case 'productivity': items = storeData.productivity; break;
+            case 'journals': items = storeData.journals; break;
             case 'recent': items = JSON.parse(localStorage.getItem('recentItems') || '[]'); break;
         }
 
@@ -181,37 +158,32 @@ function initSearch() {
     });
 }
 
-// Settings Initialization (Original - Loads Theme from localStorage)
+// Settings Initialization
 function initSettings() {
-    // Learning Note: Applies saved theme.
     const theme = localStorage.getItem('theme') || 'dark';
     document.body.dataset.theme = theme;
     document.getElementById('theme').value = theme;
 }
 
-// Toggle Settings Modal (Original + Scroll Lock & History for Back Button)
+// Toggle Settings Modal
 function toggleSettings() {
-    // Learning Note: Shows/hides settings window + overlay. Now locks scroll/history on open, unlocks on close.
     const settingsWindow = document.getElementById('settingsWindow');
     const overlay = document.getElementById('overlay');
-    const wasOpen = settingsWindow.classList.contains('active'); // Check if opening or closing
+    const wasOpen = settingsWindow.classList.contains('active');
     settingsWindow.classList.toggle('active');
     overlay.classList.toggle('active');
 
     if (!wasOpen) {
-        // Opening: Lock scroll + push history
         lockBodyScroll();
         history.pushState({ modal: 'settings' }, '', '#settings');
     } else {
-        // Closing: Unlock scroll + clean URL
         unlockBodyScroll();
         history.replaceState(null, '', window.location.pathname);
     }
 }
 
-// Save Settings (Original)
+// Save Settings
 function saveSettings() {
-    // Learning Note: Saves theme to localStorage, applies theme, closes modal.
     const theme = document.getElementById('theme').value;
 
     localStorage.setItem('theme', theme);
@@ -220,12 +192,10 @@ function saveSettings() {
     toggleSettings();
 }
 
-// Open Detail Modal (Updated: Adds item to recent items when opened)
+// Open Detail Modal (Updated: Always shows "Read" button)
 function openDetail(item) {
-    // NEW: Add this item to recently viewed
     addToRecentItems(item);
 
-    // Learning Note: Fills modal fields, sets download onclick, shows modal/overlay. Now locks scroll/history + dynamic text.
     document.getElementById('detailLogo').src = item.logo;
     document.getElementById('detailLogo').alt = `${item.title} logo`;
     document.getElementById('detailTitle').textContent = item.title;
@@ -234,7 +204,7 @@ function openDetail(item) {
     document.getElementById('detailShortDesc').textContent = item.shortDesc || '';
     document.getElementById('detailLongDesc').textContent = item.longDesc || '';
 
-    // Images (Learning Note: Builds gallery; click for zoom if added later)
+    // Images
     const imagesDiv = document.getElementById('detailImages');
     imagesDiv.innerHTML = '';
     if (item.images && item.images.length > 0) {
@@ -243,44 +213,43 @@ function openDetail(item) {
             img.src = src;
             img.alt = item.imageAlts ? (item.imageAlts[idx] || `${item.title} image ${idx + 1}`) : `${item.title} image ${idx + 1}`;
             img.style.cursor = 'pointer';
-            img.onclick = () => window.open(src, '_blank'); // Open full image
+            img.onclick = () => window.open(src, '_blank');
             imagesDiv.appendChild(img);
         });
     }
 
-    // UPDATED: Dynamic button text for detail view – "Read" strictly for Books
+    // UPDATED: Always show "Read" button for detail view
     const detailButton = document.getElementById('detailDownload');
-    const buttonText = item.type === 'Books' ? 'Read' : 'Download';
-    detailButton.textContent = buttonText;  // Set the text
+    detailButton.textContent = 'Read';
 
-    // Download/Read button
+    // Read button
     detailButton.onclick = () => handleDownloadClick(null, item.file || item.downloadUrl || '');
 
     // Show modal + Lock scroll + Push history state
     document.getElementById('detailView').classList.add('active');
     document.getElementById('overlay').classList.add('active');
-    lockBodyScroll();  // Lock scroll
-    history.pushState({ modal: 'detail' }, '', '#detail');  // Fake URL for back button
+    lockBodyScroll();
+    history.pushState({ modal: 'detail' }, '', '#detail');
 }
 
-// Close Detail Modal (Original + Scroll Unlock & History Clean)
+// Close Detail Modal
 function closeDetail() {
     document.getElementById('detailView').classList.remove('active');
     document.getElementById('overlay').classList.remove('active');
-    unlockBodyScroll();  // Unlock scroll
-    history.replaceState(null, '', window.location.pathname);  // Clean up URL (remove #detail)
+    unlockBodyScroll();
+    history.replaceState(null, '', window.location.pathname);
 }
 
-// Handle Download Click (Updated: Add downloaded items to recent)
+// Handle Download Click (Updated: Always "Read" functionality)
 function handleDownloadClick(event, url) {
-    if (event) event.stopPropagation(); // Prevent card click if from card button
+    if (event) event.stopPropagation();
     
-    // NEW: Get the item that was clicked and add to recent
+    // Add to recent items
     if (event) {
         const card = event.target.closest('.card');
         if (card) {
             const itemId = card.dataset.itemId;
-            const item = [...storeData.books, ...storeData.games, ...storeData.productivity].find(i => i.id == itemId);
+            const item = [...storeData.books, ...storeData.journals].find(i => i.id == itemId);
             if (item) {
                 addToRecentItems(item);
             }
@@ -288,38 +257,28 @@ function handleDownloadClick(event, url) {
     }
     
     if (!url) {
-        alert('Download not available yet.'); // Placeholder
+        alert('Content not available yet.');
         return;
     }
-    if (url.includes('.pdf')) {
-        // Open PDF in modal iframe
-        document.getElementById('bookIframe').src = url;
-        document.getElementById('bookModal').classList.add('active');
-        document.getElementById('overlay').classList.add('active');
-        lockBodyScroll();  // Lock scroll
-        history.pushState({ modal: 'book' }, '', '#book');  // Fake URL for back button
-    } else {
-        // Direct download
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = '';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-    }
+    
+    // Open content in modal iframe (for PDFs and archive.org content)
+    document.getElementById('bookIframe').src = url;
+    document.getElementById('bookModal').classList.add('active');
+    document.getElementById('overlay').classList.add('active');
+    lockBodyScroll();
+    history.pushState({ modal: 'book' }, '', '#book');
 }
 
-// Close Book Modal (Original + Scroll Unlock & History Clean)
+// Close Book Modal
 function closeBookModal() {
     document.getElementById('bookModal').classList.remove('active');
-    document.getElementById('bookIframe').src = ''; // Clear iframe
+    document.getElementById('bookIframe').src = '';
     document.getElementById('overlay').classList.remove('active');
-    unlockBodyScroll();  // Unlock scroll
-    history.replaceState(null, '', window.location.pathname);  // Clean up URL
+    unlockBodyScroll();
+    history.replaceState(null, '', window.location.pathname);
 }
 
-// Books Filter Functions (Original - For Language Multi-Select)
-// Toggle Language Dropdown
+// Books Filter Functions
 function toggleLanguageDropdown() {
     const dropdown = document.getElementById('languageCheckboxes');
     const arrow = document.getElementById('langDropdownArrow');
@@ -327,21 +286,18 @@ function toggleLanguageDropdown() {
     arrow.classList.toggle('rotate');
 }
 
-// Toggle All Languages Checkbox
 function toggleAllLanguages(checkbox) {
     document.querySelectorAll('.lang-checkbox').forEach(cb => cb.checked = checkbox.checked);
     updateSelectedLanguagesLabel();
     filterBooksByLanguage();
 }
 
-// Update Label for Selected Languages
 function updateSelectedLanguagesLabel() {
     const checked = document.querySelectorAll('.lang-checkbox:checked');
     const labels = Array.from(checked).map(cb => cb.value.charAt(0).toUpperCase() + cb.value.slice(1)).join(', ');
     document.getElementById('selectedLanguagesLabel').textContent = labels || 'Select Language';
 }
 
-// Filter Books by Selected Languages
 function filterBooksByLanguage() {
     const selected = Array.from(document.querySelectorAll('.lang-checkbox:checked')).map(cb => cb.value.toLowerCase());
     let filtered = storeData.books;
@@ -351,7 +307,6 @@ function filterBooksByLanguage() {
     renderCards(filtered, 'booksGrid');
 }
 
-// Handle Main Filter Change (Original - For Books Select Dropdown)
 function handleMainFilterChange() {
     const value = document.getElementById('booksFilter').value;
     const wrapper = document.getElementById('languageFilterWrapper');
@@ -363,43 +318,35 @@ function handleMainFilterChange() {
         filterBooksByLanguage();
     } else {
         wrapper.style.display = 'none';
-        renderCards(storeData.books, 'booksGrid'); // Reset to all
+        renderCards(storeData.books, 'booksGrid');
     }
-    // Learning Note: Expand for 'genre'/'author' by adding similar dropdowns/arrays in data.
 }
 
-// Async Data Loader (New - Populates storeData from JSONs)
+// Async Data Loader (Updated for Journals)
 async function loadDataFromJSON() {
-    // Learning Note: Fetches each JSON async (parallel-ish). If one fails, others still load. Empty array fallback = "No results".
     try {
-        const [booksRes, gamesRes, prodRes] = await Promise.all([
+        const [booksRes, journalsRes] = await Promise.all([
             fetch('books.json').then(r => r.json()),
-            fetch('games.json').then(r => r.json()),
-            fetch('productivity.json').then(r => r.json())
+            fetch('journals.json').then(r => r.json())
         ]);
         storeData.books = booksRes;
-        storeData.games = gamesRes;
-        storeData.productivity = prodRes;
-        console.log('Data loaded from JSONs! Total items:', storeData.books.length + storeData.games.length + storeData.productivity.length);
+        storeData.journals = journalsRes;
+        console.log('Data loaded from JSONs! Total items:', storeData.books.length + storeData.journals.length);
     } catch (err) {
         console.error('JSON load error (check files exist):', err);
-        // No UI error - just empty grids show "No results" (graceful fallback)
     }
 }
 
-// Main Initialization (Original DOMContentLoaded - Now Awaits Data Load + Updated popstate Listener)
+// Main Initialization
 document.addEventListener('DOMContentLoaded', async () => {
-    // Learning Note: Awaits data before rendering (async). Then runs all original init/renders.
     await loadDataFromJSON();
 
     // Render all sections
-    renderCards([...storeData.books, ...storeData.games, ...storeData.productivity], 'allGrid');
+    renderCards([...storeData.books, ...storeData.journals], 'allGrid');
     renderCards(storeData.books, 'booksGrid');
-    renderCards(storeData.games, 'gamesGrid');
-    renderCards(storeData.productivity, 'productivityGrid');
-    renderCards(featured, 'featuredGrid'); // If featured is empty, no cards
+    renderCards(storeData.journals, 'journalsGrid');
     
-    // NEW: Initialize recent items from localStorage
+    // Initialize recent items from localStorage
     const recentItems = JSON.parse(localStorage.getItem('recentItems') || '[]');
     renderCards(recentItems, 'recentGrid');
 
@@ -408,13 +355,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     initSearch();
     initSettings();
 
-    // Original event listeners
+    // Event listeners
     document.getElementById('closeBtn').addEventListener('click', closeDetail);
     document.getElementById('bookModalClose').addEventListener('click', closeBookModal);
     document.getElementById('settingsIcon').addEventListener('click', toggleSettings);
     document.getElementById('saveSettings').addEventListener('click', saveSettings);
 
-    // Overlay click (closes modals if clicking outside)
+    // Overlay click
     document.getElementById('overlay').addEventListener('click', (e) => {
         if (e.target === document.getElementById('overlay')) {
             const bookModal = document.getElementById('bookModal');
@@ -427,7 +374,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    // Language checkboxes (for books filter)
+    // Language checkboxes
     document.querySelectorAll('.lang-checkbox').forEach(cb => {
         cb.addEventListener('change', () => {
             const selectAll = document.getElementById('selectAllLanguages');
@@ -438,24 +385,22 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     });
 
-    // UPDATED: Handle Browser Back/Forward for Modals (Closes Innermost First for Nesting)
+    // Handle Browser Back/Forward
     window.addEventListener('popstate', (event) => {
-        // Learning Note: Fires on back/forward. Prioritizes closing innermost (book > detail > settings) to match count drops.
         const bookModal = document.getElementById('bookModal');
         const detailView = document.getElementById('detailView');
         const settingsWindow = document.getElementById('settingsWindow');
 
         if (bookModal.classList.contains('active')) {
-            closeBookModal();  // Close inner first
+            closeBookModal();
         } else if (detailView.classList.contains('active')) {
             closeDetail();
         } else if (settingsWindow.classList.contains('active')) {
-            toggleSettings();  // Since it's a toggle
+            toggleSettings();
         }
-        // Safety: If deep nest (rare), this chains—back once closes one layer.
     });
 
-    // Escape key (closes modals/dropdowns)
+    // Escape key
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             const bookModal = document.getElementById('bookModal');
@@ -473,5 +418,5 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Default to "All" tab
     switchTab('all');
 
-    console.log('Sarvstore ready! Check tabs and search.'); // Learning: Debug log - remove in production
+    console.log('Sarvstore ready! Now focused on educational content.');
 });

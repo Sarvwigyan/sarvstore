@@ -13,11 +13,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Title -->
-    <title>Sarvstore – Technology, Science & Books by Sarvwigyan</title>
+    <title>Sarvstore – Educational Books & Research Journals by Sarvwigyan</title>
     <!-- Meta Description -->
-    <meta name="description" content="Explore Sarvstore by Sarvwigyan – your hub for books, AI tools, science, and open knowledge. Discover innovation and technology in one place.">
+    <meta name="description" content="Explore Sarvstore by Sarvwigyan – your hub for educational books and research journals. Discover knowledge, science, and academic resources in one place.">
     <!-- Keywords -->
-    <meta name="keywords" content="Sarvstore, Sarvwigyan, science, AI, technology, books, open knowledge, education, innovation">
+    <meta name="keywords" content="Sarvstore, Sarvwigyan, science, research journals, books, education, academic resources, knowledge hub">
     <!-- Author & Robots -->
     <meta name="author" content="Sarvwigyan">
     <meta name="robots" content="index, follow">
@@ -36,15 +36,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="styles.css">
     <!-- Open Graph for Facebook & LinkedIn -->
-    <meta property="og:title" content="Sarv Store – The Universal Store of Knowledge">
-    <meta property="og:description" content="Books, AI tools, tech projects, and more – all at Sarv Store by Sarvwigyan.">
+    <meta property="og:title" content="Sarv Store – Educational Books & Research Journals">
+    <meta property="og:description" content="Books, research journals, and academic resources – all at Sarv Store by Sarvwigyan.">
     <meta property="og:image" content="https://sarvwigyan.github.io/resources/Sarvstore.png">
     <meta property="og:url" content="https://sarvwigyan.github.io/sarvstore/">
     <meta property="og:type" content="website">
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Sarv Store – The Universal Store of Knowledge">
-    <meta name="twitter:description" content="A one-stop platform by Sarvwigyan for books, science, AI, and education.">
+    <meta name="twitter:title" content="Sarv Store – Educational Books & Research Journals">
+    <meta name="twitter:description" content="A one-stop platform by Sarvwigyan for books, research journals, and educational resources.">
     <meta name="twitter:image" content="https://sarvwigyan.github.io/resources/Sarvstore.png">
     <!-- Structured Data (JSON-LD for SEO) -->
     <script type="application/ld+json">
@@ -58,7 +58,7 @@
             "https://github.com/sarvwigyan",
             "https://sarvwigyan.github.io/"
           ],
-          "description": "Sarv Store by Sarvwigyan is a universal platform offering science, AI, books, and educational resources."
+          "description": "Sarv Store by Sarvwigyan is an educational platform offering books, research journals, and academic resources."
         }
     </script>
 </head>
@@ -70,7 +70,7 @@
             <h1 style="font-size: larger;">Sarvstore</h1>
         </div>
         <div class="search-bar">
-            <input type="text" placeholder="Search apps..." id="searchInput" aria-label="Search apps">
+            <input type="text" placeholder="Search books & journals..." id="searchInput" aria-label="Search books and journals">
         </div>
         <div class="settings-icon" id="settingsIcon" role="button" aria-label="Open settings"><span class="gear-icon">⚙️</span></div>
     </div>
@@ -80,8 +80,7 @@
         <div class="tab-list">
             <div class="tab active" data-tab="all" role="tab" aria-selected="true" tabindex="0">All</div>
             <div class="tab" data-tab="books" role="tab" aria-selected="false" tabindex="0">Books</div>
-            <div class="tab" data-tab="games" role="tab" aria-selected="false" tabindex="0">Games</div>
-            <div class="tab" data-tab="productivity" role="tab" aria-selected="false" tabindex="0">Productivity</div>
+            <div class="tab" data-tab="journals" role="tab" aria-selected="false" tabindex="0">Journals</div>
             <div class="tab" data-tab="recent" role="tab" aria-selected="false" tabindex="0">Recently Viewed</div>
         </div>
     </div>
@@ -90,7 +89,7 @@
     <div class="content">
         <!-- All Section (Active by Default) -->
         <div class="section active" id="all" role="tabpanel" aria-labelledby="all-tab">
-            <h2 class="section-title">All Apps</h2>
+            <h2 class="section-title">All Resources</h2>
             <div class="card-grid" id="allGrid"></div>
             <div class="no-results" id="allNoResults">No results found</div>
         </div>
@@ -130,18 +129,11 @@
             <div class="no-results" id="booksNoResults">No results found</div>
         </div>
 
-        <!-- Games Section -->
-        <div class="section" id="games" role="tabpanel" aria-labelledby="games-tab">
-            <h2 class="section-title">Games</h2>
-            <div class="card-grid" id="gamesGrid"></div>
-            <div class="no-results" id="gamesNoResults">No results found</div>
-        </div>
-
-        <!-- Productivity Section -->
-        <div class="section" id="productivity" role="tabpanel" aria-labelledby="productivity-tab">
-            <h2 class="section-title">Productivity</h2>
-            <div class="card-grid" id="productivityGrid"></div>
-            <div class="no-results" id="productivityNoResults">No results found</div>
+        <!-- Journals Section -->
+        <div class="section" id="journals" role="tabpanel" aria-labelledby="journals-tab">
+            <h2 class="section-title">Research Journals</h2>
+            <div class="card-grid" id="journalsGrid"></div>
+            <div class="no-results" id="journalsNoResults">No results found</div>
         </div>
 
         <!-- Recently Viewed Section -->
@@ -150,12 +142,6 @@
             <div class="card-grid" id="recentGrid"></div>
             <div class="no-results" id="recentNoResults">No recently viewed items</div>
         </div>
-
-        <!-- Featured Section (Shows Under All) -->
-        <div class="featured-section">
-            <h2 class="section-title">Featured Apps</h2>
-            <div class="card-grid" id="featuredGrid"></div>
-        </div>
     </div>
 
     <!-- Detail View Modal (For Item Details) -->
@@ -163,12 +149,12 @@
         <button class="close-btn" id="closeBtn" aria-label="Close details">×</button>
         <div class="detail-container">
             <div class="detail-header">
-                <img class="detail-logo" id="detailLogo" src="" alt="Selected app logo">
+                <img class="detail-logo" id="detailLogo" src="" alt="Selected resource logo">
                 <div class="detail-info">
                     <div class="detail-title" id="detailTitle"></div>
                     <div class="detail-type" id="detailType"></div>
                     <div class="detail-verified" id="detailVerified"></div>
-                    <button class="detail-download" id="detailDownload">Download</button>
+                    <button class="detail-download" id="detailDownload">Read</button>
                 </div>
             </div>
             <div class="detail-description">
