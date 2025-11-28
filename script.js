@@ -1,7 +1,7 @@
 // Global Data Object (Now only Books and Journals)
 const storeData = {
     books: [], // Populated from books.json
-    journals: [] // Populated from journals.json (you'll need to create this)
+    journals: [] // Populated from journals.json
 };
 
 // NEW: Global Counter for Nested Scroll Locks
@@ -361,16 +361,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('settingsIcon').addEventListener('click', toggleSettings);
     document.getElementById('saveSettings').addEventListener('click', saveSettings);
 
-    // Overlay click
+    // Overlay click (closes modals if clicking outside) - FIXED VERSION
     document.getElementById('overlay').addEventListener('click', (e) => {
         if (e.target === document.getElementById('overlay')) {
             const bookModal = document.getElementById('bookModal');
-            const settingsWindow = document.getElementById('settingsWindow');
             const detailView = document.getElementById('detailView');
+            const settingsWindow = document.getElementById('settingsWindow');
 
-            if (bookModal.classList.contains('active')) closeBookModal();
-            else if (settingsWindow.classList.contains('active')) toggleSettings();
-            else if (detailView.classList.contains('active')) closeDetail();
+            // Close in reverse z-order (top-most modal first)
+            if (bookModal.classList.contains('active')) {
+                closeBookModal();
+            } else if (detailView.classList.contains('active')) {
+                closeDetail();
+            } else if (settingsWindow.classList.contains('active')) {
+                toggleSettings();
+            }
         }
     });
 
@@ -400,7 +405,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    // Escape key
+    // Escape key (closes modals/dropdowns)
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             const bookModal = document.getElementById('bookModal');
@@ -408,10 +413,16 @@ document.addEventListener('DOMContentLoaded', async () => {
             const detailView = document.getElementById('detailView');
             const dropdown = document.getElementById('languageCheckboxes');
 
-            if (bookModal.classList.contains('active')) closeBookModal();
-            else if (settingsWindow.classList.contains('active')) toggleSettings();
-            else if (detailView.classList.contains('active')) closeDetail();
-            else if (dropdown.style.display === 'block') toggleLanguageDropdown();
+            // Close in reverse z-order
+            if (bookModal.classList.contains('active')) {
+                closeBookModal();
+            } else if (detailView.classList.contains('active')) {
+                closeDetail();
+            } else if (settingsWindow.classList.contains('active')) {
+                toggleSettings();
+            } else if (dropdown.style.display === 'block') {
+                toggleLanguageDropdown();
+            }
         }
     });
 
