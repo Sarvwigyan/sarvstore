@@ -657,7 +657,7 @@ body::-webkit-scrollbar-track {
 }
 
 .detail-title {
-    font-size: 1.75rem;
+    font-size: 1.45rem;
     font-weight: 600;
     color: var(--text);
     background: linear-gradient(135deg, var(--primary), var(--highlight));
@@ -673,7 +673,7 @@ body::-webkit-scrollbar-track {
 }
 
 .detail-verified {
-    font-size: 1rem;
+    font-size: 0.8rem;
     color: var(--highlight);
     margin-bottom: calc(var(--spacing-unit) * 1.5);
 }
@@ -695,14 +695,14 @@ body::-webkit-scrollbar-track {
 }
 
 .detail-short-desc {
-    font-size: 1.125rem;
+    font-size: 0.8rem;
     color: var(--text);
     margin-bottom: calc(var(--spacing-unit) * 1.5);
     line-height: 1.6;
 }
 
 .detail-long-desc {
-    font-size: 1rem;
+    font-size: 0.9rem;
     color: var(--secondary-text);
     line-height: 1.7;
 }
