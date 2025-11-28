@@ -7,6 +7,144 @@ const storeData = {
 // FIXED: Improved Scroll Lock Management
 let activeModals = [];
 
+// NEW: Track current book for progress saving
+let currentBookId = null;
+
+// NEW: Permanent Reading Progress Functions
+function saveReadingProgress(bookId, scrollPosition) {
+    try {
+        const progress = {
+            scrollY: scrollPosition,
+            timestamp: Date.now(),
+            lastRead: new Date().toISOString()
+        };
+        localStorage.setItem(`readingProgress_${bookId}`, JSON.stringify(progress));
+        console.log(`Progress saved for ${bookId}:`, scrollPosition);
+    } catch (error) {
+        console.error('Error saving reading progress:', error);
+    }
+}
+
+function loadReadingProgress(bookId) {
+    try {
+        const saved = localStorage.getItem(`readingProgress_${bookId}`);
+        return saved ? JSON.parse(saved) : null;
+    } catch (error) {
+        console.error('Error loading reading progress:', error);
+        return null;
+    }
+}
+
+function clearReadingProgress(bookId) {
+    try {
+        localStorage.removeItem(`readingProgress_${bookId}`);
+        console.log(`Progress cleared for ${bookId}`);
+    } catch (error) {
+        console.error('Error clearing reading progress:', error);
+    }
+}
+
+// NEW: Function to restore scroll position in iframe
+function restoreScrollPosition(iframe, bookId) {
+    const savedProgress = loadReadingProgress(bookId);
+    if (savedProgress && savedProgress.scrollY > 0) {
+        console.log(`Restoring scroll position for ${bookId}:`, savedProgress.scrollY);
+        
+        // Try multiple methods to ensure scroll restoration
+        const restoreScroll = () => {
+            try {
+                // Method 1: Direct scroll
+                if (iframe.contentWindow && iframe.contentDocument) {
+                    iframe.contentWindow.scrollTo(0, savedProgress.scrollY);
+                }
+                
+                // Method 2: Wait a bit and try again (for slow loading content)
+                setTimeout(() => {
+                    if (iframe.contentWindow) {
+                        iframe.contentWindow.scrollTo(0, savedProgress.scrollY);
+                    }
+                }, 500);
+                
+                // Method 3: One more try after content is fully loaded
+                setTimeout(() => {
+                    if (iframe.contentWindow) {
+                        iframe.contentWindow.scrollTo(0, savedProgress.scrollY);
+                    }
+                }, 1000);
+            } catch (error) {
+                console.warn('Could not restore scroll position:', error);
+            }
+        };
+
+        // Set up scroll restoration
+        if (iframe.contentDocument && iframe.contentDocument.readyState === 'complete') {
+            restoreScroll();
+        } else {
+            iframe.onload = restoreScroll;
+        }
+    }
+}
+
+// NEW: Function to setup scroll tracking for iframe
+function setupScrollTracking(iframe, bookId) {
+    let scrollTimeout;
+    
+    const trackScroll = () => {
+        try {
+            if (iframe.contentWindow) {
+                const scrollY = iframe.contentWindow.scrollY || iframe.contentDocument.documentElement.scrollTop;
+                
+                // Only save if user has scrolled significantly
+                if (scrollY > 100) {
+                    clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(() => {
+                        saveReadingProgress(bookId, scrollY);
+                    }, 1000); // Debounce: save 1 second after user stops scrolling
+                }
+            }
+        } catch (error) {
+            // Cross-origin limitations - we'll handle this gracefully
+            console.warn('Cannot track scroll position due to cross-origin restrictions');
+        }
+    };
+
+    // Try to set up scroll listener
+    try {
+        if (iframe.contentWindow) {
+            iframe.contentWindow.addEventListener('scroll', trackScroll);
+            
+            // Also track on iframe load
+            iframe.onload = function() {
+                restoreScrollPosition(iframe, bookId);
+                iframe.contentWindow.addEventListener('scroll', trackScroll);
+            };
+        }
+    } catch (error) {
+        console.warn('Cannot setup scroll tracking due to cross-origin restrictions');
+        // Fallback: Save progress when closing
+        setupFallbackProgressSaving(iframe, bookId);
+    }
+}
+
+// NEW: Fallback for cross-origin restrictions
+function setupFallbackProgressSaving(iframe, bookId) {
+    // Save current position when modal closes
+    const originalCloseBookModal = closeBookModal;
+    closeBookModal = function() {
+        try {
+            if (iframe.contentWindow) {
+                const scrollY = iframe.contentWindow.scrollY || iframe.contentDocument.documentElement.scrollTop;
+                if (scrollY > 100) {
+                    saveReadingProgress(bookId, scrollY);
+                }
+            }
+        } catch (error) {
+            console.warn('Could not save scroll position on close');
+        }
+        originalCloseBookModal();
+    };
+}
+
 // FIXED: Function to Add Item to Recently Viewed
 function addToRecentItems(item) {
     let recentItems = JSON.parse(localStorage.getItem('recentItems') || '[]');
@@ -63,8 +201,8 @@ function closeAllModals() {
         // Reset scroll locks
         activeModals = [];
         document.body.classList.remove('modal-open');
-        // Clear iframe source to stop any loading
-        document.getElementById('bookIframe').src = '';
+        // Clear current book tracking
+        currentBookId = null;
         // Clear history state
         history.replaceState(null, '', window.location.pathname);
     }
@@ -91,13 +229,17 @@ function renderCards(items, gridId) {
     if (noResults) noResults.style.display = 'none';
 
     items.forEach(item => {
+        // NEW: Check if this item has reading progress
+        const progress = loadReadingProgress(item.id);
+        const progressBadge = progress ? ' <span class="progress-badge" title="Continue reading from where you left off">📖</span>' : '';
+        
         // UPDATED: Always show "Read" button for all educational content
         const cardHtml = `
             <div class="card" data-item-id="${item.id}" role="button" tabindex="0">
                 <img src="${item.logo}" alt="${item.title} logo" class="card-logo" onerror="this.src='https://via.placeholder.com/80?text=Logo'">
-                <div class="card-title">${item.title}</div>
+                <div class="card-title">${item.title}${progressBadge}</div>
                 <div class="card-type">${item.type}${item.verified ? ' <i class="fas fa-check-circle" style="color: #4caf50;"></i> Verified' : ''}</div>
-                <button class="card-download" onclick="handleDownloadClick(event, '${item.file || item.downloadUrl || ''}')">Read</button>
+                <button class="card-download" onclick="handleDownloadClick(event, '${item.file || item.downloadUrl || ''}', '${item.id}')">Read</button>
             </div>
         `;
         grid.innerHTML += cardHtml;
@@ -236,6 +378,15 @@ function openDetail(item) {
     document.getElementById('detailShortDesc').textContent = item.shortDesc || '';
     document.getElementById('detailLongDesc').textContent = item.longDesc || '';
 
+    // NEW: Show reading progress in detail view if available
+    const progress = loadReadingProgress(item.id);
+    if (progress) {
+        const progressInfo = document.createElement('div');
+        progressInfo.className = 'detail-progress';
+        progressInfo.innerHTML = `<span style="color: var(--highlight); font-size: 0.9rem;">📖 You have reading progress - will continue from where you left off</span>`;
+        document.getElementById('detailVerified').appendChild(progressInfo);
+    }
+
     // Images
     const imagesDiv = document.getElementById('detailImages');
     imagesDiv.innerHTML = '';
@@ -252,10 +403,10 @@ function openDetail(item) {
 
     // UPDATED: Always show "Read" button for detail view
     const detailButton = document.getElementById('detailDownload');
-    detailButton.textContent = 'Read';
+    detailButton.textContent = progress ? 'Continue Reading' : 'Read';
 
     // Read button
-    detailButton.onclick = () => handleDownloadClick(null, item.file || item.downloadUrl || '');
+    detailButton.onclick = () => handleDownloadClick(null, item.file || item.downloadUrl || '', item.id);
 
     // FIXED: Close any existing modals first
     closeAllModals();
@@ -275,19 +426,22 @@ function closeDetail() {
     history.replaceState(null, '', window.location.pathname);
 }
 
-// FIXED: Handle Download Click with proper modal management
-function handleDownloadClick(event, url) {
+// FIXED: Handle Download Click with proper modal management AND progress tracking
+function handleDownloadClick(event, url, itemId) {
     if (event) {
         event.stopPropagation();
         event.preventDefault();
     }
     
+    // Set current book for progress tracking
+    currentBookId = itemId;
+    
     // Add to recent items
     if (event) {
         const card = event.target.closest('.card');
         if (card) {
-            const itemId = card.dataset.itemId;
-            const item = [...storeData.books, ...storeData.journals].find(i => i.id == itemId);
+            const cardItemId = card.dataset.itemId;
+            const item = [...storeData.books, ...storeData.journals].find(i => i.id == cardItemId);
             if (item) {
                 addToRecentItems(item);
             }
@@ -303,20 +457,44 @@ function handleDownloadClick(event, url) {
     closeAllModals();
     
     // Open content in modal iframe (for PDFs and archive.org content)
-    document.getElementById('bookIframe').src = url;
+    const iframe = document.getElementById('bookIframe');
+    iframe.src = url;
     document.getElementById('bookModal').classList.add('active');
     document.getElementById('overlay').classList.add('active');
     lockBodyScroll();
     history.pushState({ modal: 'book' }, '', '#book');
+    
+    // NEW: Setup progress tracking for this book
+    setTimeout(() => {
+        setupScrollTracking(iframe, itemId);
+    }, 1000);
 }
 
-// FIXED: Close Book Modal properly
+// FIXED: Close Book Modal properly WITH progress saving
 function closeBookModal() {
+    // NEW: Save progress before closing if we have a current book
+    if (currentBookId) {
+        try {
+            const iframe = document.getElementById('bookIframe');
+            if (iframe.contentWindow) {
+                const scrollY = iframe.contentWindow.scrollY || iframe.contentDocument.documentElement.scrollTop;
+                if (scrollY > 100) {
+                    saveReadingProgress(currentBookId, scrollY);
+                }
+            }
+        } catch (error) {
+            console.warn('Could not save scroll position on close');
+        }
+    }
+    
     document.getElementById('bookModal').classList.remove('active');
     document.getElementById('bookIframe').src = '';
     document.getElementById('overlay').classList.remove('active');
     unlockBodyScroll();
     history.replaceState(null, '', window.location.pathname);
+    
+    // Reset current book tracking
+    currentBookId = null;
 }
 
 // Books Filter Functions
@@ -420,6 +598,24 @@ function handleEscapeKey(e) {
     }
 }
 
+// NEW: Function to clear all reading progress (optional feature)
+function clearAllReadingProgress() {
+    const keysToRemove = [];
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key.startsWith('readingProgress_')) {
+            keysToRemove.push(key);
+        }
+    }
+    
+    keysToRemove.forEach(key => localStorage.removeItem(key));
+    console.log('Cleared all reading progress');
+    // Refresh the view to update progress badges
+    renderCards([...storeData.books, ...storeData.journals], 'allGrid');
+    renderCards(storeData.books, 'booksGrid');
+    renderCards(storeData.journals, 'journalsGrid');
+}
+
 // Main Initialization
 document.addEventListener('DOMContentLoaded', async () => {
     await loadDataFromJSON();
@@ -467,5 +663,5 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Default to "All" tab
     switchTab('all');
 
-    console.log('Sarvstore ready! Modal system fixed and optimized.');
+    console.log('Sarvstore ready! Permanent reading progress feature implemented.');
 });
