@@ -210,5 +210,236 @@
     ],
     "file": "https://archive.org/embed/livingdollsstory00pani",
     "language": "English"
-}    
+},
+{
+    "id": "b11",
+    "title": "Bibliographic guide to the foundations of quantum mechanics and quantum information",
+    "type": "Journals",
+    "verified": true,
+    "logo": "https://ia800204.us.archive.org/BookReader/BookReaderImages.php?zip=/2/items/arxiv-quant-ph0012089/quant-ph0012089_jp2.zip&file=quant-ph0012089_jp2/quant-ph0012089_0000.jp2&id=arxiv-quant-ph0012089&scale=4&rotate=0",
+    "shortDesc": "By Adan Cabello | A comprehensive collection of references on the foundations of quantum mechanics and quantum information science.",
+    "longDesc": "This is a comprehensive collection of references (papers, books, preprints, book reviews, Ph. D. thesis, patents, web sites, etc.), sorted alphabetically and (some of them) classified by subject, on foundations of quantum mechanics and quantum information. Specifically, it covers hidden variables (“no-go” theorems, experiments), interpretations of quantum mechanics, entanglement, quantum effects (quantum Zeno effect, quantum erasure, “interaction-free” measurements, quantum “non-demolition” measurements), quantum information (cryptography, cloning, dense coding, teleportation), and quantum computation. The publication date is listed as 2004-11-15.",
+    "images": [
+        "https://ia800204.us.archive.org/BookReader/BookReaderImages.php?zip=/2/items/arxiv-quant-ph0012089/quant-ph0012089_jp2.zip&file=quant-ph0012089_jp2/quant-ph0012089_0000.jp2&id=arxiv-quant-ph0012089&scale=4&rotate=0",
+        "https://ia800204.us.archive.org/BookReader/BookReaderImages.php?zip=/2/items/arxiv-quant-ph0012089/quant-ph0012089_jp2.zip&file=quant-ph0012089_jp2/quant-ph0012089_0003.jp2&id=arxiv-quant-ph0012089&scale=4&rotate=0",
+        "https://ia800204.us.archive.org/BookReader/BookReaderImages.php?zip=/2/items/arxiv-quant-ph0012089/quant-ph0012089_jp2.zip&file=quant-ph0012089_jp2/quant-ph0012089_0006.jp2&id=arxiv-quant-ph0012089&scale=4&rotate=0"
+    ],
+    "imageAlts": [
+        "Front page of the Quantum Mechanics Bibliographic Guide",
+        "Abstract page of the Quantum Mechanics Bibliographic Guide",
+        "A page detailing references in the Quantum Mechanics Bibliographic Guide"
+    ],
+    "file": "https://archive.org/embed/arxiv-quant-ph0012089",
+    "language": "English"
+},
+{
+    "id": "b12",
+    "title": "Light cone dynamics and reverse Kibble-Zurek mechanism in two-dimensional superfluids following a quantum quench",
+    "type": "Journals",
+    "verified": true,
+    "logo": "https://ia800108.us.archive.org/BookReader/BookReaderImages.php?zip=/9/items/arxiv-1001.0098/1001.0098_jp2.zip&file=1001.0098_jp2/1001.0098_0000.jp2&id=arxiv-1001.0098&scale=4&rotate=0",
+    "shortDesc": "By L. Mathey and A. Polkovnikov | A study on the light cone dynamics and the reverse Kibble-Zurek effect in 2D superfluids after a quantum quench.",
+    "longDesc": "This academic paper investigates the dynamics of the relative phase of a bilayer of two-dimensional superfluids after decoupling. The research finds that on short time scales, the relative phase exhibits 'light cone' dynamics, creating a metastable superfluid state. This phenomenon, which suppresses vortex proliferation, is identified as a reverse-Kibble-Zurek effect. The study uses both numerical methods (truncated Wigner approximation) and an analytical time-dependent renormalization group approach (RG) to analyze the relaxation of the supercritical state to a disordered state via dynamical vortex unbinding. The RG approach suggests a non-equilibrium Kosterlitz-Thouless type phase transition.",
+    "images": [
+        "https://ia800108.us.archive.org/BookReader/BookReaderImages.php?zip=/9/items/arxiv-1001.0098/1001.0098_jp2.zip&file=1001.0098_jp2/1001.0098_0000.jp2&id=arxiv-1001.0098&scale=4&rotate=0",
+        "https://ia800108.us.archive.org/BookReader/BookReaderImages.php?zip=/9/items/arxiv-1001.0098/1001.0098_jp2.zip&file=1001.0098_jp2/1001.0098_0001.jp2&id=arxiv-1001.0098&scale=4&rotate=0",
+        "https://ia800108.us.archive.org/BookReader/BookReaderImages.php?zip=/9/items/arxiv-1001.0098/1001.0098_jp2.zip&file=1001.0098_jp2/1001.0098_0003.jp2&id=arxiv-1001.0098&scale=4&rotate=0"
+    ],
+    "imageAlts": [
+        "First page of the paper on Light Cone Dynamics",
+        "Abstract page of the physics paper",
+        "Figure or graph from the research paper"
+    ],
+    "file": "https://archive.org/embed/arxiv-1001.0098",
+    "language": "English"
+},
+{
+    "id": "b13",
+    "title": "Observation of a 2D Bose-gas: from thermal to quasi-condensate to superfluid",
+    "type": "Journals",
+    "verified": true,
+    "logo": "https://ia800201.us.archive.org/BookReader/BookReaderImages.php?zip=/0/items/arxiv-0805.3519/0805.3519_jp2.zip&file=0805.3519_jp2/0805.3519_0000.jp2&id=arxiv-0805.3519&scale=4&rotate=0",
+    "shortDesc": "By P. Cladé, C. Ryu, et al. | Experimental results on a Bose gas in a quasi-2D geometry near the Berezinskii, Kosterlitz and Thouless (BKT) transition temperature.",
+    "longDesc": "This research paper presents experimental results on a **Bose gas** confined in a **quasi-2D geometry** near the **Berezinskii, Kosterlitz and Thouless (BKT) transition** temperature. The authors measured the density profile (both *in situ* and after time-of-flight) and the coherence length to identify different states of the gas. Key findings include the observation of a **bimodal distribution** without long-range order, a state where the gas is **quasi-condensed** but not yet superfluid, possessing a longer coherence length than the thermal cloud. The experimental evidence supports the observation of the actual superfluid transition (BKT transition).",
+    "images": [
+        "https://ia800201.us.archive.org/BookReader/BookReaderImages.php?zip=/0/items/arxiv-0805.3519/0805.3519_jp2.zip&file=0805.3519_jp2/0805.3519_0000.jp2&id=arxiv-0805.3519&scale=4&rotate=0",
+        "https://ia800201.us.archive.org/BookReader/BookReaderImages.php?zip=/0/items/arxiv-0805.3519/0805.3519_jp2.zip&file=0805.3519_jp2/0805.3519_0001.jp2&id=arxiv-0805.3519&scale=4&rotate=0",
+        "https://ia800201.us.archive.org/BookReader/BookReaderImages.php?zip=/0/items/arxiv-0805.3519/0805.3519_jp2.zip&file=0805.3519_jp2/0805.3519_0002.jp2&id=arxiv-0805.3519&scale=4&rotate=0"
+    ],
+    "imageAlts": [
+        "First page of the paper on 2D Bose-gas observation",
+        "Abstract and introduction of the physics paper",
+        "Figure illustrating density profiles or coherence measurements"
+    ],
+    "file": "https://archive.org/embed/arxiv-0805.3519",
+    "language": "English"
+},
+{
+    "id": "b14",
+    "title": "Ground-State Properties of a One-Dimensional System of Hard Rods",
+    "type": "Journals",
+    "verified": true,
+    "logo": "https://ia801602.us.archive.org/BookReader/BookReaderImages.php?zip=/25/items/arxiv-0705.4377/0705.4377_jp2.zip&file=0705.4377_jp2/0705.4377_0000.jp2&id=arxiv-0705.4377&scale=4&rotate=0",
+    "shortDesc": "By F. Mazzanti, G. E. Astrakharchik, et al. | A quantum Monte Carlo simulation analyzing the ground-state phases of a 1D system of hard rods.",
+    "longDesc": "This academic paper presents a **quantum Monte Carlo simulation** of a system composed of **hard rods in one dimension (1D)**. The calculation is exact due to the known analytical form of the wavefunction and aligns well with theoretical asymptotic expansions. Analysis of the **static structure factor** and the **pair distribution function** reveals the existence of two distinct phases: a **solid-like phase** at high densities and a **gas-like phase** at low densities. Crucially, the **one-body density matrix** decays via a power-law at large distances, which results in a divergence in the low-density momentum distribution at $k=0$, identifying the system as a **quasi-condensate**.",
+    "images": [
+        "https://ia801602.us.archive.org/BookReader/BookReaderImages.php?zip=/25/items/arxiv-0705.4377/0705.4377_jp2.zip&file=0705.4377_jp2/0705.4377_0000.jp2&id=arxiv-0705.4377&scale=4&rotate=0",
+        "https://ia801602.us.archive.org/BookReader/BookReaderImages.php?zip=/25/items/arxiv-0705.4377/0705.4377_jp2.zip&file=0705.4377_jp2/0705.4377_0001.jp2&id=arxiv-0705.4377&scale=4&rotate=0",
+        "https://ia801602.us.archive.org/BookReader/BookReaderImages.php?zip=/25/items/arxiv-0705.4377/0705.4377_jp2.zip&file=0705.4377_jp2/0705.4377_0005.jp2&id=arxiv-0705.4377&scale=4&rotate=0"
+    ],
+    "imageAlts": [
+        "First page of the paper on 1D Hard Rods system",
+        "Abstract and introduction of the physics paper",
+        "A figure illustrating the pair distribution function or momentum distribution"
+    ],
+    "file": "https://archive.org/embed/arxiv-0705.4377",
+    "language": "English"
+},
+{
+    "id": "b15",
+    "title": "Observable dynamics and coordinate systems for vehicle tracking",
+    "type": "Journals",
+    "verified": true,
+    "logo": "https://ia801401.us.archive.org/BookReader/BookReaderImages.php?zip=/23/items/arxiv-1005.3004/1005.3004_jp2.zip&file=1005.3004_jp2/1005.3004_0000.jp2&id=arxiv-1005.3004&scale=4&rotate=0",
+    "shortDesc": "By Richard Altendorfer | A study on various coordinate systems and dynamical vector fields for target tracking in driver assistance systems.",
+    "longDesc": "This research investigates the use of different **coordinate systems** and **dynamical vector fields** for **target tracking** in the context of **driver assistance systems**. The paper demonstrates how to express the discrete dynamics of maneuvering target vehicles in arbitrary coordinates by starting from the dynamical models of both the target and the ego-vehicle in global coordinates. It clarifies the concept of **'ego compensation'** and outlines the necessary inclusion of **non-inertial effects** when employing a **body-fixed coordinate system** for tracking. The work concludes by comparing the tracking error produced by different coordinate and dynamical model combinations using simulated data.",
+    "images": [
+        "https://ia801401.us.archive.org/BookReader/BookReaderImages.php?zip=/23/items/arxiv-1005.3004/1005.3004_jp2.zip&file=1005.3004_jp2/1005.3004_0000.jp2&id=arxiv-1005.3004&scale=4&rotate=0",
+        "https://ia801401.us.archive.org/BookReader/BookReaderImages.php?zip=/23/items/arxiv-1005.3004/1005.3004_jp2.zip&file=1005.3004_jp2/1005.3004_0001.jp2&id=arxiv-1005.3004&scale=4&rotate=0",
+        "https://ia801401.us.archive.org/BookReader/BookReaderImages.php?zip=/23/items/arxiv-1005.3004/1005.3004_jp2.zip&file=1005.3004_jp2/1005.3004_0005.jp2&id=arxiv-1005.3004&scale=4&rotate=0"
+    ],
+    "imageAlts": [
+        "First page of the paper on vehicle tracking dynamics",
+        "Abstract and introduction of the automotive engineering paper",
+        "A figure illustrating coordinate systems for vehicle tracking"
+    ],
+    "file": "https://archive.org/embed/arxiv-1005.3004",
+    "language": "English"
+},
+{
+    "id": "b16",
+    "title": "Strain Effect on Energy Gaps of Armchair Graphene Nanoribbons",
+    "type": "Journals",
+    "verified": true,
+    "logo": "https://ia600203.us.archive.org/BookReader/BookReaderImages.php?zip=/31/items/arxiv-cond-mat0703795/cond-mat0703795_jp2.zip&file=cond-mat0703795_jp2/cond-mat0703795_0000.jp2&id=arxiv-cond-mat0703795&scale=4&rotate=0",
+    "shortDesc": "By Lian Sun, Qunxiang Li, et al. | A first-principles study on how uniaxial strain tunes the electronic energy gaps of Armchair Graphene Nanoribbons (AGNRs).",
+    "longDesc": "This first-principles study investigates the electronic structures of deformed **armchair graphene nanoribbons (AGNRs)**. The research finds that the variation of the **energy gap** as a function of **uniaxial strain** displays a distinct **zigzag pattern**, indicating that the energy gaps of AGNRs can be effectively tuned. The paper also reports a swap in the spatial distributions of two occupied and two empty subbands close to the Fermi level under different strains. The tunable gap width is shown to narrow as the width of the AGNRs increases. Simulations using the **tight binding approximation** are shown to reproduce the first-principles results, and the study provides a simple empirical formula to describe the scaling behavior of the maximal energy gap with respect to AGNR width.",
+    "images": [
+        "https://ia600203.us.archive.org/BookReader/BookReaderImages.php?zip=/31/items/arxiv-cond-mat0703795/cond-mat0703795_jp2.zip&file=cond-mat0703795_jp2/cond-mat0703795_0000.jp2&id=arxiv-cond-mat0703795&scale=4&rotate=0",
+        "https://ia600203.us.archive.org/BookReader/BookReaderImages.php?zip=/31/items/arxiv-cond-mat0703795/cond-mat0703795_jp2.zip&file=cond-mat0703795_jp2/cond-mat0703795_0001.jp2&id=arxiv-cond-mat0703795&scale=4&rotate=0",
+        "https://ia600203.us.archive.org/BookReader/BookReaderImages.php?zip=/31/items/arxiv-cond-mat0703795/cond-mat0703795_jp2.zip&file=cond-mat0703795_jp2/cond-mat0703795_0003.jp2&id=arxiv-cond-mat0703795&scale=4&rotate=0"
+    ],
+    "imageAlts": [
+        "First page of the paper on Graphene Nanoribbons",
+        "Abstract of the condensed matter physics paper",
+        "Figure illustrating the zigzag pattern of the energy gap vs. strain"
+    ],
+    "file": "https://archive.org/embed/arxiv-cond-mat0703795",
+    "language": "English"
+},
+{
+    "id": "b17",
+    "title": "Dynamical structure factor at small q for the XXZ spin-1/2 chain",
+    "type": "Journals",
+    "verified": true,
+    "logo": "https://ia800300.us.archive.org/BookReader/BookReaderImages.php?zip=/7/items/arxiv-0706.4327/0706.4327_jp2.zip&file=0706.4327_jp2/0706.4327_0000.jp2&id=arxiv-0706.4327&scale=4&rotate=0",
+    "shortDesc": "By R. G. Pereira, J. Sirker, et al. | A study combining Bethe Ansatz and field theory to analyze the longitudinal dynamical structure factor for the anisotropic XXZ spin-1/2 chain.",
+    "longDesc": "This theoretical physics paper investigates the **longitudinal dynamical structure factor S^zz(q, omega)** for the **anisotropic spin-1/2 chain** (the **XXZ chain**) within its gapless regime. The authors utilize a combination of **Bethe Ansatz** and **field theory (bosonization)** methods. They derive a low-energy effective model, which includes the leading irrelevant operators (band curvature terms) to account for boson decay processes. The coupling constants are determined exactly by comparing with Bethe Ansatz corrections to thermodynamic quantities. A key finding is that the width of the **on-shell peak** in **S^zz(q, omega)** scales like **delta omega_q ~ q^2**, a prediction that agrees with the two-particle continuum width calculated from the Bethe Ansatz equations. This scaling is only found to be violated near the isotropic point at finite magnetic fields. The results are compared against calculations using the **Density Matrix Renormalization Group (DMRG)** for high accuracy.",
+    "images": [
+        "https://ia800300.us.archive.org/BookReader/BookReaderImages.php?zip=/7/items/arxiv-0706.4327/0706.4327_jp2.zip&file=0706.4327_jp2/0706.4327_0000.jp2&id=arxiv-0706.4327&scale=4&rotate=0",
+        "https://ia800300.us.archive.org/BookReader/BookReaderImages.php?zip=/7/items/arxiv-0706.4327/0706.4327_jp2.zip&file=0706.4327_jp2/0706.4327_0001.jp2&id=arxiv-0706.4327&scale=4&rotate=0",
+        "https://ia800300.us.archive.org/BookReader/BookReaderImages.php?zip=/7/items/arxiv-0706.4327/0706.4327_jp2.zip&file=0706.4327_jp2/0706.4327_0003.jp2&id=arxiv-0706.4327&scale=4&rotate=0"
+    ],
+    "imageAlts": [
+        "First page of the paper on XXZ spin chain structure factor",
+        "Abstract of the theoretical physics journal article",
+        "A figure showing the dynamical structure factor S^zz(q, omega)"
+    ],
+    "file": "https://archive.org/embed/arxiv-0706.4327",
+    "language": "English"
+},
+{
+    "id": "b18",
+    "title": "Quantum Monte Carlo with Directed Loops",
+    "type": "Journals",
+    "verified": true,
+    "logo": "https://ia801203.us.archive.org/BookReader/BookReaderImages.php?zip=/21/items/arxiv-cond-mat0202316/cond-mat0202316_jp2.zip&file=cond-mat0202316_jp2/cond-mat0202316_0000.jp2&id=arxiv-cond-mat0202316&scale=4&rotate=0",
+    "shortDesc": "By Olav F. Syljuasen and Anders W. Sandvik | Introduces the concept of directed loops to eliminate 'algorithmic discontinuities' in Quantum Monte Carlo methods.",
+    "longDesc": "This paper introduces the concept of **directed loops** within **stochastic series expansion** and **path integral Quantum Monte Carlo (QMC)** methods. By establishing detailed balance rules for directed loops, the authors demonstrate a way to smoothly transition between generally applicable QMC schemes (which require back-tracking) and more restricted, specialized loop algorithms that avoid back-tracking. This technique successfully eliminates 'algorithmic discontinuities' across different regions in parameter space. As a key example, the paper applies directed loop simulations to the **anisotropic $S=1/2$ Heisenberg antiferromagnet** in an external magnetic field, showing high efficiency across the full range of fields and anisotropies, with significantly reduced autocorrelations. For the **2D Heisenberg model**, the method is used to study the magnetization process at low temperatures, yielding an accurate estimate of the **transverse susceptibility** in the thermodynamic limit: $\\chi_{\\perp} = 0.0659 \\pm 0.0002$.",
+    "images": [
+        "https://ia801203.us.archive.org/BookReader/BookReaderImages.php?zip=/21/items/arxiv-cond-mat0202316/cond-mat0202316_jp2.zip&file=cond-mat0202316_jp2/cond-mat0202316_0000.jp2&id=arxiv-cond-mat0202316&scale=4&rotate=0",
+        "https://ia801203.us.archive.org/BookReader/BookReaderImages.php?zip=/21/items/arxiv-cond-mat0202316/cond-mat0202316_jp2.zip&file=cond-mat0202316_jp2/cond-mat0202316_0001.jp2&id=arxiv-cond-mat0202316&scale=4&rotate=0",
+        "https://ia801203.us.archive.org/BookReader/BookReaderImages.php?zip=/21/items/arxiv-cond-mat0202316/cond-mat0202316_jp2.zip&file=cond-mat0202316_jp2/cond-mat0202316_0005.jp2&id=arxiv-cond-mat0202316&scale=4&rotate=0"
+    ],
+    "imageAlts": [
+        "First page of the paper on Quantum Monte Carlo with Directed Loops",
+        "Abstract of the computational physics journal article",
+        "A figure illustrating the magnetization curve or loop updates in QMC"
+    ],
+    "file": "https://archive.org/embed/arxiv-cond-mat0202316",
+    "language": "English"
+},
+{
+    "id": "b19",
+    "title": "The Energy-Scaling Approach to Phase-Ordering Growth Laws",
+    "type": "Journals",
+    "verified": true,
+    "logo": "https://ia800303.us.archive.org/BookReader/BookReaderImages.php?zip=/17/items/arxiv-cond-mat9409088/cond-mat9409088_jp2.zip&file=cond-mat9409088_jp2/cond-mat9409088_0000.jp2&id=arxiv-cond-mat9409088&scale=4&rotate=0",
+    "shortDesc": "By A. D. Rutenberg and A. J. Bray | A unified, self-consistent approach for determining the growth law $L(t)$ during phase-ordering kinetics using energy scaling.",
+    "longDesc": "This paper presents a simple, unified method—the **Energy-Scaling Approach**—for determining the **growth law** for the characteristic length scale, $L(t)$, in the **phase ordering kinetics** of a system that is rapidly cooled (quenched) from a disordered state into an ordered phase. The approach determines $L(t)$ self-consistently for purely **dissipative dynamics** by calculating the time-dependence of the energy in two ways, based on a scaling assumption for pair correlations. The authors derive growth laws for both **conserved and non-conserved $O(n)$ models** (including 2D XY models) and systems with textures. The study concludes that the growth laws for complex systems like liquid crystals and Potts models are governed by the type of **topological defect** in the order parameter field that dominates the energy. Generalized **Porod laws** for systems exhibiting topological textures are also obtained.",
+    "images": [
+        "https://ia800303.us.archive.org/BookReader/BookReaderImages.php?zip=/17/items/arxiv-cond-mat9409088/cond-mat9409088_jp2.zip&file=cond-mat9409088_jp2/cond-mat9409088_0000.jp2&id=arxiv-cond-mat9409088&scale=4&rotate=0",
+        "https://ia800303.us.archive.org/BookReader/BookReaderImages.php?zip=/17/items/arxiv-cond-mat9409088/cond-mat9409088_jp2.zip&file=cond-mat9409088_jp2/cond-mat9409088_0001.jp2&id=arxiv-cond-mat9409088&scale=4&rotate=0",
+        "https://ia800303.us.archive.org/BookReader/BookReaderImages.php?zip=/17/items/arxiv-cond-mat9409088/cond-mat9409088_jp2.zip&file=cond-mat9409088_jp2/cond-mat9409088_0002.jp2&id=arxiv-cond-mat9409088&scale=4&rotate=0"
+    ],
+    "imageAlts": [
+        "First page of the paper on Phase-Ordering Growth Laws",
+        "Abstract of the condensed matter physics journal article",
+        "A figure illustrating growth laws in phase ordering kinetics"
+    ],
+    "file": "https://archive.org/embed/arxiv-cond-mat9409088",
+    "language": "English"
+},
+{
+    "id": "b20",
+    "title": "Will Zigzag Graphene Nanoribbon Turn to Half Metal under Electric Field?",
+    "type": "Journals",
+    "verified": true,
+    "logo": "https://ia800304.us.archive.org/BookReader/BookReaderImages.php?zip=/13/items/arxiv-0708.1213/0708.1213_jp2.zip&file=0708.1213_jp2/0708.1213_0000.jp2&id=arxiv-0708.1213&scale=4&rotate=0",
+    "shortDesc": "By Er-Jun Kan, Zhenyu Li, et al. | Predicts the electric field-induced half-metallicity in zigzag graphene nanoribbons (ZGNRs).",
+    "longDesc": "This theoretical paper, conducted at the **B3LYP level of theory**, predicts that **half-metallicity** can be induced in a **zigzag edge graphene nanoribbon (ZGNR)** by applying an **external electric field** across the ribbon. Key findings show that the **critical electric field** required to realize half-metallicity decreases as the ribbon's width increases. The research also reveals that under very strong electric fields, the spin polarization and half-metallicity are removed when the edge state electrons fully transfer from one side to the other. Conversely, the useful electric field range for which the ZGNR remains half-metallic increases with the ribbon width. This rich field-induced **spin polarization** behavior suggests important applications in the field of **spintronics**.",
+    "images": [
+        "https://ia800304.us.archive.org/BookReader/BookReaderImages.php?zip=/13/items/arxiv-0708.1213/0708.1213_jp2.zip&file=0708.1213_jp2/0708.1213_0000.jp2&id=arxiv-0708.1213&scale=4&rotate=0",
+        "https://ia800304.us.archive.org/BookReader/BookReaderImages.php?zip=/13/items/arxiv-0708.1213/0708.1213_jp2.zip&file=0708.1213_jp2/0708.1213_0001.jp2&id=arxiv-0708.1213&scale=4&rotate=0",
+        "https://ia800304.us.archive.org/BookReader/BookReaderImages.php?zip=/13/items/arxiv-0708.1213/0708.1213_jp2.zip&file=0708.1213_jp2/0708.1213_0003.jp2&id=arxiv-0708.1213&scale=4&rotate=0"
+    ],
+    "imageAlts": [
+        "First page of the paper on Zigzag Graphene Nanoribbon half-metallicity",
+        "Abstract of the computational materials science journal article",
+        "Figure illustrating the effect of electric field on the electronic band structure of ZGNR"
+    ],
+    "file": "https://archive.org/embed/arxiv-0708.1213",
+    "language": "English"
+},
+{
+    "id": "b21",
+    "title": "Contractivity of positive and trace preserving maps under L_p norms",
+    "type": "Journals",
+    "verified": true,
+    "logo": "https://ia800201.us.archive.org/BookReader/BookReaderImages.php?zip=/13/items/arxiv-math-ph0601063/math-ph0601063_jp2.zip&file=math-ph0601063_jp2/math-ph0601063_0000.jp2&id=arxiv-math-ph0601063&scale=4&rotate=0",
+    "shortDesc": "By David Perez-Garcia, Michael M. Wolf, et al. | A mathematical physics study on the contractivity of trace preserving positive maps with respect to p-norms.",
+    "longDesc": "This academic paper provides a complete picture of **contractivity** of **trace preserving positive maps** with respect to **p-norms**. The authors show that for p > 1, contractivity generally holds if and only if the map is **unital**. When the domain is restricted to the traceless subspace of Hermitian matrices, contractivity is shown to hold for **qubits** for arbitrary $p \\geq 1$ and for **qutrits** if and only if $p=1$ or $p=\\infty$. In all cases where the map is non-contractive, the paper derives the best possible bounds on the p-norms.",
+    "images": [
+        "https://ia800201.us.archive.org/BookReader/BookReaderImages.php?zip=/13/items/arxiv-math-ph0601063/math-ph0601063_jp2.zip&file=math-ph0601063_jp2/math-ph0601063_0000.jp2&id=arxiv-math-ph0601063&scale=4&rotate=0",
+        "https://ia800201.us.archive.org/BookReader/BookReaderImages.php?zip=/13/items/arxiv-math-ph0601063/math-ph0601063_jp2.zip&file=math-ph0601063_jp2/math-ph0601063_0001.jp2&id=arxiv-math-ph0601063&scale=4&rotate=0",
+        "https://ia800201.us.archive.org/BookReader/BookReaderImages.php?zip=/13/items/arxiv-math-ph0601063/math-ph0601063_jp2.zip&file=math-ph0601063_jp2/math-ph0601063_0002.jp2&id=arxiv-math-ph0601063&scale=4&rotate=0"
+    ],
+    "imageAlts": [
+        "First page of the paper on Contractivity of maps under L_p norms",
+        "Abstract of the mathematical physics journal article",
+        "Figure or equation from the mathematical proof"
+    ],
+    "file": "https://archive.org/embed/arxiv-math-ph0601063",
+    "language": "English"
+}
 ]
