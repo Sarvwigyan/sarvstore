@@ -302,9 +302,9 @@
     "shortDesc": "By T. Senthil | Theoretical study of the zero-temperature continuous Mott transition in 2D systems, detailing the breakdown of the Fermi liquid state.",
     "longDesc": "This theoretical paper investigates the **zero-temperature phase transition** in two dimensions from a **Fermi liquid** to a **paramagnetic Mott insulator** featuring a spinon Fermi surface. The study shows that approaching the bandwidth-controlled **Mott transition** from the metallic side involves a vanishing **quasiparticle residue** and a diverging **effective mass**, along with diverging Landau parameters $F^0_s$ and $F^0_a$. The **quantum critical point** (QCP) possesses a 'critical Fermi surface' but no Landau quasiparticle, exhibiting a specific heat proportional to $T\\ln(1/T)$ and a non-zero $T=0$ resistivity. The author predicts a remarkable **universal resistivity jump** in the residual resistivity at the QCP. Crossovers out of the critical region are also analyzed, notably an initial crossover to a **Marginal Fermi Liquid** metal before transitioning into the Landau Fermi liquid at lower temperatures. Implications for experiments on the layered triangular lattice organic material $\\kappa-(ET)_2Cu_2(CN)_3$ are discussed.",
     "images": [
-        "https://archive.org/embed/arxiv-0804.1555",
-        "https://archive.org/embed/arxiv-0804.1555",
-        "https://archive.org/embed/arxiv-0804.1555"
+        "https://ia800406.us.archive.org/BookReader/BookReaderImages.php?zip=/14/items/arxiv-0804.1555/0804.1555_jp2.zip&file=0804.1555_jp2/0804.1555_0001.jp2&id=arxiv-0804.1555&scale=4&rotate=0",
+        "https://ia800406.us.archive.org/BookReader/BookReaderImages.php?zip=/14/items/arxiv-0804.1555/0804.1555_jp2.zip&file=0804.1555_jp2/0804.1555_0002.jp2&id=arxiv-0804.1555&scale=4&rotate=0",
+        "https://ia800406.us.archive.org/BookReader/BookReaderImages.php?zip=/14/items/arxiv-0804.1555/0804.1555_jp2.zip&file=0804.1555_jp2/0804.1555_0003.jp2&id=arxiv-0804.1555&scale=4&rotate=0"
     ],
     "imageAlts": [
         "First page of the paper on the continuous Mott transition theory",
@@ -340,7 +340,6 @@
     "title": "Simple empirical algorithm to obtain signal envelope in three steps",
     "type": "Journals",
     "verified": true,
-    "logo": "https://archive.org/embed/arxiv-1703.06812",
     "shortDesc": "By Cecilia Jarne | Proposes a simple, three-step empirical algorithm based on peak detection for obtaining the signal amplitude envelope.",
     "longDesc": "This paper proposes a simple, three-step **empirical algorithm** for obtaining the **signal amplitude envelope** based on **peak detection**. The envelope is noted as a slowly varying signal that should smoothly pass the prominent peaks of the data. This technique has been widely used in **sound analysis** and in the analysis of various physiological data for animal and human studies. The method was implemented using **Python libraries**. The study discusses the selection of parameters necessary to adapt the method for different applications in sound or general **time series analysis** and revisits some traditional envelope extraction methods.",
     "file": "https://archive.org/embed/arxiv-1703.06812",
