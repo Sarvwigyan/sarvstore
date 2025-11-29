@@ -298,7 +298,7 @@
     "title": "Theory of a continuous Mott transition in two dimensions",
     "type": "Journals",
     "verified": true,
-    "logo": "https://archive.org/embed/arxiv-0804.1555",
+    "logo": "https://ia600406.us.archive.org/BookReader/BookReaderImages.php?zip=/14/items/arxiv-0804.1555/0804.1555_jp2.zip&file=0804.1555_jp2/0804.1555_0000.jp2&id=arxiv-0804.1555&scale=4&rotate=0",
     "shortDesc": "By T. Senthil | Theoretical study of the zero-temperature continuous Mott transition in 2D systems, detailing the breakdown of the Fermi liquid state.",
     "longDesc": "This theoretical paper investigates the **zero-temperature phase transition** in two dimensions from a **Fermi liquid** to a **paramagnetic Mott insulator** featuring a spinon Fermi surface. The study shows that approaching the bandwidth-controlled **Mott transition** from the metallic side involves a vanishing **quasiparticle residue** and a diverging **effective mass**, along with diverging Landau parameters $F^0_s$ and $F^0_a$. The **quantum critical point** (QCP) possesses a 'critical Fermi surface' but no Landau quasiparticle, exhibiting a specific heat proportional to $T\\ln(1/T)$ and a non-zero $T=0$ resistivity. The author predicts a remarkable **universal resistivity jump** in the residual resistivity at the QCP. Crossovers out of the critical region are also analyzed, notably an initial crossover to a **Marginal Fermi Liquid** metal before transitioning into the Landau Fermi liquid at lower temperatures. Implications for experiments on the layered triangular lattice organic material $\\kappa-(ET)_2Cu_2(CN)_3$ are discussed.",
     "images": [
