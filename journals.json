@@ -744,5 +744,404 @@
     ],
     "file": "https://archive.org/embed/arxiv-0711.1445",
     "language": "English"
+},
+{
+    "id": "j37",
+    "title": "Quantum brownian motion on a triangular lattice and c=2 boundary conformal field theory",
+    "type": "Journals",
+    "verified": true,
+    "logo": "https://ia801905.us.archive.org/BookReader/BookReaderImages.php?zip=/30/items/arxiv-cond-mat0009084/cond-mat0009084_jp2.zip&file=cond-mat0009084_jp2/cond-mat0009084_0000.jp2&id=arxiv-cond-mat0009084&scale=4&rotate=0",
+    "shortDesc": "By Ian Affleck, Masaki Oshikawa, and Hubert Saleur | Studies a single particle undergoing quantum Brownian motion on a triangular lattice using boundary Conformal Field Theory (CFT) and exact integrability.",
+    "longDesc": "This paper investigates the behavior of a **single particle diffusing on a triangular lattice** while interacting with a **heat bath** (a model known as **Quantum Brownian Motion**). The study employs advanced techniques from **boundary Conformal Field Theory (CFT)** and **exact integrability**. The authors derive a correspondence between the phase diagram of this problem and the one found for the 2D **3-state Potts model** with a boundary. Exact results are obtained for phases characterized by **intermediate mobilities**. These results correspond to **non-trivial boundary states** in a CFT with **two free bosons** ($c=2$), which the authors explicitly construct for the first time. These conformally invariant boundary conditions are shown to be more complex than simple combinations of Dirichlet and Neumann conditions and are notably **not invariant under a Heisenberg algebra**.",
+    "images": [
+        "https://ia801905.us.archive.org/BookReader/BookReaderImages.php?zip=/30/items/arxiv-cond-mat0009084/cond-mat0009084_jp2.zip&file=cond-mat0009084_jp2/cond-mat0009084_0000.jp2&id=arxiv-cond-mat0009084&scale=4&rotate=0",
+        "https://ia801905.us.archive.org/BookReader/BookReaderImages.php?zip=/30/items/arxiv-cond-mat0009084/cond-mat0009084_jp2.zip&file=cond-mat0009084_jp2/cond-mat0009084_0001.jp2&id=arxiv-cond-mat0009084&scale=4&rotate=0",
+        "https://ia801905.us.archive.org/BookReader/BookReaderImages.php?zip=/30/items/arxiv-cond-mat0009084/cond-mat0009084_jp2.zip&file=cond-mat0009084_jp2/cond-mat0009084_0002.jp2&id=arxiv-cond-mat0009084&scale=4&rotate=0"
+    ],
+    "imageAlts": [
+        "First page of the paper on Quantum Brownian motion on a triangular lattice",
+        "Abstract of the condensed matter physics journal article",
+        "Diagram of a triangular lattice with particle diffusion paths or a phase diagram of the boundary CFT"
+    ],
+    "file": "https://archive.org/embed/arxiv-cond-mat0009084",
+    "language": "English"
+},
+{
+    "id": "j38",
+    "title": "Ostwald ripening of faceted two-dimensional islands",
+    "type": "Journals",
+    "verified": true,
+    "logo": "https://ia601506.us.archive.org/BookReader/BookReaderImages.php?zip=/11/items/arxiv-cond-mat0701338/cond-mat0701338_jp2.zip&file=cond-mat0701338_jp2/cond-mat0701338_0000.jp2&id=arxiv-cond-mat0701338&scale=4&rotate=0",
+    "shortDesc": "By V. M. Kaganer, W. Braun, and K. K. Sabelfeld | Studies the coarsening kinetics (Ostwald ripening) of faceted (square-shaped) two-dimensional islands on a crystal surface using kinetic Monte Carlo simulations.",
+    "longDesc": "This paper investigates **Ostwald ripening** (a coarsening process where smaller particles dissolve and larger particles grow) of **two-dimensional (2D) adatom and advacancy islands** on a crystal surface using **kinetic Monte Carlo simulations**. The islands become **square-shaped (faceted)** at large bond energies, which fundamentally alters the coarsening kinetics. A key finding is the **violation of the Gibbs-Thomson chemical potential** relationship; instead, coarsening proceeds through a sequence of **'magic' sizes** corresponding to square or rectangular islands. The coarsening transitions to an **attachment-limited** process, but reaches **Wagner's asymptotic law** only after an extremely long transient time. The unusual kinetics observed in the Monte Carlo simulations are shown to be accurately described by the **Becker-Döring equations** of nucleation kinetics, suggesting these equations are applicable to a broad spectrum of coarsening problems.",
+    "images": [
+        "https://ia601506.us.archive.org/BookReader/BookReaderImages.php?zip=/11/items/arxiv-cond-mat0701338/cond-mat0701338_jp2.zip&file=cond-mat0701338_jp2/cond-mat0701338_0000.jp2&id=arxiv-cond-mat0701338&scale=4&rotate=0",
+        "https://ia601506.us.archive.org/BookReader/BookReaderImages.php?zip=/11/items/arxiv-cond-mat0701338/cond-mat0701338_jp2.zip&file=cond-mat0701338_jp2/cond-mat0701338_0001.jp2&id=arxiv-cond-mat0701338&scale=4&rotate=0",
+        "https://ia601506.us.archive.org/BookReader/BookReaderImages.php?zip=/11/items/arxiv-cond-mat0701338/cond-mat0701338_jp2.zip&file=cond-mat0701338_jp2/cond-mat0701338_0002.jp2&id=arxiv-cond-mat0701338&scale=4&rotate=0"
+    ],
+    "imageAlts": [
+        "First page of the paper on Ostwald ripening of faceted 2D islands",
+        "Abstract of the condensed matter physics journal article",
+        "Kinetic Monte Carlo simulation images showing the shape and evolution of faceted square islands during Ostwald ripening"
+    ],
+    "file": "https://archive.org/embed/arxiv-cond-mat0701338",
+    "language": "English"
+},
+{
+    "id": "j39",
+    "title": "Inclusive Semileptonic B and Polarized Lambda_b Decays from QCD",
+    "type": "Journals",
+    "verified": true,
+    "logo": "https://ia600302.us.archive.org/BookReader/BookReaderImages.php?zip=/29/items/arxiv-hep-ph9308246/hep-ph9308246_jp2.zip&file=hep-ph9308246_jp2/hep-ph9308246_0000.jp2&id=arxiv-hep-ph9308246&scale=4&rotate=0",
+    "shortDesc": "By Aneesh V. Manohar and Mark B. Wise | Computes inclusive semileptonic decay spectra for B-hadrons and polarized Lambda\\_b to second order in the 1/m\\_b expansion using QCD.",
+    "longDesc": "This paper computes the **differential decay spectrum** (dGamma/dE\\_e dq\\_2) for the **inclusive semileptonic decay** of an unpolarized hadron containing a **b-quark** (B-hadron), and the decay spectrum for **polarized Lambda\\_b decay**. The calculation is performed to **second order** in the **1/m\\_b expansion** (Heavy Quark Expansion, HQE) derived from **Quantum Chromodynamics (QCD)**. The authors discuss the simple physical interpretation of most of the **1/m\\_b^2 corrections**. The implications of these results for the precise determination of the Cabibbo-Kobayashi-Maskawa matrix element **V\\_ub** are discussed. The paper also provides decay spectra for hadrons containing a **c-quark** and addresses a subtlety in the use of the equations of motion at the **1/m\\_b^2** order in the heavy quark expansion.",
+    "images": [
+        "https://ia600302.us.archive.org/BookReader/BookReaderImages.php?zip=/29/items/arxiv-hep-ph9308246/hep-ph9308246_jp2.zip&file=hep-ph9308246_jp2/hep-ph9308246_0000.jp2&id=arxiv-hep-ph9308246&scale=4&rotate=0",
+        "https://ia600302.us.archive.org/BookReader/BookReaderImages.php?zip=/29/items/arxiv-hep-ph9308246/hep-ph9308246_jp2.zip&file=hep-ph9308246_jp2/hep-ph9308246_0001.jp2&id=arxiv-hep-ph9308246&scale=4&rotate=0",
+        "https://ia600302.us.archive.org/BookReader/BookReaderImages.php?zip=/29/items/arxiv-hep-ph9308246/hep-ph9308246_jp2.zip&file=hep-ph9308246_jp2/hep-ph9308246_0002.jp2&id=arxiv-hep-ph9308246&scale=4&rotate=0"
+    ],
+    "imageAlts": [
+        "First page of the paper on semileptonic B and Lambda\\_b decays",
+        "Abstract of the high energy physics journal article",
+        "Equations detailing the 1/m\\_b expansion corrections or decay spectra"
+    ],
+    "file": "https://archive.org/embed/arxiv-hep-ph9308246",
+    "language": "English"
+},
+{
+    "id": "j40",
+    "title": "Predictability sieve, pointer states, and the classicality of quantum trajectories",
+    "type": "Journals",
+    "verified": true,
+    "logo": "https://ia600704.us.archive.org/BookReader/BookReaderImages.php?zip=/24/items/arxiv-quant-ph0509174/quant-ph0509174_jp2.zip&file=quant-ph0509174_jp2/quant-ph0509174_0000.jp2&id=arxiv-quant-ph0509174&scale=4&rotate=0",
+    "shortDesc": "By Diego A. R. Dalvit, Jacek Dziarmaga, and Wojciech H. Zurek | Quantifies the classicality of open quantum systems using four different criteria and shows that all criteria agree on the selection of pointer states.",
+    "longDesc": "This paper examines various measures of **classicality** for states of **open quantum systems** subject to **decoherence**. Classical states are expected to be stable and leave distinct imprints on the environment (**environment-induced superselection**, or **einselection**). The authors quantify these features using four different criteria:\n* **Predictability Sieve:** Selects states that produce the least amount of entropy.\n* **Purification Time:** Selects states easiest to identify from the imprint left on the environment.\n* **Efficiency Threshold:** Selects states that can be deduced from measurements on the smallest fraction of the environment.\n* **Purity Loss Time:** Selects states that take the longest time to lose a set fraction of their initial purity.\n\nThe study shows that when **pointer states** (the most predictable states selected by the predictability sieve) are well defined, all four criteria **unanimously agree** on their selection as the **most classical states**. This is illustrated with an **underdamped harmonic oscillator** (where coherent states are chosen) and a **free particle undergoing quantum Brownian motion** (where most criteria select almost identical Gaussian states).",
+    "images": [
+        "https://ia600704.us.archive.org/BookReader/BookReaderImages.php?zip=/24/items/arxiv-quant-ph0509174/quant-ph0509174_jp2.zip&file=quant-ph0509174_jp2/quant-ph0509174_0000.jp2&id=arxiv-quant-ph0509174&scale=4&rotate=0",
+        "https://ia600704.us.archive.org/BookReader/BookReaderImages.php?zip=/24/items/arxiv-quant-ph0509174/quant-ph0509174_jp2.zip&file=quant-ph0509174_jp2/quant-ph0509174_0001.jp2&id=arxiv-quant-ph0509174&scale=4&rotate=0",
+        "https://ia600704.us.archive.org/BookReader/BookReaderImages.php?zip=/24/items/arxiv-quant-ph0509174/quant-ph0509174_jp2.zip&file=quant-ph0509174_jp2/quant-ph0509174_0002.jp2&id=arxiv-quant-ph0509174&scale=4&rotate=0"
+    ],
+    "imageAlts": [
+        "First page of the paper on classicality of quantum trajectories and pointer states",
+        "Abstract and introduction of the quantum physics journal article",
+        "Graphs illustrating the evolution of entropy or purity loss time for different quantum states under decoherence"
+    ],
+    "file": "https://archive.org/embed/arxiv-quant-ph0509174",
+    "language": "English"
+},
+{
+    "id": "j41",
+    "title": "Mach-Zehnder Interferometry at the Heisenberg Limit with coherent and squeezed-vacuum light",
+    "type": "Journals",
+    "verified": true,
+    "logo": "https://ia801307.us.archive.org/BookReader/BookReaderImages.php?zip=/30/items/arxiv-0705.4631/0705.4631_jp2.zip&file=0705.4631_jp2/0705.4631_0000.jp2&id=arxiv-0705.4631&scale=4&rotate=0",
+    "shortDesc": "By L. Pezze' and A. Smerzi | Demonstrates that a Mach-Zehnder interferometer using coherent and squeezed-vacuum light can achieve the Heisenberg limit of phase sensitivity, independent of the phase shift value.",
+"longDesc": "This paper investigates the phase sensitivity (Δθ) of a **Mach-Zehnder interferometer** when the two input ports are fed by a **coherent state** and **squeezed-vacuum light**, respectively. The authors demonstrate two key findings: (1) The phase sensitivity (Δθ) is **independent of the true value of the phase shift** itself. (2) The interferometer can **reach the Heisenberg limit** of sensitivity, given by Δθ ~ 1/N_T, where N_T is the average number of particles of the input states (the fundamental limit in quantum metrology). Furthermore, the paper shows that the **Cramer-Rao lower bound** (a theoretical limit on the variance of any unbiased estimator), which is given by Δθ ∝ 1 / √(|α|² e^(2r) + sinh²r), can be **saturated** for arbitrary values of the **squeezing parameter** (r) and the **coherent mode amplitude** (|α|). This saturation is achieved using a **Bayesian phase inference protocol**, confirming the practical attainability of this high sensitivity.",
+    "images": [
+        "https://ia801307.us.archive.org/BookReader/BookReaderImages.php?zip=/30/items/arxiv-0705.4631/0705.4631_jp2.zip&file=0705.4631_jp2/0705.4631_0000.jp2&id=arxiv-0705.4631&scale=4&rotate=0",
+        "https://ia801307.us.archive.org/BookReader/BookReaderImages.php?zip=/30/items/arxiv-0705.4631/0705.4631_jp2.zip&file=0705.4631_jp2/0705.4631_0001.jp2&id=arxiv-0705.4631&scale=4&rotate=0",
+        "https://ia801307.us.archive.org/BookReader/BookReaderImages.php?zip=/30/items/arxiv-0705.4631/0705.4631_jp2.zip&file=0705.4631_jp2/0705.4631_0002.jp2&id=arxiv-0705.4631&scale=4&rotate=0"
+    ],
+    "imageAlts": [
+        "First page of the paper on Mach-Zehnder Interferometry at the Heisenberg Limit",
+        "Abstract of the quantum physics journal article",
+        "Graph comparing the phase sensitivity (Delta theta) to the Heisenberg limit and shot-noise limit"
+    ],
+    "file": "https://archive.org/embed/arxiv-0705.4631",
+    "language": "English"
+},
+{
+    "id": "j42",
+    "title": "How to Enhance Dephasing Time in Superconducting Qubits",
+    "type": "Journals",
+    "verified": true,
+    "logo": "https://ia801306.us.archive.org/BookReader/BookReaderImages.php?zip=/5/items/arxiv-0712.2225/0712.2225_jp2.zip&file=0712.2225_jp2/0712.2225_0000.jp2&id=arxiv-0712.2225&scale=4&rotate=0",
+    "shortDesc": "By L. Cywinski, R. M. Lutchyn, et al. | Theoretically investigates the use of engineered pulse sequences to substantially enhance the quantum coherence (dephasing time) of superconducting qubits against background noise.",
+    "longDesc": "This paper theoretically investigates the use of **designed pulse sequences** (e.g., dynamic decoupling) as a means of restoring **quantum coherence** lost due to background noise in **superconducting qubits**. The analysis considers two major sources of noise: **1/f noise** and **Random Telegraph Noise**. The authors demonstrate that by carefully engineering the pulse sequences, the qubit's **coherence time** (or **dephasing time**) can be **substantially enhanced**. Conversely, they propose that the time dependence of qubit coherence under these sequences can be used as a **spectroscopic tool** for identifying the underlying noise mechanisms; for example, using **Uhrig's pulse sequence** can provide information about the spectral density moments of the noise. The study also investigates the effect of pulses on a qubit affected by a **strongly coupled fluctuator**, showing that the application of pulses effectively **suppresses the non-Gaussian features** typically associated with this type of decoherence.",
+    "images": [
+        "https://ia801306.us.archive.org/BookReader/BookReaderImages.php?zip=/5/items/arxiv-0712.2225/0712.2225_jp2.zip&file=0712.2225_jp2/0712.2225_0000.jp2&id=arxiv-0712.2225&scale=4&rotate=0",
+        "https://ia801306.us.archive.org/BookReader/BookReaderImages.php?zip=/5/items/arxiv-0712.2225/0712.2225_jp2.zip&file=0712.2225_jp2/0712.2225_0001.jp2&id=arxiv-0712.2225&scale=4&rotate=0",
+        "https://ia801306.us.archive.org/BookReader/BookReaderImages.php?zip=/5/items/arxiv-0712.2225/0712.2225_jp2.zip&file=0712.2225_jp2/0712.2225_0002.jp2&id=arxiv-0712.2225&scale=4&rotate=0"
+    ],
+    "imageAlts": [
+        "First page of the paper on enhancing dephasing time in superconducting qubits",
+        "Abstract of the quantum physics journal article",
+        "Graph comparing the qubit coherence decay curve with and without the application of pulse sequences (dynamic decoupling)"
+    ],
+    "file": "https://archive.org/embed/arxiv-0712.2225",
+    "language": "English"
+},
+{
+    "id": "j43",
+    "title": "The cohomology ring of polygon spaces",
+    "type": "Journals",
+    "verified": true,
+    "logo": "https://ia902906.us.archive.org/BookReader/BookReaderImages.php?zip=/2/items/arxiv-dg-ga9706003/dg-ga9706003_jp2.zip&file=dg-ga9706003_jp2/dg-ga9706003_0000.jp2&id=arxiv-dg-ga9706003&scale=4&rotate=0",
+    "shortDesc": "By Lisa C. Jeffrey (Full author list not provided in abstract) | Calculates the cohomology ring for the moduli space of polygons with fixed side lengths in 3-dimensional Euclidean space.",
+    "longDesc": "This paper focuses on the **cohomology ring** of **polygon spaces**, which are the moduli spaces of polygons with a fixed sequence of side lengths in 3-dimensional Euclidean space ($\\mathbb{R}^3$). The polygon space for a given set of side lengths is a specific type of manifold. Calculating the cohomology ring—which is a fundamental topological invariant—provides deep insight into the structure of these geometric spaces. While the provided abstract is extremely brief (only the title is given), the field of study (Differential Geometry and Global Analysis) confirms the focus is on rigorous, algebraic descriptions of these spaces, often using techniques like symplectic reduction or moment map methods.",
+    "images": [
+        "https://ia902906.us.archive.org/BookReader/BookReaderImages.php?zip=/2/items/arxiv-dg-ga9706003/dg-ga9706003_jp2.zip&file=dg-ga9706003_jp2/dg-ga9706003_0000.jp2&id=arxiv-dg-ga9706003&scale=4&rotate=0",
+        "https://ia902906.us.archive.org/BookReader/BookReaderImages.php?zip=/2/items/arxiv-dg-ga9706003/dg-ga9706003_jp2.zip&file=dg-ga9706003_jp2/dg-ga9706003_0001.jp2&id=arxiv-dg-ga9706003&scale=4&rotate=0",
+        "https://ia902906.us.archive.org/BookReader/BookReaderImages.php?zip=/2/items/arxiv-dg-ga9706003/dg-ga9706003_jp2.zip&file=dg-ga9706003_jp2/dg-ga9706003_0002.jp2&id=arxiv-dg-ga9706003&scale=4&rotate=0"
+    ],
+    "imageAlts": [
+        "First page of the paper on the cohomology ring of polygon spaces",
+        "Introduction or theorem statement from the differential geometry journal article",
+        "Geometric figure or diagram illustrating a polygon space with fixed side lengths"
+    ],
+    "file": "https://archive.org/embed/arxiv-dg-ga9706003",
+    "language": "English"
+},
+{
+    "id": "j44",
+    "title": "Topological Censorship",
+    "type": "Journals",
+    "verified": true,
+    "logo": "https://ia601205.us.archive.org/BookReader/BookReaderImages.php?zip=/10/items/arxiv-gr-qc9305017/gr-qc9305017_jp2.zip&file=gr-qc9305017_jp2/gr-qc9305017_0000.jp2&id=arxiv-gr-qc9305017&scale=4&rotate=0",
+    "shortDesc": "By John L. Friedman, Kristin Schleich, and Donald M. Witt | Proves the Topological Censorship Conjecture: observers cannot probe the topology of spacetime because complex structures collapse too quickly for light to traverse.",
+    "longDesc": "This paper provides a proof of the **Topological Censorship Conjecture** in general relativity. Although many 3-manifolds can mathematically serve as Cauchy surfaces for vacuum spacetimes, the conjecture states that the actual dynamics of gravity prevent an observer from probing complicated **spacetime topology**. The core result is that any topological structure collapses too quickly for light to traverse it. More precisely, in a **globally hyperbolic, asymptotically flat spacetime** that satisfies the **null energy condition**, every **causal curve** extending from past null infinity ($\\scri^-$) to future null infinity (${\\scri}^+$) is **homotopic** (can be smoothly deformed) to a **topologically trivial curve**. The authors note a caveat: if the **Poincaré conjecture** were false, the theorem would not prevent probing 'fake 3-spheres' (manifolds that have the homology of a 3-sphere but not the topology). This result fundamentally restricts the global structure of physically realistic spacetimes.",
+    "images": [
+        "https://ia601205.us.archive.org/BookReader/BookReaderImages.php?zip=/10/items/arxiv-gr-qc9305017/gr-qc9305017_jp2.zip&file=gr-qc9305017_jp2/gr-qc9305017_0000.jp2&id=arxiv-gr-qc9305017&scale=4&rotate=0",
+        "https://ia601205.us.archive.org/BookReader/BookReaderImages.php?zip=/10/items/arxiv-gr-qc9305017/gr-qc9305017_jp2.zip&file=gr-qc9305017_jp2/gr-qc9305017_0001.jp2&id=arxiv-gr-qc9305017&scale=4&rotate=0",
+        "https://ia601205.us.archive.org/BookReader/BookReaderImages.php?zip=/10/items/arxiv-gr-qc9305017/gr-qc9305017_jp2.zip&file=gr-qc9305017_jp2/gr-qc9305017_0002.jp2&id=arxiv-gr-qc9305017&scale=4&rotate=0"
+    ],
+    "imageAlts": [
+        "First page of the paper on Topological Censorship",
+        "Introduction and statement of the main theorem in the general relativity journal article",
+        "Spacetime diagram illustrating causal curves and asymptotic flatness"
+    ],
+    "file": "https://archive.org/embed/arxiv-gr-qc9305017",
+    "language": "English"
+},
+{
+    "id": "j45",
+    "title": "Dynamical control of matter-wave tunneling in periodic potentials",
+    "type": "Journals",
+    "verified": true,
+    "logo": "https://ia801905.us.archive.org/BookReader/BookReaderImages.php?zip=/23/items/arxiv-0707.0403/0707.0403_jp2.zip&file=0707.0403_jp2/0707.0403_0000.jp2&id=arxiv-0707.0403&scale=4&rotate=0",
+    "shortDesc": "By H. Lignier, C. Sias, et al. | Reports on the experimental measurement and dynamical suppression of inter-well tunneling of a Bose-Einstein condensate (BEC) in a strongly driven optical lattice.",
+    "longDesc": "This paper reports experimental measurements demonstrating the **dynamical suppression of inter-well tunneling** for a **Bose-Einstein Condensate (BEC)**  held within a **strongly driven optical lattice** (a periodic potential). The strong driving is achieved by **sinusoidal shaking** of the lattice, which corresponds to a time-varying linear potential. The **tunneling rate** is measured by allowing the BEC to freely expand in the lattice. The key finding is that the measured tunneling rate is **reduced** and can be **completely suppressed** for specific values of the shaking parameter. These experimental results show excellent agreement with theoretical predictions. Furthermore, the authors verified that the strong shaking **does not destroy the phase coherence** of the BEC, which opens up the potential for realizing **quantum phase transitions** by using the shaking strength as a tunable control parameter.",
+    "images": [
+        "https://ia801905.us.archive.org/BookReader/BookReaderImages.php?zip=/23/items/arxiv-0707.0403/0707.0403_jp2.zip&file=0707.0403_jp2/0707.0403_0000.jp2&id=arxiv-0707.0403&scale=4&rotate=0",
+        "https://ia801905.us.archive.org/BookReader/BookReaderImages.php?zip=/23/items/arxiv-0707.0403/0707.0403_jp2.zip&file=0707.0403_jp2/0707.0403_0001.jp2&id=arxiv-0707.0403&scale=4&rotate=0",
+        "https://ia801905.us.archive.org/BookReader/BookReaderImages.php?zip=/23/items/arxiv-0707.0403/0707.0403_jp2.zip&file=0707.0403_jp2/0707.0403_0002.jp2&id=arxiv-0707.0403&scale=4&rotate=0"
+    ],
+    "imageAlts": [
+        "First page of the paper on dynamical control of matter-wave tunneling",
+        "Abstract and experimental setup description of the quantum physics journal article",
+        "Graph showing the measured tunneling rate reduction as a function of the lattice shaking parameter"
+    ],
+    "file": "https://archive.org/embed/arxiv-0707.0403",
+    "language": "English"
+},
+{
+    "id": "j46",
+    "title": "\"Unusual\" critical states in type-II superconductors",
+    "type": "Journals",
+    "verified": true,
+    "logo": "https://ia800308.us.archive.org/BookReader/BookReaderImages.php?zip=/29/items/arxiv-0708.1531/0708.1531_jp2.zip&file=0708.1531_jp2/0708.1531_0000.jp2&id=arxiv-0708.1531&scale=4&rotate=0",
+    "shortDesc": "By E. H. Brandt and G. P. Mikitik | Provides a theoretical description of general critical states in type-II superconductors where the critical currents are not perpendicular to the local magnetic induction.",
+    "longDesc": "This paper provides a theoretical description of **general critical states** in **type-II superconductors** where the **critical currents** are **not perpendicular** to the local **magnetic induction** $\\mathbf{B}$. These 'unusual' states often arise in real-world scenarios, such as when the sample geometry lacks sufficient symmetry or when the external magnetic field direction undergoes complex changes. The study is restricted to conditions where **flux-line cutting** (a complex vortex-vortex interaction) is absent. The authors emphasize that the properties of these general critical states significantly differ from the well-known properties of the conventional **Bean critical state** model . To illustrate their approach, they analyze several examples, including the critical states in a slab subjected to a uniform perpendicular magnetic field followed by two successively applied in-plane field components, and the critical states in a long, thin strip under a perpendicular field that is then tilted.",
+    "images": [
+        "https://ia800308.us.archive.org/BookReader/BookReaderImages.php?zip=/29/items/arxiv-0708.1531/0708.1531_jp2.zip&file=0708.1531_jp2/0708.1531_0000.jp2&id=arxiv-0708.1531&scale=4&rotate=0",
+        "https://ia800308.us.archive.org/BookReader/BookReaderImages.php?zip=/29/items/arxiv-0708.1531/0708.1531_jp2.zip&file=0708.1531_jp2/0708.1531_0001.jp2&id=arxiv-0708.1531&scale=4&rotate=0",
+        "https://ia800308.us.archive.org/BookReader/BookReaderImages.php?zip=/29/items/arxiv-0708.1531/0708.1531_jp2.zip&file=0708.1531_jp2/0708.1531_0002.jp2&id=arxiv-0708.1531&scale=4&rotate=0"
+    ],
+    "imageAlts": [
+        "First page of the paper on 'unusual' critical states in type-II superconductors",
+        "Abstract of the condensed matter physics journal article",
+        "Diagram or simulation result illustrating the magnetic field and current distribution in a type-II superconductor with complex field history"
+    ],
+    "file": "https://archive.org/embed/arxiv-0708.1531",
+    "language": "English"
+},
+{
+    "id": "j47",
+    "title": "A simple all-microwave entangling gate for fixed-frequency superconducting qubits",
+    "type": "Journals",
+    "verified": true,
+    "logo": "https://ia601200.us.archive.org/BookReader/BookReaderImages.php?zip=/27/items/arxiv-1106.0553/1106.0553_jp2.zip&file=1106.0553_jp2/1106.0553_0000.jp2&id=arxiv-1106.0553&scale=8&rotate=0",
+    "shortDesc": "By Jerry M. Chow, A. D. Corcoles, et al. | Demonstrates a simple, tunable, all-microwave two-qubit entangling gate for fixed-frequency superconducting qubits, achieving 81% fidelity.",
+    "longDesc": "This paper presents the demonstration of a **simple, all-microwave, two-qubit entangling gate** on **superconducting qubits** that are operated at **fixed frequencies** at their optimal bias points (known for maximizing coherence). The gate design is highly efficient as it **requires no additional subcircuitry** and is fully tunable via the amplitude of **microwave irradiation** applied to one qubit at the transition frequency of the other. The authors used this gate to successfully generate **entangled states**, achieving a maximal extracted **concurrence of 0.88**. Furthermore, **quantum process tomography** measurements revealed a gate **fidelity of 81%** , a crucial benchmark for scalable quantum computation.",
+    "images": [
+        "https://ia601200.us.archive.org/BookReader/BookReaderImages.php?zip=/27/items/arxiv-1106.0553/1106.0553_jp2.zip&file=1106.0553_jp2/1106.0553_0000.jp2&id=arxiv-1106.0553&scale=8&rotate=0",
+        "https://ia601200.us.archive.org/BookReader/BookReaderImages.php?zip=/27/items/arxiv-1106.0553/1106.0553_jp2.zip&file=1106.0553_jp2/1106.0553_0001.jp2&id=arxiv-1106.0553&scale=8&rotate=0",
+        "https://ia601200.us.archive.org/BookReader/BookReaderImages.php?zip=/27/items/arxiv-1106.0553/1106.0553_jp2.zip&file=1106.0553_jp2/1106.0553_0002.jp2&id=arxiv-1106.0553&scale=8&rotate=0"
+    ],
+    "imageAlts": [
+        "First page of the paper on a simple all-microwave entangling gate",
+        "Abstract of the quantum physics journal article",
+        "Diagram or photograph of the fixed-frequency superconducting qubits and the coupling resonator"
+    ],
+    "file": "https://archive.org/embed/arxiv-1106.0553",
+    "language": "English"
+},
+{
+    "id": "j48",
+    "title": "Black hole formation in the grazing collision of high-energy particles",
+    "type": "Journals",
+    "verified": true,
+    "logo": "https://ia800203.us.archive.org/BookReader/BookReaderImages.php?zip=/25/items/arxiv-gr-qc0209003/gr-qc0209003_jp2.zip&file=gr-qc0209003_jp2/gr-qc0209003_0000.jp2&id=arxiv-gr-qc0209003&scale=4&rotate=0",
+    "shortDesc": "By Hirotaka Yoshino and Yasusada Nambu | Numerically investigates D-dimensional black hole formation and calculates the cross-section for grazing high-energy particle collisions, determining the geometric conditions for horizon formation.",
+"longDesc": "This paper numerically investigates the formation of **D-dimensional black holes** in **high-energy particle collisions** that occur with a non-zero **impact parameter** (grazing collision). The study aims to evaluate the **total cross section** of black hole production, a crucial quantity for assessing the likelihood of this phenomenon, especially in the context of extra-dimensional theories. The numerical results show that the formation of an **apparent horizon** occurs when the distance between the colliding particles is less than **1.5 times the effective gravitational radius** of each particle. The authors compare different criteria for horizon formation, finding that while both the **one-dimensional hoop conjecture** and the **(D-3)-dimensional volume** corresponding to the system's typical scale provide good conditions, the **(D-3)-dimensional volume** offers a better criterion for judging the existence of the horizon in higher-dimensional gravity.",
+    "images": [
+        "https://ia800203.us.archive.org/BookReader/BookReaderImages.php?zip=/25/items/arxiv-gr-qc0209003/gr-qc0209003_jp2.zip&file=gr-qc0209003_jp2/gr-qc0209003_0000.jp2&id=arxiv-gr-qc0209003&scale=4&rotate=0",
+        "https://ia800203.us.archive.org/BookReader/BookReaderImages.php?zip=/25/items/arxiv-gr-qc0209003/gr-qc0209003_jp2.zip&file=gr-qc0209003_jp2/gr-qc0209003_0001.jp2&id=arxiv-gr-qc0209003&scale=4&rotate=0",
+        "https://ia800203.us.archive.org/BookReader/BookReaderImages.php?zip=/25/items/arxiv-gr-qc0209003/gr-qc0209003_jp2.zip&file=gr-qc0209003_jp2/gr-qc0209003_0002.jp2&id=arxiv-gr-qc0209003&scale=4&rotate=0"
+    ],
+    "imageAlts": [
+        "First page of the paper on black hole formation in particle collisions",
+        "Abstract of the general relativity and quantum cosmology journal article",
+        "Diagram or numerical simulation plot showing the formation of an apparent horizon during the collision of two high-energy particles"
+    ],
+    "file": "https://archive.org/embed/arxiv-gr-qc0209003",
+    "language": "English"
+},
+{
+    "id": "j49",
+    "title": "Experimental study of the interfacial cobalt oxide in Co3O4/a-Al2O3(0001) epitaxial films",
+    "type": "Journals",
+    "verified": true,
+    "logo": "https://ia801204.us.archive.org/BookReader/BookReaderImages.php?zip=/28/items/arxiv-0910.2647/0910.2647_jp2.zip&file=0910.2647_jp2/0910.2647_0000.jp2&id=arxiv-0910.2647&scale=4&rotate=0",
+    "shortDesc": "By C. A. F. Vaz, D. Prabhakaran, et al. | Reports a detailed spectroscopic and structural study of ultrathin cobalt oxide films grown on a-Al2O3(0001), identifying the initial interfacial layer as the Co2O3 corundum phase.",
+    "longDesc": "This paper presents a detailed **spectroscopic and structural characterization** of **ultrathin cobalt oxide films** grown via **O-assisted molecular beam epitaxy (MBE)** on $\\alpha$-$\\text{Al}_2\\text{O}_3(0001)$ single crystals. The films show **progressively more disorder** as their thickness increases from the initial deposition stages. **Low Energy Electron Diffraction (LEED)** indicates that the unit cell retains a structure similar to the substrate up to a thickness of $\\mathbf{17 \\text{ Å}}$, after which the pattern of $\\text{Co}_3\\text{O}_4(111)$ emerges. **X-ray Photoelectron Spectroscopy (XPS)** reveals abrupt changes in the shape of the $\\text{Co } 2p$ lines between 3.4 Å and 17 Å, signaling a transition from an interfacial layer to the bulk-like $\\text{Co}_3\\text{O}_4$. Crucially, the **absence of characteristic satellite peaks** in the $\\text{Co } 2p$ lines for ultrathin films indicates the formation of a **trivalent, octahedrally coordinated interfacial cobalt oxide layer**—which the authors identify as the **$\\text{Co}_2\\text{O}_3$ corundum phase**—during the early stages of epitaxial growth.",
+    "images": [
+        "https://ia801204.us.archive.org/BookReader/BookReaderImages.php?zip=/28/items/arxiv-0910.2647/0910.2647_jp2.zip&file=0910.2647_jp2/0910.2647_0000.jp2&id=arxiv-0910.2647&scale=4&rotate=0",
+        "https://ia801204.us.archive.org/BookReader/BookReaderImages.php?zip=/28/items/arxiv-0910.2647/0910.2647_jp2.zip&file=0910.2647_jp2/0910.2647_0001.jp2&id=arxiv-0910.2647&scale=4&rotate=0",
+        "https://ia801204.us.archive.org/BookReader/BookReaderImages.php?zip=/28/items/arxiv-0910.2647/0910.2647_jp2.zip&file=0910.2647_jp2/0910.2647_0002.jp2&id=arxiv-0910.2647&scale=4&rotate=0"
+    ],
+    "imageAlts": [
+        "First page of the paper on interfacial cobalt oxide films",
+        "Abstract of the condensed matter physics journal article",
+        "X-ray photoelectron spectroscopy (XPS) data showing the Co 2p line shape changes with film thickness"
+    ],
+    "file": "https://archive.org/embed/arxiv-0910.2647",
+    "language": "English"
+},
+{
+    "id": "j50",
+    "title": "Symmetries and stabilization for sheaves of vanishing cycles",
+    "type": "Journals",
+    "verified": true,
+    "logo": "https://ia601705.us.archive.org/BookReader/BookReaderImages.php?zip=/12/items/arxiv-1211.3259/1211.3259_jp2.zip&file=1211.3259_jp2/1211.3259_0000.jp2&id=arxiv-1211.3259&scale=4&rotate=0",
+    "shortDesc": "By Christopher Brav, Vittoria Bussi, et al. | A mathematical physics paper proving stabilization and symmetry properties of the perverse sheaf of vanishing cycles ($PV_{U,f}$) associated with the critical locus of a regular function.",
+    "longDesc": "This paper in algebraic geometry and mathematical physics studies the **perverse sheaf of vanishing cycles** ($PV_{U,f}$) defined on the **critical locus** $X = \\text{Crit}(f)$ of a regular function $f: U \\to \\mathbb{A}^1$ on a smooth $\\mathbb{C}$-scheme $U$. The paper proves four major results, providing a deeper understanding of the stability and symmetric properties of this sheaf:\\n\\n* **(a) Symmetries:** An isomorphism $\\Phi: U \\to U$ that preserves $f$ and fixes $X$ induces an isomorphism $\\Phi_*: PV_{U,f} \\to PV_{U,f}$, which is shown to be multiplication by $\\text{det}(d\\Phi\\vert_X)$, which is either $\\mathbf{1}$ or $\\mathbf{-1}$.\\n* **(b) Stabilization:** $PV_{U,f}$ depends only on the **third-order thickening** of $X$ in $U$ ($X^{(3)}$) and the restriction of $f$ to this thickening ($f^{(3)}$), demonstrating a strong local stability.\\n* **(c) Natural Isomorphism:** A natural isomorphism $\\Theta_\\Phi$ is constructed between sheaves for different functions ($f$ and $g$) when one function is related to the other by an embedding $\\Phi$ that maps their critical loci.\\n* **(d) d-Critical Loci:** A natural perverse sheaf $P_{X,s}$ is defined for an **oriented d-critical locus** $(X,s)$ (a concept introduced by Joyce), which is locally modelled on $PV_{U,f}$.\\n\\nThe results are generalized to schemes over other fields and to complex analytic spaces, and the authors discuss applications in **categorifying Donaldson-Thomas invariants** for Calabi-Yau 3-folds and defining a **'Fukaya category'** using perverse sheaves.",
+    "images": [
+        "https://ia601705.us.archive.org/BookReader/BookReaderImages.php?zip=/12/items/arxiv-1211.3259/1211.3259_jp2.zip&file=1211.3259_jp2/1211.3259_0000.jp2&id=arxiv-1211.3259&scale=4&rotate=0",
+        "https://ia601705.us.archive.org/BookReader/BookReaderImages.php?zip=/12/items/arxiv-1211.3259/1211.3259_jp2.zip&file=1211.3259_jp2/1211.3259_0001.jp2&id=arxiv-1211.3259&scale=4&rotate=0",
+        "https://ia601705.us.archive.org/BookReader/BookReaderImages.php?zip=/12/items/arxiv-1211.3259/1211.3259_jp2.zip&file=1211.3259_jp2/1211.3259_0002.jp2&id=arxiv-1211.3259&scale=4&rotate=0"
+    ],
+    "imageAlts": [
+        "First page of the paper on sheaves of vanishing cycles",
+        "Abstract of the algebraic geometry and mathematical physics journal article",
+        "A figure or complex mathematical notation related to perverse sheaves or critical loci"
+    ],
+    "file": "https://sarvwigyan.github.io/resources/journals/j50.pdf",
+    "language": "English"
+},
+{
+    "id": "j51",
+    "title": "Density-functional study of the structure and stability of ZnO surfaces",
+    "type": "Journals",
+    "verified": true,
+    "logo": "https://ia801204.us.archive.org/BookReader/BookReaderImages.php?zip=/15/items/arxiv-cond-mat0206549/cond-mat0206549_jp2.zip&file=cond-mat0206549_jp2/cond-mat0206549_0000.jp2&id=arxiv-cond-mat0206549&scale=4&rotate=0",
+    "shortDesc": "By B. Meyer and Dominik Marx | Theoretical investigation of the structure and stability of ZnO nonpolar (10-10) and (11-20) and polar (0001)-Zn and (000-1)-O surfaces using density-functional theory (DFT).",
+    "longDesc": "This paper presents an extensive **theoretical investigation** of the **nonpolar** (\\mathbf{10\\bar{1}0} and \\mathbf{11\\bar{2}0}) surfaces as well as the **polar** zinc-terminated (\\mathbf{0001}-Zn) and oxygen-terminated (\\mathbf{000\\bar{1}}-O) surfaces of **Zinc Oxide (ZnO)**. The study utilizes **density-functional theory (DFT)**, specifically LDA and PBE pseudopotential calculations. Particular attention is given to the rigorous **convergence properties** of various parameters, including **basis set, k-point mesh, slab thickness**, and relaxation constraints. The authors discuss the pros and cons of different theoretical approaches to deal with the inherent **stability problem of the polar surfaces**. The paper provides reliable results for the **structural relaxations** and **energetics** of these surfaces, comparing them to previous theoretical and experimental data.",
+    "images": [
+        "https://ia801204.us.archive.org/BookReader/BookReaderImages.php?zip=/15/items/arxiv-cond-mat0206549/cond-mat0206549_jp2.zip&file=cond-mat0206549_jp2/cond-mat0206549_0000.jp2&id=arxiv-cond-mat0206549&scale=4&rotate=0",
+        "https://ia801204.us.archive.org/BookReader/BookReaderImages.php?zip=/15/items/arxiv-cond-mat0206549/cond-mat0206549_jp2.zip&file=cond-mat0206549_jp2/cond-mat0206549_0001.jp2&id=arxiv-cond-mat0206549&scale=4&rotate=0",
+        "https://ia801204.us.archive.org/BookReader/BookReaderImages.php?zip=/15/items/arxiv-cond-mat0206549/cond-mat0206549_jp2.zip&file=cond-mat0206549_jp2/cond-mat0206549_0002.jp2&id=arxiv-cond-mat0206549&scale=4&rotate=0"
+    ],
+    "imageAlts": [
+        "First page of the paper on ZnO surface structure and stability",
+        "Abstract and introduction of the condensed matter physics journal article",
+        "Diagram illustrating the surface structure or relaxation of a ZnO surface"
+    ],
+    "file": "https://sarvwigyan.github.io/resources/journals/j51.pdf",
+    "language": "English"
+},
+{
+    "id": "j52",
+    "title": "Random matrix theory and discrete moments of the Riemann zeta function",
+    "type": "Journals",
+    "verified": true,
+    "logo": "https://ia801503.us.archive.org/BookReader/BookReaderImages.php?zip=/27/items/arxiv-math0207236/math0207236_jp2.zip&file=math0207236_jp2/math0207236_0000.jp2&id=arxiv-math0207236&scale=4&rotate=0",
+    "shortDesc": "By C. P. Hughes | Calculates the discrete moments of the characteristic polynomial of a random unitary matrix to make conjectures about similar moments for the Riemann zeta function.",
+    "longDesc": "This paper establishes a connection between **Random Matrix Theory (RMT)** and analytic number theory by focusing on the **discrete moments of the Riemann zeta function** $\\zeta(s)$. The core work involves calculating the discrete moments of the **characteristic polynomial** of a **random unitary matrix** evaluated a small distance away from an **eigenangle**. The results obtained from the random matrix model allow the author to formulate **conjectures** about the corresponding moments of the Riemann zeta function. This approach is demonstrated to provide a **uniform framework** for understanding moments of both the zeta function and its **derivative**, reinforcing the established but still conjectural link between the statistics of energy levels in quantum systems (modeled by RMT) and the distribution of prime numbers (encoded in the zeros of the zeta function).",
+    "images": [
+        "https://ia801503.us.archive.org/BookReader/BookReaderImages.php?zip=/27/items/arxiv-math0207236/math0207236_jp2.zip&file=math0207236_jp2/math0207236_0000.jp2&id=arxiv-math0207236&scale=4&rotate=0",
+        "https://ia801503.us.archive.org/BookReader/BookReaderImages.php?zip=/27/items/arxiv-math0207236/math0207236_jp2.zip&file=math0207236_jp2/math0207236_0001.jp2&id=arxiv-math0207236&scale=4&rotate=0",
+        "https://ia801503.us.archive.org/BookReader/BookReaderImages.php?zip=/27/items/arxiv-math0207236/math0207236_jp2.zip&file=math0207236_jp2/math0207236_0002.jp2&id=arxiv-math0207236&scale=4&rotate=0"
+    ],
+    "imageAlts": [
+        "First page of the paper on Random matrix theory and the Riemann zeta function",
+        "Abstract and introduction of the mathematical physics journal article",
+        "Mathematical equations related to characteristic polynomials or discrete moments"
+    ],
+    "file": "https://sarvwigyan.github.io/resources/journals/j52.pdf",
+    "language": "English"
+},
+{
+    "id": "j53",
+    "title": "Query complexity for searching multiple marked states from an unsorted database",
+    "type": "Journals",
+    "verified": true,
+    "logo": "https://ia600806.us.archive.org/BookReader/BookReaderImages.php?zip=/7/items/arxiv-quant-ph0604059/quant-ph0604059_jp2.zip&file=quant-ph0604059_jp2/quant-ph0604059_0000.jp2&id=arxiv-quant-ph0604059&scale=4&rotate=0",
+    "shortDesc": "By Bin Shang | Calculates the query complexity for a generalized quantum search algorithm (Grover's) designed to find all multiple marked states in an unsorted database.",
+"longDesc": "This paper addresses the vital problem of finding **all desired states** (marked states) within a large, **unsorted database** using quantum computation. While **Grover's original quantum search algorithm** was generalized for multiple solutions, the **query complexity** for finding *all* of them was previously unknown. The author proposes a **generalized quantum algorithm** with high precision to solve this problem and demonstrates that the **practical query complexity** (the number of times the database needs to be accessed) **increases with the number of marked states** ($M$). Finally, the paper introduces an alternative algorithm tailored for a \"duality computer\", highlighting its advantages in solving this specific multiple-solution search problem compared to other known algorithms.",
+"images": [
+        "https://ia600806.us.archive.org/BookReader/BookReaderImages.php?zip=/7/items/arxiv-quant-ph0604059/quant-ph0604059_jp2.zip&file=quant-ph0604059_jp2/quant-ph0604059_0000.jp2&id=arxiv-quant-ph0604059&scale=4&rotate=0",
+        "https://ia600806.us.archive.org/BookReader/BookReaderImages.php?zip=/7/items/arxiv-quant-ph0604059/quant-ph0604059_jp2.zip&file=quant-ph0604059_jp2/quant-ph0604059_0001.jp2&id=arxiv-quant-ph0604059&scale=4&rotate=0",
+        "https://ia600806.us.archive.org/BookReader/BookReaderImages.php?zip=/7/items/arxiv-quant-ph0604059/quant-ph0604059_jp2.zip&file=quant-ph0604059_jp2/quant-ph0604059_0002.jp2&id=arxiv-quant-ph0604059&scale=4&rotate=0"
+    ],
+    "imageAlts": [
+        "First page of the paper on query complexity for searching multiple marked states",
+        "Abstract of the quantum physics journal article",
+        "Equations or figures demonstrating the quantum search algorithm and query complexity calculation"
+    ],
+    "file": "https://sarvwigyan.github.io/resources/journals/j53.pdf",
+    "language": "English"
+},
+{
+    "id": "j54",
+    "title": "A high-accuracy algorithm for designing arbitrary holographic atom traps",
+    "type": "Journals",
+    "verified": true,
+    "logo": "https://ia800207.us.archive.org/BookReader/BookReaderImages.php?zip=/2/items/arxiv-0712.0794/0712.0794_jp2.zip&file=0712.0794_jp2/0712.0794_0000.jp2&id=arxiv-0712.0794&scale=4&rotate=0",
+    "shortDesc": "By M. Pasienski and B. DeMarco | Reports a new iterative Fourier-transform algorithm for creating holograms capable of diffracting light into arbitrary 2D intensity profiles with high accuracy for atom trapping.",
+    "longDesc": "This paper reports the realization and demonstration of a **new iterative Fourier-transform algorithm** specifically designed for creating **holograms** that can diffract light into an **arbitrary two-dimensional intensity profile**. This capability is crucial for implementing complex traps in atomic physics, known as **holographic atom traps** . The authors show that the intensity distributions predicted by the algorithm are remarkably **smooth** and achieve a fractional error from the target distribution at the **percent level** (high accuracy). Critically, this new algorithm is shown to **outperform** the most frequently used alternative methods by typical margins of **one to two orders of magnitude** in terms of accuracy and roughness, respectively. The techniques detailed in the paper provide a clear path for designing complex holographic atom traps, leaving the remaining challenge focused on the physical implementation of the resulting holograms.",
+    "images": [
+        "https://ia800207.us.archive.org/BookReader/BookReaderImages.php?zip=/2/items/arxiv-0712.0794/0712.0794_jp2.zip&file=0712.0794_jp2/0712.0794_0000.jp2&id=arxiv-0712.0794&scale=4&rotate=0",
+        "https://ia800207.us.archive.org/BookReader/BookReaderImages.php?zip=/2/items/arxiv-0712.0794/0712.0794_jp2.zip&file=0712.0794_jp2/0712.0794_0001.jp2&id=arxiv-0712.0794&scale=4&rotate=0",
+        "https://ia800207.us.archive.org/BookReader/BookReaderImages.php?zip=/2/items/arxiv-0712.0794/0712.0794_jp2.zip&file=0712.0794_jp2/0712.0794_0002.jp2&id=arxiv-0712.0794&scale=4&rotate=0"
+    ],
+    "imageAlts": [
+        "First page of the paper on a high-accuracy algorithm for holographic atom traps",
+        "Abstract of the quantum physics journal article",
+        "Comparison graph showing the accuracy and roughness of the new iterative Fourier-transform algorithm versus conventional methods"
+    ],
+    "file": "https://sarvwigyan.github.io/resources/journals/j54.pdf",
+    "language": "English"
+},
+{
+    "id": "j55",
+    "title": "Intracluster Medium Entropy Profiles for a Chandra Archival Sample of Galaxy Clusters",
+    "type": "Journals",
+    "verified": true,
+    "logo": "https://sarvwigyan.github.io/resources/Images/j55i1.jpg",
+    "shortDesc": "By Kenneth W. Cavagnolo, Megan Donahue, et al. | Presents radial entropy profiles of the intracluster medium (ICM) for 239 galaxy clusters from the Chandra archive, demonstrating a bimodal distribution of core entropy.",
+"longDesc": "This paper presents **radial entropy profiles** of the **intracluster medium (ICM)** for a large sample of **239 galaxy clusters** sourced from the **Chandra X-ray Observatory's Data Archive**. Entropy is crucial as it governs ICM global properties and preserves the cluster's thermal history, making it ideal for studying **feedback effects** and deviations from **cluster self-similarity**. The authors find that most profiles are well-fitted by the model $K(r) = K_0 + K_{100}(r/100 \\text{ kpc})$, which is a **power-law at large radii** and approaches a constant value at small radii. The parameter $K_0$ quantifies the **excess core entropy**. A major finding is that the $K_0$ distributions for both the full sample and the HIFLUGCS sample are **bimodal**, exhibiting a distinct gap between $K_0 \\sim 30 - 50 \\text{ keV cm}^2$ and population peaks at $K_0 \\sim 15 \\text{ keV cm}^2$ (cool-core clusters) and $K_0 \\sim 150 \\text{ keV cm}^2$ (non-cool-core clusters). The study rules out instrumental effects (like PSF smearing) as the explanation for the observed entropy-profile flattening at small radii.",
+    "images": [
+        "https://sarvwigyan.github.io/resources/Images/j55i1.jpg",
+        "https://sarvwigyan.github.io/resources/Images/j55i2.jpg",
+        "https://sarvwigyan.github.io/resources/Images/j55i3.jpg"
+    ],
+    "imageAlts": [
+        "First page of the paper on Intracluster Medium Entropy Profiles",
+        "Abstract of the astrophysics journal article",
+        "Graph of the radial entropy profile K(r) versus radius for a sample of galaxy clusters"
+    ],
+    "file": "https://sarvwigyan.github.io/resources/journals/j55.pdf",
+    "language": "English"
 }
 ]
