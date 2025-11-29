@@ -4,6 +4,22 @@ const storeData = {
     journals: [] // Populated from journals.json
 };
 
+// NEW: Lazy Loading Variables
+let currentPage = {
+    all: 1,
+    books: 1,
+    journals: 1,
+    recent: 1
+};
+const CARDS_PER_PAGE = 20;
+let isLoading = false;
+let hasMoreItems = {
+    all: true,
+    books: true,
+    journals: true,
+    recent: true
+};
+
 // FIXED: Improved Scroll Lock Management
 let activeModals = [];
 
@@ -163,7 +179,7 @@ function addToRecentItems(item) {
     
     // Update recent grid if we're on the recent tab
     if (document.getElementById('recent').classList.contains('active')) {
-        renderCards(recentItems, 'recentGrid');
+        renderCards(recentItems, 'recentGrid', true);
     }
 }
 
@@ -208,27 +224,109 @@ function closeAllModals() {
     }
 }
 
-// Function to Render Cards in a Grid (Updated: Always show "Read" button)
-function renderCards(items, gridId) {
+// NEW: Function to get paginated items
+function getPaginatedItems(items, section, reset = false) {
+    if (reset) {
+        currentPage[section] = 1;
+        hasMoreItems[section] = true;
+    }
+    
+    const startIndex = 0;
+    const endIndex = currentPage[section] * CARDS_PER_PAGE;
+    const paginatedItems = items.slice(startIndex, endIndex);
+    
+    // Check if there are more items to load
+    hasMoreItems[section] = endIndex < items.length;
+    
+    return paginatedItems;
+}
+
+// NEW: Function to load more items
+function loadMoreItems(section) {
+    if (isLoading || !hasMoreItems[section]) return;
+    
+    isLoading = true;
+    const loadingIndicator = document.getElementById('loadingIndicator');
+    if (loadingIndicator) {
+        loadingIndicator.style.display = 'block';
+    }
+    
+    // Simulate loading delay for better UX
+    setTimeout(() => {
+        currentPage[section]++;
+        
+        let items = [];
+        switch (section) {
+            case 'all': items = [...storeData.books, ...storeData.journals]; break;
+            case 'books': items = storeData.books; break;
+            case 'journals': items = storeData.journals; break;
+            case 'recent': items = JSON.parse(localStorage.getItem('recentItems') || '[]'); break;
+        }
+        
+        const paginatedItems = getPaginatedItems(items, section);
+        renderCards(paginatedItems, section + 'Grid', false);
+        
+        isLoading = false;
+        if (loadingIndicator) {
+            loadingIndicator.style.display = 'none';
+        }
+        
+        // Hide loading indicator if no more items
+        if (!hasMoreItems[section] && loadingIndicator) {
+            loadingIndicator.style.display = 'none';
+        }
+    }, 300);
+}
+
+// NEW: Function to check if user has scrolled to bottom
+function isScrolledToBottom() {
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight;
+    const clientHeight = document.documentElement.clientHeight;
+    
+    return scrollTop + clientHeight >= scrollHeight - 100; // 100px buffer
+}
+
+// NEW: Scroll event handler for lazy loading
+function handleScroll() {
+    const activeSection = document.querySelector('.section.active').id;
+    
+    if (isScrolledToBottom() && hasMoreItems[activeSection] && !isLoading) {
+        loadMoreItems(activeSection);
+    }
+}
+
+// UPDATED: Function to Render Cards in a Grid with Lazy Loading Support
+function renderCards(items, gridId, reset = true) {
     const grid = document.getElementById(gridId);
     const noResults = document.getElementById(gridId.replace('Grid', 'NoResults')) || null;
+    const section = gridId.replace('Grid', '');
     
     // NEW: Hide loading indicator when rendering books
     const loadingIndicator = document.getElementById('loadingIndicator');
-    if (gridId === 'booksGrid' && loadingIndicator) {
+    if (gridId === 'booksGrid' && loadingIndicator && reset) {
         loadingIndicator.style.display = 'none';
     }
 
-    grid.innerHTML = ''; // Clear existing cards
+    // Clear grid only on reset
+    if (reset) {
+        grid.innerHTML = '';
+        currentPage[section] = 1;
+        hasMoreItems[section] = true;
+    }
 
-    if (items.length === 0) {
+    if (items.length === 0 && reset) {
         if (noResults) noResults.style.display = 'block';
+        if (loadingIndicator) loadingIndicator.style.display = 'none';
         return;
     }
 
-    if (noResults) noResults.style.display = 'none';
+    if (noResults && reset) noResults.style.display = 'none';
 
-    items.forEach(item => {
+    // Get paginated items
+    const paginatedItems = getPaginatedItems(items, section, reset);
+    
+    paginatedItems.forEach(item => {
         // NEW: Check if this item has reading progress
         const progress = loadReadingProgress(item.id);
         const progressBadge = progress ? ' <span class="progress-badge" title="Continue reading from where you left off">📖</span>' : '';
@@ -255,6 +353,13 @@ function renderCards(items, gridId) {
             }
         });
     });
+    
+    // NEW: Show/hide loading indicator based on whether there are more items
+    if (loadingIndicator && gridId === 'booksGrid') {
+        if (!hasMoreItems[section] || items.length <= CARDS_PER_PAGE) {
+            loadingIndicator.style.display = 'none';
+        }
+    }
 }
 
 // Tab Switching Function (Updated: Refresh Recent Tab when switching to it)
@@ -277,7 +382,7 @@ function switchTab(tabId) {
     // NEW: Refresh recent items when switching to recent tab
     if (tabId === 'recent') {
         const recentItems = JSON.parse(localStorage.getItem('recentItems') || '[]');
-        renderCards(recentItems, 'recentGrid');
+        renderCards(recentItems, 'recentGrid', true);
     }
 }
 
@@ -320,9 +425,9 @@ function initSearch() {
             item.type.toLowerCase().includes(query)
         );
 
-        // Re-render filtered
+        // Re-render filtered with reset
         const gridId = activeSectionId + 'Grid';
-        renderCards(filtered, gridId);
+        renderCards(filtered, gridId, true);
     });
 }
 
@@ -523,7 +628,7 @@ function filterBooksByLanguage() {
     if (selected.length > 0) {
         filtered = storeData.books.filter(book => selected.includes((book.language || '').toLowerCase()));
     }
-    renderCards(filtered, 'booksGrid');
+    renderCards(filtered, 'booksGrid', true);
 }
 
 function handleMainFilterChange() {
@@ -537,7 +642,7 @@ function handleMainFilterChange() {
         filterBooksByLanguage();
     } else {
         wrapper.style.display = 'none';
-        renderCards(storeData.books, 'booksGrid');
+        renderCards(storeData.books, 'booksGrid', true);
     }
 }
 
@@ -611,28 +716,31 @@ function clearAllReadingProgress() {
     keysToRemove.forEach(key => localStorage.removeItem(key));
     console.log('Cleared all reading progress');
     // Refresh the view to update progress badges
-    renderCards([...storeData.books, ...storeData.journals], 'allGrid');
-    renderCards(storeData.books, 'booksGrid');
-    renderCards(storeData.journals, 'journalsGrid');
+    renderCards([...storeData.books, ...storeData.journals], 'allGrid', true);
+    renderCards(storeData.books, 'booksGrid', true);
+    renderCards(storeData.journals, 'journalsGrid', true);
 }
 
 // Main Initialization
 document.addEventListener('DOMContentLoaded', async () => {
     await loadDataFromJSON();
 
-    // Render all sections
-    renderCards([...storeData.books, ...storeData.journals], 'allGrid');
-    renderCards(storeData.books, 'booksGrid');
-    renderCards(storeData.journals, 'journalsGrid');
+    // Render all sections with lazy loading
+    renderCards([...storeData.books, ...storeData.journals], 'allGrid', true);
+    renderCards(storeData.books, 'booksGrid', true);
+    renderCards(storeData.journals, 'journalsGrid', true);
     
     // Initialize recent items from localStorage
     const recentItems = JSON.parse(localStorage.getItem('recentItems') || '[]');
-    renderCards(recentItems, 'recentGrid');
+    renderCards(recentItems, 'recentGrid', true);
 
     // Original inits
     initTabs();
     initSearch();
     initSettings();
+
+    // NEW: Add scroll event listener for lazy loading
+    window.addEventListener('scroll', handleScroll);
 
     // Event listeners
     document.getElementById('closeBtn').addEventListener('click', closeDetail);
@@ -663,5 +771,5 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Default to "All" tab
     switchTab('all');
 
-    console.log('Sarvstore ready! Permanent reading progress feature implemented.');
+    console.log('Sarvstore ready! Lazy loading and permanent reading progress features implemented.');
 });
