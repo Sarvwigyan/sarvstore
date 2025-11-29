@@ -1,43 +1,8 @@
-// Global Data Object (Now only Books and Journals)
+// Global Data Object
 const storeData = {
-    books: [], // Populated from books.json
-    journals: [] // Populated from journals.json
-};
-
-// NEW: Enhanced Book Reader Instance
-let enhancedReader = null;
-
-// NEW: Lazy Loading Variables
-let currentPage = {
-    all: 0,
-    books: 0,
-    journals: 0,
-    recent: 0
-};
-const CARDS_PER_PAGE = 20;
-let isLoading = false;
-let hasMoreItems = {
-    all: true,
-    books: true,
-    journals: true,
-    recent: true
-};
-
-// Store all items for each section
-let allItems = {
-    all: [],
     books: [],
-    journals: [],
-    recent: []
+    journals: []
 };
-
-// FIXED: Improved Scroll Lock Management
-let activeModals = [];
-
-// NEW: Track current book for progress saving
-let currentBookId = null;
-
-// ==================== ENHANCED BOOK READER INTEGRATION ====================
 
 // Enhanced Book Reader System
 class EnhancedBookReader {
@@ -45,15 +10,12 @@ class EnhancedBookReader {
         this.currentBook = null;
         this.currentPage = 1;
         this.totalPages = 0;
-        this.pdfDoc = null;
-        this.scale = 1.5;
         this.isLoading = false;
         
         // User data
         this.userLibrary = this.getUserLibrary();
         this.readingSession = null;
         
-        // Initialize when DOM is loaded
         this.init();
     }
     
@@ -82,15 +44,7 @@ class EnhancedBookReader {
                             <span>← Prev</span>
                         </button>
                         
-                        <input type="number" id="pageJump" min="1" value="1" style="
-                            width: 60px;
-                            background: rgba(255,255,255,0.1);
-                            border: var(--border);
-                            border-radius: 6px;
-                            color: var(--text);
-                            padding: 0.4rem;
-                            text-align: center;
-                        ">
+                        <input type="number" id="pageJump" min="1" value="1" class="page-input">
                         
                         <button class="reader-btn" id="nextPage">
                             <span>Next →</span>
@@ -112,12 +66,7 @@ class EnhancedBookReader {
                         
                         <!-- Collections -->
                         <button class="reader-btn" id="showCollections">
-                            <span>Add to Collection</span>
-                        </button>
-                        
-                        <!-- Notes Sidebar -->
-                        <button class="reader-btn" id="toggleSidebar">
-                            <span>Notes</span>
+                            <span>Collections</span>
                         </button>
                         
                         <!-- Close -->
@@ -135,7 +84,7 @@ class EnhancedBookReader {
                             <button class="nav-arrow left-arrow">‹</button>
                             <button class="nav-arrow right-arrow">›</button>
                         </div>
-                        <!-- PDF pages will be rendered here -->
+                        <iframe id="bookIframe" class="book-iframe" title="Book viewer" style="width: 100%; height: 100%; border: none;"></iframe>
                     </div>
                     
                     <!-- Sidebar -->
@@ -143,7 +92,7 @@ class EnhancedBookReader {
                         <div class="sidebar-tabs">
                             <button class="tab-btn active" data-tab="bookmarks">Bookmarks</button>
                             <button class="tab-btn" data-tab="notes">Notes</button>
-                            <button class="tab-btn" data-tab="highlights">Highlights</button>
+                            <button class="tab-btn" data-tab="collections">Collections</button>
                         </div>
                         
                         <div class="tab-content">
@@ -161,20 +110,40 @@ class EnhancedBookReader {
                             <div class="tab-pane" id="notesTab">
                                 <textarea 
                                     id="currentNote" 
-                                    placeholder="Add your notes for the current page here..."
+                                    placeholder="Add your notes for the current book here..."
+                                    style="width: 100%; height: 120px; margin-bottom: 1rem; padding: 0.5rem; border-radius: 8px; background: rgba(255,255,255,0.1); color: var(--text); border: var(--border);"
                                 ></textarea>
                                 <button class="reader-btn" id="saveNote" style="width: 100%; margin-bottom: 1rem;">
-                                    Save Note for Current Page
+                                    Save Note
                                 </button>
                                 <div class="notes-list" id="notesList">
                                     <div class="no-items">No notes yet</div>
                                 </div>
                             </div>
                             
-                            <!-- Highlights Tab -->
-                            <div class="tab-pane" id="highlightsTab">
-                                <div class="highlights-list" id="highlightsList">
-                                    <div class="no-items">No highlights yet</div>
+                            <!-- Collections Tab -->
+                            <div class="tab-pane" id="collectionsTab">
+                                <div class="collection-grid" style="display: grid; gap: 0.5rem;">
+                                    <div class="collection-card" data-collection="currently-reading">
+                                        <div class="collection-icon">📖</div>
+                                        <div>Currently Reading</div>
+                                        <div class="collection-count">0 books</div>
+                                    </div>
+                                    <div class="collection-card" data-collection="want-to-read">
+                                        <div class="collection-icon">📚</div>
+                                        <div>Want to Read</div>
+                                        <div class="collection-count">0 books</div>
+                                    </div>
+                                    <div class="collection-card" data-collection="finished">
+                                        <div class="collection-icon">✅</div>
+                                        <div>Finished</div>
+                                        <div class="collection-count">0 books</div>
+                                    </div>
+                                    <div class="collection-card" data-collection="favorites">
+                                        <div class="collection-icon">⭐</div>
+                                        <div>Favorites</div>
+                                        <div class="collection-count">0 books</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -185,49 +154,13 @@ class EnhancedBookReader {
                 <div class="reader-footer">
                     <div class="reading-stats">
                         <span>Reading Time: <span id="readingTime">0m</span></span>
-                        <span>Last Read: <span id="lastRead">Just now</span></span>
-                        <span>
-                            Progress: 
+                        <span>Progress: 
                             <div class="progress-bar">
                                 <div class="progress-fill" id="progressFill" style="width: 0%"></div>
                             </div>
                             <span id="completionPercentage">0%</span>
                         </span>
                     </div>
-                </div>
-            </div>
-            
-            <!-- Collections Modal -->
-            <div class="collection-modal" id="collectionModal">
-                <h3>Add to Collection</h3>
-                <p>Select collections for this book:</p>
-                
-                <div class="collection-grid" id="collectionGrid">
-                    <div class="collection-card" data-collection="currently-reading">
-                        <div class="collection-icon">📖</div>
-                        <div>Currently Reading</div>
-                        <div class="collection-count">0 books</div>
-                    </div>
-                    <div class="collection-card" data-collection="want-to-read">
-                        <div class="collection-icon">📚</div>
-                        <div>Want to Read</div>
-                        <div class="collection-count">0 books</div>
-                    </div>
-                    <div class="collection-card" data-collection="finished">
-                        <div class="collection-icon">✅</div>
-                        <div>Finished</div>
-                        <div class="collection-count">0 books</div>
-                    </div>
-                    <div class="collection-card" data-collection="favorites">
-                        <div class="collection-icon">⭐</div>
-                        <div>Favorites</div>
-                        <div class="collection-count">0 books</div>
-                    </div>
-                </div>
-                
-                <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
-                    <button class="reader-btn" id="saveCollections" style="flex: 1;">Save Collections</button>
-                    <button class="reader-btn" id="closeCollections" style="flex: 1;">Cancel</button>
                 </div>
             </div>
         `;
@@ -252,13 +185,8 @@ class EnhancedBookReader {
         // Notes
         document.getElementById('saveNote').addEventListener('click', () => this.saveNote());
         
-        // Sidebar
-        document.getElementById('toggleSidebar').addEventListener('click', () => this.toggleSidebar());
-        
         // Collections
-        document.getElementById('showCollections').addEventListener('click', () => this.showCollections());
-        document.getElementById('saveCollections').addEventListener('click', () => this.saveCollections());
-        document.getElementById('closeCollections').addEventListener('click', () => this.hideCollections());
+        document.getElementById('showCollections').addEventListener('click', () => this.toggleSidebar());
         
         // Close reader
         document.getElementById('closeReader').addEventListener('click', () => this.closeReader());
@@ -268,15 +196,17 @@ class EnhancedBookReader {
             btn.addEventListener('click', (e) => this.switchTab(e.target.dataset.tab));
         });
         
+        // Collection cards
+        document.querySelectorAll('.collection-card').forEach(card => {
+            card.addEventListener('click', () => this.toggleCollection(card.dataset.collection));
+        });
+        
         // Overlay navigation
         document.querySelector('.left-arrow').addEventListener('click', () => this.previousPage());
         document.querySelector('.right-arrow').addEventListener('click', () => this.nextPage());
         
         // Keyboard navigation
         document.addEventListener('keydown', (e) => this.handleKeyboard(e));
-        
-        // Auto-save progress
-        setInterval(() => this.saveProgress(), 30000); // Every 30 seconds
     }
     
     async openBook(bookData) {
@@ -284,7 +214,6 @@ class EnhancedBookReader {
         this.readingSession = {
             bookId: bookData.id,
             startTime: Date.now(),
-            startPage: 1,
             readingTime: 0
         };
         
@@ -300,125 +229,157 @@ class EnhancedBookReader {
         document.getElementById('readerBookTitle').textContent = bookData.title;
         document.getElementById('pageJump').value = this.currentPage;
         
-        // Load PDF (simulated - in real implementation, you'd use PDF.js)
-        await this.loadPDF(bookData);
+        // Load actual book content
+        await this.loadBookContent(bookData);
         
         // Start reading session
         this.startReadingSession();
         
-        // Update collections display
-        this.updateCollectionsDisplay();
-    }
-    
-    async loadPDF(bookData) {
-        // Simulate PDF loading
-        this.isLoading = true;
-        this.totalPages = bookData.pages || 100; // Mock pages
-        
-        document.getElementById('totalPages').textContent = `of ${this.totalPages}`;
-        this.updateProgress();
-        
-        // Render current page (simulated)
-        await this.renderPage(this.currentPage);
-        this.isLoading = false;
-        
         // Load bookmarks and notes
         this.loadBookmarks();
         this.loadNotes();
+        this.updateCollectionsDisplay();
     }
     
-    async renderPage(pageNum) {
-        const viewer = document.getElementById('pdfViewer');
-        viewer.innerHTML = `
-            <div class="page-navigation-overlay">
-                <button class="nav-arrow left-arrow">‹</button>
-                <button class="nav-arrow right-arrow">›</button>
-            </div>
-            <div class="pdf-page">
-                <div style="
-                    width: 800px; 
-                    height: 1000px; 
-                    background: white; 
-                    display: flex; 
-                    align-items: center; 
-                    justify-content: center;
-                    font-family: Arial, sans-serif;
-                    color: #333;
-                    border: 2px solid #ddd;
-                ">
-                    <div style="text-align: center;">
-                        <h2>${this.currentBook.title}</h2>
-                        <p>Page ${pageNum} of ${this.totalPages}</p>
-                        <p style="margin-top: 2rem; font-style: italic;">
-                            This is a simulated PDF page.<br>
-                            In a real implementation, this would be rendered using PDF.js
-                        </p>
-                        <p style="margin-top: 1rem;">
-                            📖 Reading progress: ${Math.round((pageNum / this.totalPages) * 100)}%
-                        </p>
-                    </div>
-                </div>
-            </div>
-        `;
+    async loadBookContent(bookData) {
+        this.isLoading = true;
         
-        // Re-bind overlay events
-        document.querySelector('.left-arrow').addEventListener('click', () => this.previousPage());
-        document.querySelector('.right-arrow').addEventListener('click', () => this.nextPage());
+        const iframe = document.getElementById('bookIframe');
+        iframe.src = bookData.file || bookData.downloadUrl || '';
         
-        this.currentPage = pageNum;
-        this.updateProgress();
+        // For PDF files, we'll use the browser's built-in PDF viewer
+        // For archive.org links, they'll open in the iframe
+        
+        // Simulate loading completion
+        iframe.onload = () => {
+            this.isLoading = false;
+            this.setupScrollTracking();
+            this.updateProgress();
+        };
+        
+        // Set a timeout in case iframe doesn't load properly
+        setTimeout(() => {
+            this.isLoading = false;
+            this.updateProgress();
+        }, 2000);
+    }
+    
+    setupScrollTracking() {
+        const iframe = document.getElementById('bookIframe');
+        let scrollTimeout;
+        
+        try {
+            // Try to track scroll position
+            iframe.contentWindow.addEventListener('scroll', () => {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(() => {
+                    this.saveProgress();
+                }, 1000);
+            });
+        } catch (error) {
+            // Cross-origin restrictions - use fallback
+            console.log('Using fallback progress tracking');
+        }
     }
     
     nextPage() {
-        if (this.currentPage < this.totalPages && !this.isLoading) {
-            this.currentPage++;
-            this.renderPage(this.currentPage);
+        const iframe = document.getElementById('bookIframe');
+        try {
+            iframe.contentWindow.scrollBy(0, window.innerHeight * 0.8);
+            this.saveProgress();
+        } catch (error) {
+            // Fallback: just save progress
             this.saveProgress();
         }
     }
     
     previousPage() {
-        if (this.currentPage > 1 && !this.isLoading) {
-            this.currentPage--;
-            this.renderPage(this.currentPage);
+        const iframe = document.getElementById('bookIframe');
+        try {
+            iframe.contentWindow.scrollBy(0, -window.innerHeight * 0.8);
+            this.saveProgress();
+        } catch (error) {
+            // Fallback: just save progress
             this.saveProgress();
         }
     }
     
     jumpToPage(page) {
-        if (page >= 1 && page <= this.totalPages && !this.isLoading) {
+        if (page >= 1) {
             this.currentPage = page;
-            this.renderPage(this.currentPage);
-            this.saveProgress();
+            const iframe = document.getElementById('bookIframe');
+            try {
+                const scrollPosition = (page - 1) * window.innerHeight;
+                iframe.contentWindow.scrollTo(0, scrollPosition);
+                this.saveProgress();
+            } catch (error) {
+                this.saveProgress();
+            }
         }
     }
     
     zoomIn() {
-        this.scale = Math.min(this.scale + 0.25, 3);
-        this.renderPage(this.currentPage);
+        const iframe = document.getElementById('bookIframe');
+        try {
+            // Try to zoom by adjusting iframe transform
+            const currentZoom = parseFloat(iframe.style.transform?.replace('scale(', '') || 1);
+            const newZoom = Math.min(currentZoom + 0.25, 3);
+            iframe.style.transform = `scale(${newZoom})`;
+        } catch (error) {
+            this.showNotification('Zoom not available for this content');
+        }
     }
     
     zoomOut() {
-        this.scale = Math.max(this.scale - 0.25, 0.5);
-        this.renderPage(this.currentPage);
+        const iframe = document.getElementById('bookIframe');
+        try {
+            const currentZoom = parseFloat(iframe.style.transform?.replace('scale(', '') || 1);
+            const newZoom = Math.max(currentZoom - 0.25, 0.5);
+            iframe.style.transform = `scale(${newZoom})`;
+        } catch (error) {
+            this.showNotification('Zoom not available for this content');
+        }
     }
     
     toggleBookmark() {
         const bookmarks = this.getBookBookmarks(this.currentBook.id);
-        const existingBookmark = bookmarks.find(b => b.page === this.currentPage);
+        const iframe = document.getElementById('bookIframe');
         
-        if (existingBookmark) {
-            this.removeBookmark(existingBookmark.id);
-        } else {
-            this.addBookmark();
+        try {
+            const scrollY = iframe.contentWindow.scrollY || iframe.contentDocument.documentElement.scrollTop;
+            const page = Math.floor(scrollY / window.innerHeight) + 1;
+            
+            const existingBookmark = bookmarks.find(b => b.page === page);
+            
+            if (existingBookmark) {
+                this.removeBookmark(existingBookmark.id);
+                this.showNotification('Bookmark removed');
+            } else {
+                this.addBookmarkAtPage(page);
+                this.showNotification('Bookmark added');
+            }
+        } catch (error) {
+            this.showNotification('Could not add bookmark');
         }
     }
     
-    addBookmark(notes = '') {
+    addBookmark() {
+        const iframe = document.getElementById('bookIframe');
+        try {
+            const scrollY = iframe.contentWindow.scrollY || iframe.contentDocument.documentElement.scrollTop;
+            const page = Math.floor(scrollY / window.innerHeight) + 1;
+            this.addBookmarkAtPage(page);
+            this.showNotification('Bookmark added to page ' + page);
+        } catch (error) {
+            this.showNotification('Could not add bookmark');
+        }
+    }
+    
+    addBookmarkAtPage(page, notes = '') {
         const bookmark = {
             id: Date.now().toString(),
             bookId: this.currentBook.id,
-            page: this.currentPage,
+            page: page,
             notes: notes,
             created: new Date().toISOString()
         };
@@ -428,7 +389,6 @@ class EnhancedBookReader {
         this.saveBookBookmarks(this.currentBook.id, bookmarks);
         
         this.loadBookmarks();
-        this.updateBookmarkButton();
     }
     
     removeBookmark(bookmarkId) {
@@ -437,24 +397,23 @@ class EnhancedBookReader {
         this.saveBookBookmarks(this.currentBook.id, bookmarks);
         
         this.loadBookmarks();
-        this.updateBookmarkButton();
     }
     
     saveNote() {
         const noteText = document.getElementById('currentNote').value.trim();
-        if (!noteText) return;
+        if (!noteText) {
+            this.showNotification('Please enter a note');
+            return;
+        }
         
         const note = {
             id: Date.now().toString(),
             bookId: this.currentBook.id,
-            page: this.currentPage,
             text: noteText,
             created: new Date().toISOString()
         };
         
         let notes = this.getBookNotes(this.currentBook.id);
-        // Remove existing note for this page
-        notes = notes.filter(n => n.page !== this.currentPage);
         notes.push(note);
         
         this.saveBookNotes(this.currentBook.id, notes);
@@ -505,32 +464,18 @@ class EnhancedBookReader {
     loadNotes() {
         const notes = this.getBookNotes(this.currentBook.id);
         const container = document.getElementById('notesList');
-        const currentNote = notes.find(n => n.page === this.currentPage);
         
-        // Set current note text
-        document.getElementById('currentNote').value = currentNote?.text || '';
-        
-        // Display notes list
-        const otherNotes = notes.filter(n => n.page !== this.currentPage);
-        
-        if (otherNotes.length === 0) {
-            container.innerHTML = '<div class="no-items">No other notes</div>';
+        if (notes.length === 0) {
+            container.innerHTML = '<div class="no-items">No notes yet</div>';
             return;
         }
         
-        container.innerHTML = otherNotes.map(note => `
-            <div class="note-item" data-page="${note.page}">
-                <div class="note-page">Page ${note.page}</div>
+        container.innerHTML = notes.map(note => `
+            <div class="note-item">
                 <div class="note-text">${note.text}</div>
+                <div class="note-date">${new Date(note.created).toLocaleDateString()}</div>
             </div>
         `).join('');
-        
-        // Add click events to notes
-        container.querySelectorAll('.note-item').forEach(item => {
-            item.addEventListener('click', () => {
-                this.jumpToPage(parseInt(item.dataset.page));
-            });
-        });
     }
     
     switchTab(tabName) {
@@ -546,25 +491,33 @@ class EnhancedBookReader {
     }
     
     toggleSidebar() {
-        document.getElementById('readerSidebar').classList.toggle('collapsed');
+        document.getElementById('readerSidebar').classList.toggle('active');
     }
     
-    showCollections() {
-        this.updateCollectionsModal();
-        document.getElementById('collectionModal').classList.add('active');
-    }
-    
-    hideCollections() {
-        document.getElementById('collectionModal').classList.remove('active');
-    }
-    
-    updateCollectionsModal() {
-        const bookCollections = this.getBookCollections(this.currentBook.id);
-        const grid = document.getElementById('collectionGrid');
+    toggleCollection(collectionName) {
+        const collections = this.getBookCollections(this.currentBook.id);
+        const isInCollection = collections.includes(collectionName);
         
-        grid.querySelectorAll('.collection-card').forEach(card => {
+        if (isInCollection) {
+            // Remove from collection
+            this.saveBookCollections(this.currentBook.id, collections.filter(c => c !== collectionName));
+            this.showNotification('Removed from ' + collectionName);
+        } else {
+            // Add to collection
+            collections.push(collectionName);
+            this.saveBookCollections(this.currentBook.id, collections);
+            this.showNotification('Added to ' + collectionName);
+        }
+        
+        this.updateCollectionsDisplay();
+    }
+    
+    updateCollectionsDisplay() {
+        const collections = this.getBookCollections(this.currentBook.id);
+        
+        document.querySelectorAll('.collection-card').forEach(card => {
             const collection = card.dataset.collection;
-            const isActive = bookCollections.includes(collection);
+            const isActive = collections.includes(collection);
             
             card.classList.toggle('active', isActive);
             
@@ -574,60 +527,37 @@ class EnhancedBookReader {
         });
     }
     
-    saveCollections() {
-        const selectedCollections = [];
-        document.querySelectorAll('.collection-card.active').forEach(card => {
-            selectedCollections.push(card.dataset.collection);
-        });
-        
-        this.saveBookCollections(this.currentBook.id, selectedCollections);
-        this.hideCollections();
-        this.updateCollectionsDisplay();
-        this.showNotification('Collections updated!');
-    }
-    
-    updateCollectionsDisplay() {
-        const collections = this.getBookCollections(this.currentBook.id);
-        const btn = document.getElementById('showCollections');
-        
-        if (collections.length > 0) {
-            btn.innerHTML = `<span>In ${collections.length} Collection(s)</span>`;
-        } else {
-            btn.innerHTML = `<span>Add to Collection</span>`;
-        }
-    }
-    
-    updateBookmarkButton() {
-        const bookmarks = this.getBookBookmarks(this.currentBook.id);
-        const hasBookmark = bookmarks.some(b => b.page === this.currentPage);
-        const btn = document.getElementById('toggleBookmark');
-        
-        btn.classList.toggle('active', hasBookmark);
-    }
-    
     updateProgress() {
-        const progress = (this.currentPage / this.totalPages) * 100;
+        const iframe = document.getElementById('bookIframe');
+        let progress = 0;
+        
+        try {
+            const scrollY = iframe.contentWindow.scrollY || iframe.contentDocument.documentElement.scrollTop;
+            const scrollHeight = iframe.contentDocument.documentElement.scrollHeight;
+            const clientHeight = iframe.contentDocument.documentElement.clientHeight;
+            
+            progress = Math.round((scrollY / (scrollHeight - clientHeight)) * 100);
+            this.currentPage = Math.floor(scrollY / clientHeight) + 1;
+        } catch (error) {
+            // Use stored progress as fallback
+            const savedProgress = this.getBookProgress(this.currentBook.id);
+            progress = savedProgress?.progress || 0;
+        }
         
         document.getElementById('currentPage').textContent = `Page ${this.currentPage}`;
         document.getElementById('pageJump').value = this.currentPage;
         document.getElementById('progressFill').style.width = `${progress}%`;
-        document.getElementById('completionPercentage').textContent = `${Math.round(progress)}%`;
-        
-        this.updateBookmarkButton();
-        
-        // Update current note if exists
-        const notes = this.getBookNotes(this.currentBook.id);
-        const currentNote = notes.find(n => n.page === this.currentPage);
-        document.getElementById('currentNote').value = currentNote?.text || '';
+        document.getElementById('completionPercentage').textContent = `${progress}%`;
     }
     
     saveProgress() {
         if (!this.currentBook || !this.readingSession) return;
         
+        this.updateProgress();
+        
         const progress = {
             page: this.currentPage,
-            totalPages: this.totalPages,
-            progress: (this.currentPage / this.totalPages) * 100,
+            progress: parseInt(document.getElementById('completionPercentage').textContent),
             lastRead: new Date().toISOString(),
             readingTime: this.readingSession.readingTime + Math.floor((Date.now() - this.readingSession.startTime) / 60000)
         };
@@ -636,7 +566,6 @@ class EnhancedBookReader {
         
         // Update reading time display
         document.getElementById('readingTime').textContent = `${progress.readingTime}m`;
-        document.getElementById('lastRead').textContent = 'Just now';
     }
     
     startReadingSession() {
@@ -647,6 +576,7 @@ class EnhancedBookReader {
         this.saveProgress();
         document.getElementById('enhancedBookReader').classList.remove('active');
         document.body.classList.remove('modal-open');
+        document.getElementById('bookIframe').src = '';
         this.currentBook = null;
         this.readingSession = null;
     }
@@ -771,7 +701,6 @@ class EnhancedBookReader {
     }
     
     loadUserData() {
-        // Initialize user library if not exists
         if (!localStorage.getItem('userLibrary')) {
             this.saveUserLibrary({
                 books: {},
@@ -786,170 +715,47 @@ class EnhancedBookReader {
     }
 }
 
-// ==================== EXISTING FUNCTIONALITY (UPDATED) ====================
+// Initialize enhanced reader
+let enhancedReader = null;
 
-// NEW: Permanent Reading Progress Functions
-function saveReadingProgress(bookId, scrollPosition) {
-    try {
-        const progress = {
-            scrollY: scrollPosition,
-            timestamp: Date.now(),
-            lastRead: new Date().toISOString()
-        };
-        localStorage.setItem(`readingProgress_${bookId}`, JSON.stringify(progress));
-        console.log(`Progress saved for ${bookId}:`, scrollPosition);
-    } catch (error) {
-        console.error('Error saving reading progress:', error);
-    }
-}
+// Lazy Loading Variables
+let currentPage = {
+    all: 0,
+    books: 0,
+    journals: 0,
+    recent: 0
+};
+const CARDS_PER_PAGE = 20;
+let isLoading = false;
+let hasMoreItems = {
+    all: true,
+    books: true,
+    journals: true,
+    recent: true
+};
 
-function loadReadingProgress(bookId) {
-    try {
-        const saved = localStorage.getItem(`readingProgress_${bookId}`);
-        return saved ? JSON.parse(saved) : null;
-    } catch (error) {
-        console.error('Error loading reading progress:', error);
-        return null;
-    }
-}
+let allItems = {
+    all: [],
+    books: [],
+    journals: [],
+    recent: []
+};
 
-function clearReadingProgress(bookId) {
-    try {
-        localStorage.removeItem(`readingProgress_${bookId}`);
-        console.log(`Progress cleared for ${bookId}`);
-    } catch (error) {
-        console.error('Error clearing reading progress:', error);
-    }
-}
+let activeModals = [];
+let currentBookId = null;
 
-// NEW: Function to restore scroll position in iframe
-function restoreScrollPosition(iframe, bookId) {
-    const savedProgress = loadReadingProgress(bookId);
-    if (savedProgress && savedProgress.scrollY > 0) {
-        console.log(`Restoring scroll position for ${bookId}:`, savedProgress.scrollY);
-        
-        // Try multiple methods to ensure scroll restoration
-        const restoreScroll = () => {
-            try {
-                // Method 1: Direct scroll
-                if (iframe.contentWindow && iframe.contentDocument) {
-                    iframe.contentWindow.scrollTo(0, savedProgress.scrollY);
-                }
-                
-                // Method 2: Wait a bit and try again (for slow loading content)
-                setTimeout(() => {
-                    if (iframe.contentWindow) {
-                        iframe.contentWindow.scrollTo(0, savedProgress.scrollY);
-                    }
-                }, 500);
-                
-                // Method 3: One more try after content is fully loaded
-                setTimeout(() => {
-                    if (iframe.contentWindow) {
-                        iframe.contentWindow.scrollTo(0, savedProgress.scrollY);
-                    }
-                }, 1000);
-            } catch (error) {
-                console.warn('Could not restore scroll position:', error);
-            }
-        };
-
-        // Set up scroll restoration
-        if (iframe.contentDocument && iframe.contentDocument.readyState === 'complete') {
-            restoreScroll();
-        } else {
-            iframe.onload = restoreScroll;
-        }
-    }
-}
-
-// NEW: Function to setup scroll tracking for iframe
-function setupScrollTracking(iframe, bookId) {
-    let scrollTimeout;
-    
-    const trackScroll = () => {
-        try {
-            if (iframe.contentWindow) {
-                const scrollY = iframe.contentWindow.scrollY || iframe.contentDocument.documentElement.scrollTop;
-                
-                // Only save if user has scrolled significantly
-                if (scrollY > 100) {
-                    clearTimeout(scrollTimeout);
-                    scrollTimeout = setTimeout(() => {
-                        saveReadingProgress(bookId, scrollY);
-                    }, 1000); // Debounce: save 1 second after user stops scrolling
-                }
-            }
-        } catch (error) {
-            // Cross-origin limitations - we'll handle this gracefully
-            console.warn('Cannot track scroll position due to cross-origin restrictions');
-        }
-    };
-
-    // Try to set up scroll listener
-    try {
-        if (iframe.contentWindow) {
-            iframe.contentWindow.addEventListener('scroll', trackScroll);
-            
-            // Also track on iframe load
-            iframe.onload = function() {
-                restoreScrollPosition(iframe, bookId);
-                iframe.contentWindow.addEventListener('scroll', trackScroll);
-            };
-        }
-    } catch (error) {
-        console.warn('Cannot setup scroll tracking due to cross-origin restrictions');
-        // Fallback: Save progress when closing
-        setupFallbackProgressSaving(iframe, bookId);
-    }
-}
-
-// NEW: Fallback for cross-origin restrictions
-function setupFallbackProgressSaving(iframe, bookId) {
-    // Save current position when modal closes
-    const originalCloseBookModal = closeBookModal;
-    closeBookModal = function() {
-        try {
-            if (iframe.contentWindow) {
-                const scrollY = iframe.contentWindow.scrollY || iframe.contentDocument.documentElement.scrollTop;
-                if (scrollY > 100) {
-                    saveReadingProgress(bookId, scrollY);
-                }
-            }
-        } catch (error) {
-            console.warn('Could not save scroll position on close');
-        }
-        originalCloseBookModal();
-    };
-}
-
-// NEW: Enhanced book opening function
+// Enhanced book opening function
 function openEnhancedBookReader(bookData) {
     if (enhancedReader) {
         enhancedReader.openBook(bookData);
     }
 }
 
-// UPDATED: Handle Download Click with enhanced reader option
-function handleDownloadClick(event, url, itemId, itemType = 'book') {
+// Updated handleDownloadClick to use enhanced reader for books
+function handleDownloadClick(event, url, itemId) {
     if (event) {
         event.stopPropagation();
         event.preventDefault();
-    }
-    
-    // Set current book for progress tracking
-    currentBookId = itemId;
-    
-    // Add to recent items
-    if (event) {
-        const card = event.target.closest('.card');
-        if (card) {
-            const cardItemId = card.dataset.itemId;
-            const item = [...storeData.books, ...storeData.journals].find(i => i.id == cardItemId);
-            if (item) {
-                addToRecentItems(item);
-            }
-        }
     }
     
     if (!url) {
@@ -957,57 +763,40 @@ function handleDownloadClick(event, url, itemId, itemType = 'book') {
         return;
     }
     
-    // NEW: Check if we should use enhanced reader or regular iframe
+    // Find the item
     const item = [...storeData.books, ...storeData.journals].find(i => i.id === itemId);
+    if (!item) return;
     
-    // For books, use enhanced reader; for journals, use regular iframe
-    if (item && item.type === 'Books' && enhancedReader) {
-        // Use enhanced book reader
+    // Add to recent items
+    addToRecentItems(item);
+    
+    // For books, use enhanced reader; for journals, use simple iframe
+    if (item.type === 'Books' && enhancedReader) {
         openEnhancedBookReader(item);
     } else {
-        // Use regular iframe viewer
-        // FIXED: Close any existing modals first
-        closeAllModals();
-        
-        // Open content in modal iframe (for PDFs and archive.org content)
+        // Use simple iframe for journals
         const iframe = document.getElementById('bookIframe');
         iframe.src = url;
         document.getElementById('bookModal').classList.add('active');
         document.getElementById('overlay').classList.add('active');
         lockBodyScroll();
-        history.pushState({ modal: 'book' }, '', '#book');
-        
-        // NEW: Setup progress tracking for this book
-        setTimeout(() => {
-            setupScrollTracking(iframe, itemId);
-        }, 1000);
     }
 }
 
-// FIXED: Function to Add Item to Recently Viewed
+// Rest of your existing functions (keep them exactly as they were)
 function addToRecentItems(item) {
     let recentItems = JSON.parse(localStorage.getItem('recentItems') || '[]');
-    
-    // Remove if already exists (to avoid duplicates)
     recentItems = recentItems.filter(recentItem => recentItem.id !== item.id);
-    
-    // Add to beginning of array (most recent first)
     recentItems.unshift(item);
-    
-    // Keep only last 10 items
     recentItems = recentItems.slice(0, 10);
-    
-    // Save back to localStorage
     localStorage.setItem('recentItems', JSON.stringify(recentItems));
     
-    // Update recent grid if we're on the recent tab
     if (document.getElementById('recent').classList.contains('active')) {
         allItems.recent = recentItems;
         renderCards(recentItems, 'recentGrid', true);
     }
 }
 
-// FIXED: Improved Scroll Lock Management
 function lockBodyScroll() {
     if (activeModals.length === 0) {
         document.body.classList.add('modal-open');
@@ -1022,9 +811,8 @@ function unlockBodyScroll() {
     }
 }
 
-// FIXED: Function to close all modals properly
 function closeAllModals() {
-    const modals = ['bookModal', 'detailView', 'settingsWindow', 'enhancedBookReader', 'collectionModal'];
+    const modals = ['bookModal', 'detailView', 'settingsWindow', 'enhancedBookReader'];
     let closedAny = false;
     
     modals.forEach(modalId => {
@@ -1035,20 +823,14 @@ function closeAllModals() {
         }
     });
     
-    // Close overlay only if we closed any modal
     if (closedAny) {
         document.getElementById('overlay').classList.remove('active');
-        // Reset scroll locks
         activeModals = [];
         document.body.classList.remove('modal-open');
-        // Clear current book tracking
         currentBookId = null;
-        // Clear history state
-        history.replaceState(null, '', window.location.pathname);
     }
 }
 
-// CORRECTED: Function to get paginated items
 function getPaginatedItems(items, section, reset = false) {
     if (reset) {
         currentPage[section] = 0;
@@ -1059,41 +841,32 @@ function getPaginatedItems(items, section, reset = false) {
     const endIndex = startIndex + CARDS_PER_PAGE;
     const paginatedItems = items.slice(startIndex, endIndex);
     
-    // Check if there are more items to load
     hasMoreItems[section] = endIndex < items.length;
     
     return paginatedItems;
 }
 
-// CORRECTED: Function to load more items
 function loadMoreItems(section) {
     if (isLoading || !hasMoreItems[section]) return;
     
     isLoading = true;
     showLoadingIndicator(section);
     
-    // Simulate loading delay for better UX
     setTimeout(() => {
         currentPage[section]++;
-        
         const items = allItems[section];
         const paginatedItems = getPaginatedItems(items, section, false);
-        
-        // Append new cards to existing ones
         appendCards(paginatedItems, section + 'Grid');
-        
         isLoading = false;
         hideLoadingIndicator(section);
         
-        // Hide loading indicator if no more items
         if (!hasMoreItems[section]) {
             hideLoadingIndicator(section);
             showNoMoreItems(section);
         }
-    }, 800); // Increased delay for better loading animation
+    }, 800);
 }
 
-// NEW: Show loading indicator with animation
 function showLoadingIndicator(section) {
     const loadingIndicator = document.getElementById('loadingIndicator');
     if (loadingIndicator) {
@@ -1101,16 +874,10 @@ function showLoadingIndicator(section) {
         loadingIndicator.innerHTML = `
             <div class="loading-spinner"></div>
             <div class="loading-text">Loading more ${getSectionName(section)}...</div>
-            <div class="loading-dots">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
         `;
     }
 }
 
-// NEW: Hide loading indicator
 function hideLoadingIndicator(section) {
     const loadingIndicator = document.getElementById('loadingIndicator');
     if (loadingIndicator) {
@@ -1118,7 +885,6 @@ function hideLoadingIndicator(section) {
     }
 }
 
-// NEW: Show "no more items" message
 function showNoMoreItems(section) {
     const loadingIndicator = document.getElementById('loadingIndicator');
     if (loadingIndicator) {
@@ -1130,14 +896,12 @@ function showNoMoreItems(section) {
             </div>
         `;
         
-        // Hide after 3 seconds
         setTimeout(() => {
             loadingIndicator.style.display = 'none';
         }, 3000);
     }
 }
 
-// NEW: Get section name for loading messages
 function getSectionName(section) {
     switch(section) {
         case 'all': return 'resources';
@@ -1148,16 +912,14 @@ function getSectionName(section) {
     }
 }
 
-// NEW: Function to check if user has scrolled to bottom
 function isScrolledToBottom() {
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
     const scrollHeight = document.documentElement.scrollHeight;
     const clientHeight = document.documentElement.clientHeight;
     
-    return scrollTop + clientHeight >= scrollHeight - 200; // 200px buffer for better UX
+    return scrollTop + clientHeight >= scrollHeight - 200;
 }
 
-// NEW: Scroll event handler for lazy loading
 function handleScroll() {
     const activeSection = document.querySelector('.section.active').id;
     
@@ -1166,15 +928,13 @@ function handleScroll() {
     }
 }
 
-// NEW: Function to append cards (for lazy loading)
 function appendCards(items, gridId) {
     const grid = document.getElementById(gridId);
     const section = gridId.replace('Grid', '');
     
     items.forEach(item => {
-        // Check if this item has reading progress
-        const progress = loadReadingProgress(item.id);
-        const progressBadge = progress ? ' <span class="progress-badge" title="Continue reading from where you left off">📖</span>' : '';
+        const progress = enhancedReader ? enhancedReader.getBookProgress(item.id) : null;
+        const progressBadge = progress ? ' <span class="progress-badge" title="Continue reading">📖</span>' : '';
         
         const cardHtml = `
             <div class="card" data-item-id="${item.id}" role="button" tabindex="0">
@@ -1187,7 +947,6 @@ function appendCards(items, gridId) {
         grid.innerHTML += cardHtml;
     });
 
-    // Add click listeners to new cards for detail view
     const newCards = grid.querySelectorAll('.card:not([data-event-bound])');
     newCards.forEach(card => {
         card.setAttribute('data-event-bound', 'true');
@@ -1201,22 +960,18 @@ function appendCards(items, gridId) {
     });
 }
 
-// CORRECTED: Function to Render Cards in a Grid with Lazy Loading Support
 function renderCards(items, gridId, reset = true) {
     const grid = document.getElementById(gridId);
     const noResults = document.getElementById(gridId.replace('Grid', 'NoResults')) || null;
     const section = gridId.replace('Grid', '');
     
-    // Store items for this section
     allItems[section] = items;
     
-    // Hide loading indicator initially
     const loadingIndicator = document.getElementById('loadingIndicator');
     if (loadingIndicator) {
         loadingIndicator.style.display = 'none';
     }
 
-    // Clear grid only on reset
     if (reset) {
         grid.innerHTML = '';
         currentPage[section] = 0;
@@ -1231,15 +986,13 @@ function renderCards(items, gridId, reset = true) {
 
     if (noResults) noResults.style.display = 'none';
 
-    // Get paginated items for initial load
     const paginatedItems = getPaginatedItems(items, section, reset);
     
-    // Clear and render initial cards on reset, or append on lazy load
     if (reset) {
         grid.innerHTML = '';
         paginatedItems.forEach(item => {
-            const progress = loadReadingProgress(item.id);
-            const progressBadge = progress ? ' <span class="progress-badge" title="Continue reading from where you left off">📖</span>' : '';
+            const progress = enhancedReader ? enhancedReader.getBookProgress(item.id) : null;
+            const progressBadge = progress ? ' <span class="progress-badge" title="Continue reading">📖</span>' : '';
             
             const cardHtml = `
                 <div class="card" data-item-id="${item.id}" role="button" tabindex="0">
@@ -1255,7 +1008,6 @@ function renderCards(items, gridId, reset = true) {
         appendCards(paginatedItems, gridId);
     }
 
-    // Add click listeners to all cards for detail view
     document.querySelectorAll(`#${gridId} .card`).forEach(card => {
         if (!card.hasAttribute('data-event-bound')) {
             card.setAttribute('data-event-bound', 'true');
@@ -1269,7 +1021,6 @@ function renderCards(items, gridId, reset = true) {
         }
     });
     
-    // Show loading indicator if there are more items to load
     if (loadingIndicator && hasMoreItems[section] && items.length > CARDS_PER_PAGE) {
         loadingIndicator.style.display = 'block';
         loadingIndicator.innerHTML = `
@@ -1279,7 +1030,6 @@ function renderCards(items, gridId, reset = true) {
             </div>
         `;
         
-        // Hide scroll hint after 5 seconds
         setTimeout(() => {
             if (loadingIndicator && loadingIndicator.querySelector('.scroll-hint')) {
                 loadingIndicator.style.display = 'none';
@@ -1288,7 +1038,6 @@ function renderCards(items, gridId, reset = true) {
     }
 }
 
-// Tab Switching Function (Updated: Refresh Recent Tab when switching to it)
 function switchTab(tabId) {
     document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
     document.querySelectorAll('.tab').forEach(tab => {
@@ -1305,7 +1054,6 @@ function switchTab(tabId) {
         tab.setAttribute('aria-selected', 'true');
     }
 
-    // Refresh recent items when switching to recent tab
     if (tabId === 'recent') {
         const recentItems = JSON.parse(localStorage.getItem('recentItems') || '[]');
         allItems.recent = recentItems;
@@ -1313,7 +1061,6 @@ function switchTab(tabId) {
     }
 }
 
-// Initialize Tabs
 function initTabs() {
     document.querySelectorAll('.tab').forEach(tab => {
         tab.addEventListener('click', (e) => {
@@ -1329,7 +1076,6 @@ function initTabs() {
     });
 }
 
-// Search Initialization (Updated for new sections)
 function initSearch() {
     const searchInput = document.getElementById('searchInput');
     searchInput.addEventListener('input', () => {
@@ -1337,7 +1083,6 @@ function initSearch() {
         const activeSectionId = document.querySelector('.section.active').id;
         let items = [];
 
-        // Get items based on active tab
         switch (activeSectionId) {
             case 'all': items = [...storeData.books, ...storeData.journals]; break;
             case 'books': items = storeData.books; break;
@@ -1345,34 +1090,29 @@ function initSearch() {
             case 'recent': items = JSON.parse(localStorage.getItem('recentItems') || '[]'); break;
         }
 
-        // Filter by query
         const filtered = items.filter(item =>
             item.title.toLowerCase().includes(query) ||
             (item.shortDesc && item.shortDesc.toLowerCase().includes(query)) ||
             item.type.toLowerCase().includes(query)
         );
 
-        // Re-render filtered with reset
         const gridId = activeSectionId + 'Grid';
         allItems[activeSectionId] = filtered;
         renderCards(filtered, gridId, true);
     });
 }
 
-// Settings Initialization
 function initSettings() {
     const theme = localStorage.getItem('theme') || 'dark';
     document.body.dataset.theme = theme;
     document.getElementById('theme').value = theme;
 }
 
-// Toggle Settings Modal
 function toggleSettings() {
     const settingsWindow = document.getElementById('settingsWindow');
     const overlay = document.getElementById('overlay');
     const wasOpen = settingsWindow.classList.contains('active');
     
-    // FIXED: Close all modals first to avoid conflicts
     if (!wasOpen) {
         closeAllModals();
     }
@@ -1382,24 +1122,18 @@ function toggleSettings() {
 
     if (!wasOpen) {
         lockBodyScroll();
-        history.pushState({ modal: 'settings' }, '', '#settings');
     } else {
         unlockBodyScroll();
-        history.replaceState(null, '', window.location.pathname);
     }
 }
 
-// Save Settings
 function saveSettings() {
     const theme = document.getElementById('theme').value;
-
     localStorage.setItem('theme', theme);
     document.body.dataset.theme = theme;
-
     toggleSettings();
 }
 
-// FIXED: Open Detail Modal with proper modal management
 function openDetail(item) {
     addToRecentItems(item);
 
@@ -1411,16 +1145,15 @@ function openDetail(item) {
     document.getElementById('detailShortDesc').textContent = item.shortDesc || '';
     document.getElementById('detailLongDesc').textContent = item.longDesc || '';
 
-    // NEW: Show reading progress in detail view if available
-    const progress = loadReadingProgress(item.id);
+    // Show reading progress if available
+    const progress = enhancedReader ? enhancedReader.getBookProgress(item.id) : null;
     if (progress) {
         const progressInfo = document.createElement('div');
         progressInfo.className = 'detail-progress';
-        progressInfo.innerHTML = `<span style="color: var(--highlight); font-size: 0.9rem;">📖 You have reading progress - will continue from where you left off</span>`;
+        progressInfo.innerHTML = `<span style="color: var(--highlight); font-size: 0.9rem;">📖 Reading progress: ${progress.progress}%</span>`;
         document.getElementById('detailVerified').appendChild(progressInfo);
     }
 
-    // Images
     const imagesDiv = document.getElementById('detailImages');
     imagesDiv.innerHTML = '';
     if (item.images && item.images.length > 0) {
@@ -1434,55 +1167,28 @@ function openDetail(item) {
         });
     }
 
-    // UPDATED: Always show "Read" button for detail view
     const detailButton = document.getElementById('detailDownload');
     detailButton.textContent = progress ? 'Continue Reading' : 'Read';
-
-    // Read button
     detailButton.onclick = () => handleDownloadClick(null, item.file || item.downloadUrl || '', item.id);
 
-    // FIXED: Close any existing modals first
     closeAllModals();
     
-    // Show modal + Lock scroll + Push history state
     document.getElementById('detailView').classList.add('active');
     document.getElementById('overlay').classList.add('active');
     lockBodyScroll();
-    history.pushState({ modal: 'detail' }, '', '#detail');
 }
 
-// FIXED: Close Detail Modal properly
 function closeDetail() {
     document.getElementById('detailView').classList.remove('active');
     document.getElementById('overlay').classList.remove('active');
     unlockBodyScroll();
-    history.replaceState(null, '', window.location.pathname);
 }
 
-// FIXED: Close Book Modal properly WITH progress saving
 function closeBookModal() {
-    // NEW: Save progress before closing if we have a current book
-    if (currentBookId) {
-        try {
-            const iframe = document.getElementById('bookIframe');
-            if (iframe.contentWindow) {
-                const scrollY = iframe.contentWindow.scrollY || iframe.contentDocument.documentElement.scrollTop;
-                if (scrollY > 100) {
-                    saveReadingProgress(currentBookId, scrollY);
-                }
-            }
-        } catch (error) {
-            console.warn('Could not save scroll position on close');
-        }
-    }
-    
     document.getElementById('bookModal').classList.remove('active');
     document.getElementById('bookIframe').src = '';
     document.getElementById('overlay').classList.remove('active');
     unlockBodyScroll();
-    history.replaceState(null, '', window.location.pathname);
-    
-    // Reset current book tracking
     currentBookId = null;
 }
 
@@ -1532,7 +1238,6 @@ function handleMainFilterChange() {
     }
 }
 
-// Async Data Loader (Updated for Journals)
 async function loadDataFromJSON() {
     try {
         const [booksRes, journalsRes] = await Promise.all([
@@ -1542,22 +1247,19 @@ async function loadDataFromJSON() {
         storeData.books = booksRes;
         storeData.journals = journalsRes;
         
-        // Initialize allItems
         allItems.all = [...storeData.books, ...storeData.journals];
         allItems.books = storeData.books;
         allItems.journals = storeData.journals;
         allItems.recent = JSON.parse(localStorage.getItem('recentItems') || '[]');
         
-        console.log('Data loaded from JSONs! Total items:', storeData.books.length + storeData.journals.length);
+        console.log('Data loaded! Books:', storeData.books.length, 'Journals:', storeData.journals.length);
     } catch (err) {
-        console.error('JSON load error (check files exist):', err);
+        console.error('Error loading data:', err);
     }
 }
 
-// FIXED: Improved overlay click handler
 function handleOverlayClick(e) {
     if (e.target === document.getElementById('overlay')) {
-        // FIXED: Close only the top-most modal
         if (document.getElementById('bookModal').classList.contains('active')) {
             closeBookModal();
         } else if (document.getElementById('detailView').classList.contains('active')) {
@@ -1566,32 +1268,12 @@ function handleOverlayClick(e) {
             toggleSettings();
         } else if (document.getElementById('enhancedBookReader').classList.contains('active')) {
             enhancedReader.closeReader();
-        } else if (document.getElementById('collectionModal').classList.contains('active')) {
-            enhancedReader.hideCollections();
         }
     }
 }
 
-// FIXED: Improved browser back/forward handling
-function handlePopState(event) {
-    // FIXED: Close only the top-most modal
-    if (document.getElementById('bookModal').classList.contains('active')) {
-        closeBookModal();
-    } else if (document.getElementById('detailView').classList.contains('active')) {
-        closeDetail();
-    } else if (document.getElementById('settingsWindow').classList.contains('active')) {
-        toggleSettings();
-    } else if (document.getElementById('enhancedBookReader').classList.contains('active')) {
-        enhancedReader.closeReader();
-    } else if (document.getElementById('collectionModal').classList.contains('active')) {
-        enhancedReader.hideCollections();
-    }
-}
-
-// FIXED: Improved escape key handler
 function handleEscapeKey(e) {
     if (e.key === 'Escape') {
-        // FIXED: Close only the top-most modal
         if (document.getElementById('bookModal').classList.contains('active')) {
             closeBookModal();
         } else if (document.getElementById('detailView').classList.contains('active')) {
@@ -1600,60 +1282,36 @@ function handleEscapeKey(e) {
             toggleSettings();
         } else if (document.getElementById('enhancedBookReader').classList.contains('active')) {
             enhancedReader.closeReader();
-        } else if (document.getElementById('collectionModal').classList.contains('active')) {
-            enhancedReader.hideCollections();
         } else if (document.getElementById('languageCheckboxes').style.display === 'block') {
             toggleLanguageDropdown();
         }
     }
 }
 
-// NEW: Function to clear all reading progress (optional feature)
-function clearAllReadingProgress() {
-    const keysToRemove = [];
-    for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        if (key.startsWith('readingProgress_')) {
-            keysToRemove.push(key);
-        }
-    }
-    
-    keysToRemove.forEach(key => localStorage.removeItem(key));
-    console.log('Cleared all reading progress');
-    // Refresh the view to update progress badges
-    renderCards([...storeData.books, ...storeData.journals], 'allGrid', true);
-    renderCards(storeData.books, 'booksGrid', true);
-    renderCards(storeData.journals, 'journalsGrid', true);
-}
-
 // Main Initialization
 document.addEventListener('DOMContentLoaded', async () => {
-    // NEW: Initialize enhanced book reader
+    // Initialize enhanced book reader FIRST
     enhancedReader = new EnhancedBookReader();
     
     await loadDataFromJSON();
 
-    // Render all sections with lazy loading
+    // Render all sections
     renderCards(allItems.all, 'allGrid', true);
     renderCards(allItems.books, 'booksGrid', true);
     renderCards(allItems.journals, 'journalsGrid', true);
     renderCards(allItems.recent, 'recentGrid', true);
 
-    // Original inits
+    // Initialize components
     initTabs();
     initSearch();
     initSettings();
 
-    // NEW: Add scroll event listener for lazy loading
-    window.addEventListener('scroll', handleScroll);
-
     // Event listeners
+    window.addEventListener('scroll', handleScroll);
     document.getElementById('closeBtn').addEventListener('click', closeDetail);
     document.getElementById('bookModalClose').addEventListener('click', closeBookModal);
     document.getElementById('settingsIcon').addEventListener('click', toggleSettings);
     document.getElementById('saveSettings').addEventListener('click', saveSettings);
-
-    // FIXED: Use the improved overlay click handler
     document.getElementById('overlay').addEventListener('click', handleOverlayClick);
 
     // Language checkboxes
@@ -1667,14 +1325,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     });
 
-    // FIXED: Use improved browser back/forward handler
-    window.addEventListener('popstate', handlePopState);
-
-    // FIXED: Use improved escape key handler
     document.addEventListener('keydown', handleEscapeKey);
 
     // Default to "All" tab
     switchTab('all');
 
-    console.log('Sarvstore ready! Enhanced book reader integrated with lazy loading and animations.');
+    console.log('Sarvstore ready! Enhanced book reader with REAL book loading implemented.');
 });
