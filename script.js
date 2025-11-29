@@ -6,10 +6,10 @@ const storeData = {
 
 // NEW: Lazy Loading Variables
 let currentPage = {
-    all: 1,
-    books: 1,
-    journals: 1,
-    recent: 1
+    all: 0,
+    books: 0,
+    journals: 0,
+    recent: 0
 };
 const CARDS_PER_PAGE = 20;
 let isLoading = false;
@@ -18,6 +18,14 @@ let hasMoreItems = {
     books: true,
     journals: true,
     recent: true
+};
+
+// Store all items for each section
+let allItems = {
+    all: [],
+    books: [],
+    journals: [],
+    recent: []
 };
 
 // FIXED: Improved Scroll Lock Management
@@ -179,6 +187,7 @@ function addToRecentItems(item) {
     
     // Update recent grid if we're on the recent tab
     if (document.getElementById('recent').classList.contains('active')) {
+        allItems.recent = recentItems;
         renderCards(recentItems, 'recentGrid', true);
     }
 }
@@ -227,12 +236,12 @@ function closeAllModals() {
 // CORRECTED: Function to get paginated items
 function getPaginatedItems(items, section, reset = false) {
     if (reset) {
-        currentPage[section] = 1;
-        hasMoreItems[section] = true;
+        currentPage[section] = 0;
+        hasMoreItems[section] = items.length > 0;
     }
     
-    const startIndex = 0;
-    const endIndex = currentPage[section] * CARDS_PER_PAGE;
+    const startIndex = currentPage[section] * CARDS_PER_PAGE;
+    const endIndex = startIndex + CARDS_PER_PAGE;
     const paginatedItems = items.slice(startIndex, endIndex);
     
     // Check if there are more items to load
@@ -246,36 +255,82 @@ function loadMoreItems(section) {
     if (isLoading || !hasMoreItems[section]) return;
     
     isLoading = true;
-    const loadingIndicator = document.getElementById('loadingIndicator');
-    if (loadingIndicator) {
-        loadingIndicator.style.display = 'block';
-    }
+    showLoadingIndicator(section);
     
     // Simulate loading delay for better UX
     setTimeout(() => {
         currentPage[section]++;
         
-        let items = [];
-        switch (section) {
-            case 'all': items = [...storeData.books, ...storeData.journals]; break;
-            case 'books': items = storeData.books; break;
-            case 'journals': items = storeData.journals; break;
-            case 'recent': items = JSON.parse(localStorage.getItem('recentItems') || '[]'); break;
-        }
-        
+        const items = allItems[section];
         const paginatedItems = getPaginatedItems(items, section, false);
-        renderCards(paginatedItems, section + 'Grid', false);
+        
+        // Append new cards to existing ones
+        appendCards(paginatedItems, section + 'Grid');
         
         isLoading = false;
-        if (loadingIndicator) {
-            loadingIndicator.style.display = 'none';
-        }
+        hideLoadingIndicator(section);
         
         // Hide loading indicator if no more items
-        if (!hasMoreItems[section] && loadingIndicator) {
-            loadingIndicator.style.display = 'none';
+        if (!hasMoreItems[section]) {
+            hideLoadingIndicator(section);
+            showNoMoreItems(section);
         }
-    }, 300);
+    }, 800); // Increased delay for better loading animation
+}
+
+// NEW: Show loading indicator with animation
+function showLoadingIndicator(section) {
+    const loadingIndicator = document.getElementById('loadingIndicator');
+    if (loadingIndicator) {
+        loadingIndicator.style.display = 'block';
+        loadingIndicator.innerHTML = `
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Loading more ${getSectionName(section)}...</div>
+            <div class="loading-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        `;
+    }
+}
+
+// NEW: Hide loading indicator
+function hideLoadingIndicator(section) {
+    const loadingIndicator = document.getElementById('loadingIndicator');
+    if (loadingIndicator) {
+        loadingIndicator.style.display = 'none';
+    }
+}
+
+// NEW: Show "no more items" message
+function showNoMoreItems(section) {
+    const loadingIndicator = document.getElementById('loadingIndicator');
+    if (loadingIndicator) {
+        loadingIndicator.style.display = 'block';
+        loadingIndicator.innerHTML = `
+            <div class="no-more-items">
+                <i class="fas fa-check-circle"></i>
+                <div>All ${getSectionName(section)} loaded</div>
+            </div>
+        `;
+        
+        // Hide after 3 seconds
+        setTimeout(() => {
+            loadingIndicator.style.display = 'none';
+        }, 3000);
+    }
+}
+
+// NEW: Get section name for loading messages
+function getSectionName(section) {
+    switch(section) {
+        case 'all': return 'resources';
+        case 'books': return 'books';
+        case 'journals': return 'journals';
+        case 'recent': return 'recent items';
+        default: return 'items';
+    }
 }
 
 // NEW: Function to check if user has scrolled to bottom
@@ -284,7 +339,7 @@ function isScrolledToBottom() {
     const scrollHeight = document.documentElement.scrollHeight;
     const clientHeight = document.documentElement.clientHeight;
     
-    return scrollTop + clientHeight >= scrollHeight - 100; // 100px buffer
+    return scrollTop + clientHeight >= scrollHeight - 200; // 200px buffer for better UX
 }
 
 // NEW: Scroll event handler for lazy loading
@@ -296,48 +351,16 @@ function handleScroll() {
     }
 }
 
-// CORRECTED: Function to Render Cards in a Grid with Lazy Loading Support
-function renderCards(items, gridId, reset = true) {
+// NEW: Function to append cards (for lazy loading)
+function appendCards(items, gridId) {
     const grid = document.getElementById(gridId);
-    const noResults = document.getElementById(gridId.replace('Grid', 'NoResults')) || null;
     const section = gridId.replace('Grid', '');
     
-    // NEW: Hide loading indicator when rendering books
-    const loadingIndicator = document.getElementById('loadingIndicator');
-    if (gridId === 'booksGrid' && loadingIndicator && reset) {
-        loadingIndicator.style.display = 'none';
-    }
-
-    // Clear grid only on reset
-    if (reset) {
-        grid.innerHTML = '';
-        currentPage[section] = 1;
-        hasMoreItems[section] = true;
-    }
-
-    if (items.length === 0 && reset) {
-        if (noResults) noResults.style.display = 'block';
-        if (loadingIndicator) loadingIndicator.style.display = 'none';
-        return;
-    }
-
-    if (noResults && reset) noResults.style.display = 'none';
-
-    // Get paginated items
-    const paginatedItems = getPaginatedItems(items, section, reset);
-    
-    // Only add new cards, don't duplicate existing ones
-    const currentCardIds = new Set(Array.from(grid.children).map(card => card.dataset.itemId));
-    
-    paginatedItems.forEach(item => {
-        // Skip if card already exists (to prevent duplicates)
-        if (currentCardIds.has(item.id)) return;
-        
-        // NEW: Check if this item has reading progress
+    items.forEach(item => {
+        // Check if this item has reading progress
         const progress = loadReadingProgress(item.id);
         const progressBadge = progress ? ' <span class="progress-badge" title="Continue reading from where you left off">📖</span>' : '';
         
-        // UPDATED: Always show "Read" button for all educational content
         const cardHtml = `
             <div class="card" data-item-id="${item.id}" role="button" tabindex="0">
                 <img src="${item.logo}" alt="${item.title} logo" class="card-logo" onerror="this.src='https://via.placeholder.com/80?text=Logo'">
@@ -349,14 +372,10 @@ function renderCards(items, gridId, reset = true) {
         grid.innerHTML += cardHtml;
     });
 
-    // Add click listeners to cards for detail view
-    document.querySelectorAll(`#${gridId} .card`).forEach(card => {
-        // Remove existing event listeners to prevent duplicates
-        card.replaceWith(card.cloneNode(true));
-    });
-    
-    // Re-attach event listeners to all cards
-    document.querySelectorAll(`#${gridId} .card`).forEach(card => {
+    // Add click listeners to new cards for detail view
+    const newCards = grid.querySelectorAll('.card:not([data-event-bound])');
+    newCards.forEach(card => {
+        card.setAttribute('data-event-bound', 'true');
         card.addEventListener('click', (e) => {
             if (!e.target.closest('.card-download')) {
                 const itemId = card.dataset.itemId;
@@ -365,14 +384,92 @@ function renderCards(items, gridId, reset = true) {
             }
         });
     });
+}
+
+// CORRECTED: Function to Render Cards in a Grid with Lazy Loading Support
+function renderCards(items, gridId, reset = true) {
+    const grid = document.getElementById(gridId);
+    const noResults = document.getElementById(gridId.replace('Grid', 'NoResults')) || null;
+    const section = gridId.replace('Grid', '');
     
-    // NEW: Show/hide loading indicator based on whether there are more items
-    if (loadingIndicator && gridId === 'booksGrid') {
-        if (!hasMoreItems[section] || items.length <= CARDS_PER_PAGE) {
-            loadingIndicator.style.display = 'none';
-        } else {
-            loadingIndicator.style.display = 'block';
+    // Store items for this section
+    allItems[section] = items;
+    
+    // Hide loading indicator initially
+    const loadingIndicator = document.getElementById('loadingIndicator');
+    if (loadingIndicator) {
+        loadingIndicator.style.display = 'none';
+    }
+
+    // Clear grid only on reset
+    if (reset) {
+        grid.innerHTML = '';
+        currentPage[section] = 0;
+        hasMoreItems[section] = items.length > 0;
+    }
+
+    if (items.length === 0) {
+        if (noResults) noResults.style.display = 'block';
+        if (loadingIndicator) loadingIndicator.style.display = 'none';
+        return;
+    }
+
+    if (noResults) noResults.style.display = 'none';
+
+    // Get paginated items for initial load
+    const paginatedItems = getPaginatedItems(items, section, reset);
+    
+    // Clear and render initial cards on reset, or append on lazy load
+    if (reset) {
+        grid.innerHTML = '';
+        paginatedItems.forEach(item => {
+            const progress = loadReadingProgress(item.id);
+            const progressBadge = progress ? ' <span class="progress-badge" title="Continue reading from where you left off">📖</span>' : '';
+            
+            const cardHtml = `
+                <div class="card" data-item-id="${item.id}" role="button" tabindex="0">
+                    <img src="${item.logo}" alt="${item.title} logo" class="card-logo" onerror="this.src='https://via.placeholder.com/80?text=Logo'">
+                    <div class="card-title">${item.title}${progressBadge}</div>
+                    <div class="card-type">${item.type}${item.verified ? ' <i class="fas fa-check-circle" style="color: #4caf50;"></i> Verified' : ''}</div>
+                    <button class="card-download" onclick="handleDownloadClick(event, '${item.file || item.downloadUrl || ''}', '${item.id}')">Read</button>
+                </div>
+            `;
+            grid.innerHTML += cardHtml;
+        });
+    } else {
+        appendCards(paginatedItems, gridId);
+    }
+
+    // Add click listeners to all cards for detail view
+    document.querySelectorAll(`#${gridId} .card`).forEach(card => {
+        if (!card.hasAttribute('data-event-bound')) {
+            card.setAttribute('data-event-bound', 'true');
+            card.addEventListener('click', (e) => {
+                if (!e.target.closest('.card-download')) {
+                    const itemId = card.dataset.itemId;
+                    const item = [...storeData.books, ...storeData.journals].find(i => i.id == itemId);
+                    if (item) openDetail(item);
+                }
+            });
         }
+    });
+    
+    // Show loading indicator if there are more items to load
+    if (loadingIndicator && hasMoreItems[section] && items.length > CARDS_PER_PAGE) {
+        loadingIndicator.style.display = 'block';
+        loadingIndicator.innerHTML = `
+            <div class="scroll-hint">
+                <i class="fas fa-arrow-down"></i>
+                <div>Scroll down to load more ${getSectionName(section)}</div>
+            </div>
+        `;
+        
+        // Hide scroll hint after 5 seconds
+        setTimeout(() => {
+            if (loadingIndicator && loadingIndicator.querySelector('.scroll-hint')) {
+                loadingIndicator.style.display = 'none';
+            }
+        }, 5000);
     }
 }
 
@@ -393,9 +490,10 @@ function switchTab(tabId) {
         tab.setAttribute('aria-selected', 'true');
     }
 
-    // NEW: Refresh recent items when switching to recent tab
+    // Refresh recent items when switching to recent tab
     if (tabId === 'recent') {
         const recentItems = JSON.parse(localStorage.getItem('recentItems') || '[]');
+        allItems.recent = recentItems;
         renderCards(recentItems, 'recentGrid', true);
     }
 }
@@ -441,6 +539,7 @@ function initSearch() {
 
         // Re-render filtered with reset
         const gridId = activeSectionId + 'Grid';
+        allItems[activeSectionId] = filtered;
         renderCards(filtered, gridId, true);
     });
 }
@@ -642,6 +741,7 @@ function filterBooksByLanguage() {
     if (selected.length > 0) {
         filtered = storeData.books.filter(book => selected.includes((book.language || '').toLowerCase()));
     }
+    allItems.books = filtered;
     renderCards(filtered, 'booksGrid', true);
 }
 
@@ -656,6 +756,7 @@ function handleMainFilterChange() {
         filterBooksByLanguage();
     } else {
         wrapper.style.display = 'none';
+        allItems.books = storeData.books;
         renderCards(storeData.books, 'booksGrid', true);
     }
 }
@@ -669,6 +770,13 @@ async function loadDataFromJSON() {
         ]);
         storeData.books = booksRes;
         storeData.journals = journalsRes;
+        
+        // Initialize allItems
+        allItems.all = [...storeData.books, ...storeData.journals];
+        allItems.books = storeData.books;
+        allItems.journals = storeData.journals;
+        allItems.recent = JSON.parse(localStorage.getItem('recentItems') || '[]');
+        
         console.log('Data loaded from JSONs! Total items:', storeData.books.length + storeData.journals.length);
     } catch (err) {
         console.error('JSON load error (check files exist):', err);
@@ -740,13 +848,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     await loadDataFromJSON();
 
     // Render all sections with lazy loading
-    renderCards([...storeData.books, ...storeData.journals], 'allGrid', true);
-    renderCards(storeData.books, 'booksGrid', true);
-    renderCards(storeData.journals, 'journalsGrid', true);
-    
-    // Initialize recent items from localStorage
-    const recentItems = JSON.parse(localStorage.getItem('recentItems') || '[]');
-    renderCards(recentItems, 'recentGrid', true);
+    renderCards(allItems.all, 'allGrid', true);
+    renderCards(allItems.books, 'booksGrid', true);
+    renderCards(allItems.journals, 'journalsGrid', true);
+    renderCards(allItems.recent, 'recentGrid', true);
 
     // Original inits
     initTabs();
@@ -785,5 +890,5 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Default to "All" tab
     switchTab('all');
 
-    console.log('Sarvstore ready! Lazy loading and permanent reading progress features implemented.');
+    console.log('Sarvstore ready! Fixed lazy loading with multiple loads and animations implemented.');
 });

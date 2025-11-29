@@ -315,6 +315,7 @@ body::-webkit-scrollbar-track {
     border: var(--border);
     position: relative;
     overflow: hidden;
+    animation: fadeIn 0.5s ease-in;
 }
 
 .card::before {
@@ -972,7 +973,7 @@ body.modal-open {
     overflow: hidden;
 }
 
-/* NEW: Lazy Loading Styles */
+/* ENHANCED: Lazy Loading Styles */
 .loading-indicator {
     text-align: center;
     padding: 30px;
@@ -998,9 +999,59 @@ body.modal-open {
     margin: 0 auto 10px;
 }
 
+.loading-text {
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+}
+
+.loading-dots {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+}
+
+.loading-dots span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--highlight);
+    animation: bounce 1.4s infinite ease-in-out both;
+}
+
+.loading-dots span:nth-child(1) { animation-delay: -0.32s; }
+.loading-dots span:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes bounce {
+    0%, 80%, 100% { 
+        transform: scale(0);
+    } 40% { 
+        transform: scale(1.0);
+    }
+}
+
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+.scroll-hint {
+    animation: pulse 2s infinite;
+}
+
+.scroll-hint i {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.no-more-items {
+    color: var(--highlight);
+}
+
+.no-more-items i {
+    font-size: 2rem;
+    margin-bottom: 8px;
+    display: block;
 }
 
 .progress-badge {
@@ -1019,6 +1070,12 @@ body.modal-open {
 .card.loading {
     opacity: 0.7;
     pointer-events: none;
+}
+
+/* NEW: Smooth fade-in animation for new cards */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 /* ==================== RESPONSIVE DESIGN ==================== */
@@ -1199,7 +1256,7 @@ body.modal-open {
         height: 120px;
     }
     
-    /* NEW: Responsive adjustments for lazy loading */
+    /* NEW: Responsive adjustments for loading indicators */
     .loading-indicator {
         padding: 20px;
         font-size: 0.9rem;
@@ -1208,6 +1265,11 @@ body.modal-open {
     .loading-spinner {
         width: 25px;
         height: 25px;
+    }
+    
+    .loading-dots span {
+        width: 6px;
+        height: 6px;
     }
 }
 
