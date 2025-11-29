@@ -339,6 +339,7 @@
     "id": "j17",
     "title": "Simple empirical algorithm to obtain signal envelope in three steps",
     "type": "Journals",
+    "logo": "https://sarvwigyan.github.io/resources/Images/j17.png",
     "verified": true,
     "shortDesc": "By Cecilia Jarne | Proposes a simple, three-step empirical algorithm based on peak detection for obtaining the signal amplitude envelope.",
     "longDesc": "This paper proposes a simple, three-step **empirical algorithm** for obtaining the **signal amplitude envelope** based on **peak detection**. The envelope is noted as a slowly varying signal that should smoothly pass the prominent peaks of the data. This technique has been widely used in **sound analysis** and in the analysis of various physiological data for animal and human studies. The method was implemented using **Python libraries**. The study discusses the selection of parameters necessary to adapt the method for different applications in sound or general **time series analysis** and revisits some traditional envelope extraction methods.",
