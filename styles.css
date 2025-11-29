@@ -972,25 +972,18 @@ body.modal-open {
     overflow: hidden;
 }
 
-/* NEW: Lazy Loading Styles */
 .loading-indicator {
     text-align: center;
     padding: 30px;
-    color: var(--secondary-text);
+    color: #666;
     width: 100%;
     grid-column: 1 / -1;
     display: none;
-    background: var(--card-bg);
-    backdrop-filter: var(--blur);
-    -webkit-backdrop-filter: var(--blur);
-    border-radius: 16px;
-    margin-top: 1rem;
-    border: var(--border);
 }
 
 .loading-spinner {
-    border: 3px solid rgba(255, 255, 255, 0.3);
-    border-top: 3px solid var(--highlight);
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #007bff;
     border-radius: 50%;
     width: 30px;
     height: 30px;
@@ -1001,24 +994,6 @@ body.modal-open {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
-}
-
-.progress-badge {
-    font-size: 0.8em;
-    margin-left: 4px;
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0% { opacity: 0.6; }
-    50% { opacity: 1; }
-    100% { opacity: 0.6; }
-}
-
-/* NEW: Loading state for cards */
-.card.loading {
-    opacity: 0.7;
-    pointer-events: none;
 }
 
 /* ==================== RESPONSIVE DESIGN ==================== */
@@ -1197,17 +1172,6 @@ body.modal-open {
     .detail-images img {
         width: 200px;
         height: 120px;
-    }
-    
-    /* NEW: Responsive adjustments for lazy loading */
-    .loading-indicator {
-        padding: 20px;
-        font-size: 0.9rem;
-    }
-    
-    .loading-spinner {
-        width: 25px;
-        height: 25px;
     }
 }
 
