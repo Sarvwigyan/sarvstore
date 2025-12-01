@@ -1,31 +1,23 @@
 [
     {
-        "id": "b1",
-        "title": "The Art Of Being Perfect(Sanskrit)",
-        "type": "Books",
-        "verified": false,
-        "logo": "https://sarvwigyan.github.io/resources/TheArtOfBeingPerfect.jpg",
-        "shortDesc": "एषा पुस्तिका आत्मविकासस्य, चारित्रशुद्धेः, चित्तनिग्रहस्य च मार्गं प्रकाशयति। श्रद्धा, भक्तिः, तर्कः, भावना च — एतेषां समन्वयेन मानवस्य जीवने पूर्णत्वं साध्यते।",
-        "longDesc": "‘पूर्णत्वकला’ नाम पुस्तकायाः विशेषता या अस्ति यत् सा केवलं बाह्यजीवनस्य नियमपरायणतां न उपदिशति, अपि तु अंतरङ्गस्य आध्यात्मिकविकासं प्रति मानवं प्रेरयति। एषा पुस्तिका श्रद्धाया, भक्तेः, तर्कस्य, भावनायाः च समुच्चयेन आत्मशुद्धिं, चित्तस्थैर्यं, जीवनस्य उद्देशपरिज्ञानं च बोधयति।",
-        "images": [
-            "https://ia800903.us.archive.org/BookReader/BookReaderImages.php?zip=/28/items/the-art-of-being-perfect-1/The%20Art%20Of%20Being%20Perfect%20(1)_jp2.zip&file=The%20Art%20Of%20Being%20Perfect%20(1)_jp2/The%20Art%20Of%20Being%20Perfect%20(1)_0000.jp2&id=the-art-of-being-perfect-1&scale=4&rotate=0",
-            "https://sarvwigyan.github.io/resources/TheArtOfBeingPerfect.jpg",
-            "https://ia800903.us.archive.org/BookReader/BookReaderImages.php?zip=/28/items/the-art-of-being-perfect-1/The%20Art%20Of%20Being%20Perfect%20%281%29_jp2.zip&file=The%20Art%20Of%20Being%20Perfect%20%281%29_jp2/The%20Art%20Of%20Being%20Perfect%20%281%29_0001.jp2&id=the-art-of-being-perfect-1&scale=4&rotate=0",
-            "https://ia800903.us.archive.org/BookReader/BookReaderImages.php?zip=/28/items/the-art-of-being-perfect-1/The%20Art%20Of%20Being%20Perfect%20%281%29_jp2.zip&file=The%20Art%20Of%20Being%20Perfect%20%281%29_jp2/The%20Art%20Of%20Being%20Perfect%20%281%29_0002.jp2&id=the-art-of-being-perfect-1&scale=4&rotate=0",
-            "https://ia800903.us.archive.org/BookReader/BookReaderImages.php?zip=/28/items/the-art-of-being-perfect-1/The%20Art%20Of%20Being%20Perfect%20%281%29_jp2.zip&file=The%20Art%20Of%20Being%20Perfect%20%281%29_jp2/The%20Art%20Of%20Being%20Perfect%20%281%29_0053.jp2&id=the-art-of-being-perfect-1&scale=4&rotate=0",
-            "https://ia800903.us.archive.org/BookReader/BookReaderImages.php?zip=/28/items/the-art-of-being-perfect-1/The%20Art%20Of%20Being%20Perfect%20%281%29_jp2.zip&file=The%20Art%20Of%20Being%20Perfect%20%281%29_jp2/The%20Art%20Of%20Being%20Perfect%20%281%29_0054.jp2&id=the-art-of-being-perfect-1&scale=4&rotate=0"
-        ],
-        "imageAlts": [
-            "Cover page of The Art of Being Perfect in Sanskrit",
-            "Illustration from The Art of Being Perfect in Sanskrit",
-            "First page of The Art of Being Perfect in Sanskrit",
-            "Second page of The Art of Being Perfect in Sanskrit",
-            "Page 53 of The Art of Being Perfect in Sanskrit",
-            "Page 54 of The Art of Being Perfect in Sanskrit"
-        ],
-        "file": "https://sarvwigyan.github.io/resources/Books/The%20Art%20Of%20Being%20Perfect%20Sanskrit.pdf",
-        "language": "Sanskrit"
-    },
+    "id": "b1",
+    "title": "The Hitchhiker’s Guide to the Galaxy",
+    "type": "Books",
+    "verified": true,
+    "logo": "https://sarvwigyan.github.io/resources/Images/b1i1.png",
+    "shortDesc": "By Douglas Adams. The hilarious misadventures of the last surviving Earthman, Arthur Dent, following the demolition of Earth for a hyperspace bypass.",
+    "longDesc": "The first book in Douglas Adams's classic 'trilogy of five' is a wildly inventive science fiction comedy. The story follows **Arthur Dent**, the last surviving human, who is rescued just seconds before the Earth is demolished by the bureaucratic **Vogons** to make way for an interstellar bypass. Along with his alien friend **Ford Prefect** (a researcher for the titular electronic guidebook), Arthur traverses the galaxy, encountering the two-headed President **Zaphod Beeblebrox**, the deeply depressed robot **Marvin**, and learning that the **Answer to the Ultimate Question of Life, the Universe, and Everything is 42**—but the Question itself remains elusive. The book is famous for its absurdist humor and the essential advice inscribed on the Guide's cover: **'Don't Panic.'**",
+    "images": [
+        "https://sarvwigyan.github.io/resources/Images/b1i1.png",
+        "https://sarvwigyan.github.io/resources/Images/b1i1.png"
+    ],
+    "imageAlts": [
+        "Cover of The Hitchhiker’s Guide to the Galaxy, first edition",
+        "A scene or a humorous excerpt from the novel"
+    ],
+    "file": "https://sarvwigyan.github.io/resources/Books/b1.pdf",
+    "language": "English"
+},
     {
         "id": "b2",
         "title": "The Art Of Being Perfect(Hindi)",
