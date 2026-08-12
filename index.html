@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Clarity tracking code for https://sarvstore.netlify.app/ -->
+    <script>
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "sblm2l3woh");
+    </script>
+    <!-- Charset & Viewport -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Title -->
+    <title>Sarvstore – Educational Books & Research Journals by Sarvwigyan</title>
+    <!-- Meta Description -->
+    <meta name="description" content="Explore Sarvstore by Sarvwigyan – your hub for educational books and research journals. Discover knowledge, science, and academic resources in one place.">
+    <!-- Keywords -->
+    <meta name="keywords" content="Sarvstore, Sarvwigyan, science, research journals, books, education, academic resources, knowledge hub">
+    <!-- Author & Robots -->
+    <meta name="author" content="Sarvwigyan">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="theme-color" content="#0a192f">
+    <!-- Bing Webmaster Verification -->
+    <meta name="msvalidate.01" content="C32F6CD84659D81F2BFD84929E418D05" />
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://sarvstore.netlify.app/">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://sarvwigyan.github.io/resources/Sarvstore.png" sizes="32x32">
+    <!-- Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="styles.css">
+    <!-- Open Graph for Facebook & LinkedIn -->
+    <meta property="og:title" content="Sarv Store – Educational Books & Research Journals">
+    <meta property="og:description" content="Books, research journals, and academic resources – all at Sarv Store by Sarvwigyan.">
+    <meta property="og:image" content="https://sarvwigyan.github.io/resources/Sarvstore.png">
+    <meta property="og:url" content="https://sarvwigyan.github.io/sarvstore/">
+    <meta property="og:type" content="website">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Sarv Store – Educational Books & Research Journals">
+    <meta name="twitter:description" content="A one-stop platform by Sarvwigyan for books, research journals, and educational resources.">
+    <meta name="twitter:image" content="https://sarvwigyan.github.io/resources/Sarvstore.png">
+    <!-- Structured Data (JSON-LD for SEO) -->
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "Sarv Store",
+          "url": "https://sarvstore.netlify.app/",
+          "logo": "https://sarvwigyan.github.io/resources/Sarvstore.png",
+          "sameAs": [
+            "https://github.com/sarvwigyan",
+            "https://sarvwigyan.github.io/"
+          ],
+          "description": "Sarv Store by Sarvwigyan is an educational platform offering books, research journals, and academic resources."
+        }
+    </script>
+</head>
+<body>
+    <!-- Main Header: Logo, Search Bar, Settings Gear -->
+    <div class="header">
+        <div class="header-logo">
+            <img src="https://sarvwigyan.github.io/resources/Sarvstore.png" style="width: auto; height: 1.5em;" alt="Sarv Store logo">
+            <h1 style="font-size: larger;">Sarvstore</h1>
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Search books & journals..." id="searchInput" aria-label="Search books and journals">
+        </div>
+        <div class="settings-icon" id="settingsIcon" role="button" aria-label="Open settings"><span class="gear-icon">⚙️</span></div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="tabs" role="tablist">
+        <div class="tab-list">
+            <div class="tab active" data-tab="all" role="tab" aria-selected="true" tabindex="0">All</div>
+            <div class="tab" data-tab="books" role="tab" aria-selected="false" tabindex="0">Books</div>
+            <div class="tab" data-tab="journals" role="tab" aria-selected="false" tabindex="0">Journals</div>
+            <div class="tab" data-tab="recent" role="tab" aria-selected="false" tabindex="0">Recently Viewed</div>
+        </div>
+    </div>
+
+    <!-- Main Content Sections -->
+    <div class="content">
+        <!-- All Section (Active by Default) -->
+        <div class="section active" id="all" role="tabpanel" aria-labelledby="all-tab">
+            <h2 class="section-title">All Resources</h2>
+            <div class="card-grid" id="allGrid"></div>
+            <div class="no-results" id="allNoResults">No results found</div>
+        </div>
+
+        <!-- Books Section (With Filter Bar) -->
+        <div class="section" id="books" role="tabpanel" aria-labelledby="books-tab">
+            <h2 class="section-title">Books</h2>
+            <div class="books-filter-bar">
+                <label for="booksFilter" class="filter-label">📚 Filter:</label>
+                <div class="custom-select-wrapper">
+                    <select id="booksFilter" onchange="handleMainFilterChange()" aria-label="Filter books">
+                        <option value="">All Categories</option>
+                        <option value="language">Language</option>
+                        <option value="genre">Genre</option>
+                        <option value="author">Author</option>
+                    </select>
+                    <i class="fas fa-chevron-down filter-dropdown-icon" id="mainFilterArrow" aria-hidden="true"></i>
+                </div>
+                <div class="custom-select-wrapper" id="languageFilterWrapper" style="display: none;">
+                    <div class="multi-select-trigger" onclick="toggleLanguageDropdown()">
+                        <span id="selectedLanguagesLabel">Select Language</span>
+                        <i class="fas fa-chevron-down filter-dropdown-icon rotate-on-open" id="langDropdownArrow"></i>
+                    </div>
+                    <div class="multi-select-dropdown" id="languageCheckboxes">
+                        <label><input type="checkbox" id="selectAllLanguages" onchange="toggleAllLanguages(this)"> Select All Languages</label>
+                        <label><input type="checkbox" class="lang-checkbox" value="english"> English</label>
+                        <label><input type="checkbox" class="lang-checkbox" value="hindi"> Hindi</label>
+                        <label><input type="checkbox" class="lang-checkbox" value="sanskrit"> Sanskrit</label>
+                    </div>
+                </div>
+            </div>
+            <div class="card-grid" id="booksGrid"></div>
+            <!-- UPDATED: Loading indicator for lazy loading -->
+            <div class="loading-indicator" id="loadingIndicator">
+                <div class="loading-spinner"></div>
+                <div>Loading more books...</div>
+            </div>
+            <div class="no-results" id="booksNoResults">No results found</div>
+        </div>
+
+        <!-- Journals Section -->
+        <div class="section" id="journals" role="tabpanel" aria-labelledby="journals-tab">
+            <h2 class="section-title">Research Journals</h2>
+            <div class="card-grid" id="journalsGrid"></div>
+            <div class="no-results" id="journalsNoResults">No results found</div>
+        </div>
+
+        <!-- Recently Viewed Section -->
+        <div class="section" id="recent" role="tabpanel" aria-labelledby="recent-tab">
+            <h2 class="section-title">Recently Viewed</h2>
+            <div class="card-grid" id="recentGrid"></div>
+            <div class="no-results" id="recentNoResults">No recently viewed items</div>
+        </div>
+    </div>
+
+    <!-- Detail View Modal (For Item Details) -->
+    <div class="detail-view" id="detailView" role="dialog" aria-modal="true">
+        <button class="close-btn" id="closeBtn" aria-label="Close details">×</button>
+        <div class="detail-container">
+            <div class="detail-header">
+                <img class="detail-logo" id="detailLogo" src="" alt="Selected resource logo">
+                <div class="detail-info">
+                    <div class="detail-title" id="detailTitle"></div>
+                    <div class="detail-type" id="detailType"></div>
+                    <div class="detail-verified" id="detailVerified"></div>
+                    <button class="detail-download" id="detailDownload">Read</button>
+                </div>
+            </div>
+            <div class="detail-description">
+                <div class="detail-short-desc" id="detailShortDesc"></div>
+                <div class="detail-long-desc" id="detailLongDesc"></div>
+                <div class="detail-images" id="detailImages"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Book Viewer Modal (For PDFs) -->
+    <div class="book-modal" id="bookModal" role="dialog" aria-modal="true">
+        <div class="book-modal-content">
+            <div class="reader-toolbar">
+                <span class="reader-title" id="readerBookTitle">📖 Digital Reader</span>
+                <div class="reader-controls">
+                    <button class="reader-btn" id="readerZoomOut" title="Zoom Out" aria-label="Zoom out"><i class="fas fa-search-minus"></i></button>
+                    <button class="reader-btn" id="readerZoomReset" title="Reset Zoom" aria-label="Reset zoom"><i class="fas fa-undo"></i></button>
+                    <button class="reader-btn" id="readerZoomIn" title="Zoom In" aria-label="Zoom in"><i class="fas fa-search-plus"></i></button>
+                    <button class="reader-btn" id="readerFullscreen" title="Toggle Fullscreen" aria-label="Toggle fullscreen"><i class="fas fa-expand"></i></button>
+                    <button class="book-modal-close" id="bookModalClose" aria-label="Close book viewer">×</button>
+                </div>
+            </div>
+            <iframe id="bookIframe" class="book-iframe" title="Book viewer"></iframe>
+        </div>
+    </div>
+
+    <!-- Overlay (Darkens Background for Modals) -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Settings Modal -->
+    <div class="settings-window" id="settingsWindow" role="dialog" aria-modal="true">
+        <h2>Settings</h2>
+        <div class="settings-option">
+            <label for="theme">Theme</label>
+            <select id="theme" aria-label="Select theme">
+                <option value="dark">Dark</option>
+                <option value="light">Light</option>
+                <option value="pure">Pure</option>
+            </select>
+        </div>
+        <button id="saveSettings">Save</button>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2023 Sarv Store. All rights reserved.</p>
+        <nav>
+            <a href="https://sarvwigyan.github.io/">Visit Sarvwigyan</a>
+            <a href="https://sarvwigyan.github.io/sarvstore/about.html">About</a>
+            <a href="https://sarvwigyan.github.io/feedback.html">Contact</a>
+            <a href="https://sarvwigyan.github.io/privacy-policy.html">Privacy Policy</a>
+            <a href="https://sarvwigyan.github.io/Community/community.html">Community</a>
+        </nav>
+    </footer>
+
+    <!-- Load Main Script -->
+    <script src="script.js"></script>
+</body>
+</html>
