@@ -897,6 +897,99 @@ function initReaderToolbar() {
     }
 }
 
+// Tab Switching Functions
+function initTabs() {
+    const tabs = document.querySelectorAll('.tab');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const target = tab.getAttribute('data-tab');
+            switchTab(target);
+        });
+    });
+}
+
+function switchTab(tabId) {
+    const tabs = document.querySelectorAll('.tab');
+    const sections = document.querySelectorAll('.section');
+    
+    tabs.forEach(t => {
+        if (t.getAttribute('data-tab') === tabId) {
+            t.classList.add('active');
+            t.setAttribute('aria-selected', 'true');
+        } else {
+            t.classList.remove('active');
+            t.setAttribute('aria-selected', 'false');
+        }
+    });
+
+    sections.forEach(sec => {
+        if (sec.id === tabId) {
+            sec.classList.add('active');
+        } else {
+            sec.classList.remove('active');
+        }
+    });
+}
+
+// Search Functionality
+function initSearch() {
+    const searchInput = document.getElementById('searchInput');
+    if (!searchInput) return;
+
+    searchInput.addEventListener('input', () => {
+        const query = searchInput.value.toLowerCase().trim();
+        if (!query) {
+            renderCards(allItems.all, 'allGrid', true);
+            renderCards(allItems.books, 'booksGrid', true);
+            renderCards(allItems.journals, 'journalsGrid', true);
+            return;
+        }
+
+        const filteredAll = allItems.all.filter(i => 
+            (i.title || '').toLowerCase().includes(query) ||
+            (i.author || '').toLowerCase().includes(query) ||
+            (i.category || i.genre || '').toLowerCase().includes(query)
+        );
+        renderCards(filteredAll, 'allGrid', true);
+    });
+}
+
+// Settings & Theme Management
+function initSettings() {
+    const savedTheme = localStorage.getItem('sarvstore_theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    const select = document.getElementById('theme') || document.getElementById('themeSelect');
+    if (select) {
+        select.value = savedTheme;
+    }
+}
+
+function toggleSettings() {
+    const modal = document.getElementById('settingsWindow');
+    const overlay = document.getElementById('overlay');
+    if (!modal) return;
+    const isActive = modal.classList.contains('active');
+    if (isActive) {
+        modal.classList.remove('active');
+        if (overlay) overlay.classList.remove('active');
+        if (typeof unlockBodyScroll === 'function') unlockBodyScroll();
+    } else {
+        modal.classList.add('active');
+        if (overlay) overlay.classList.add('active');
+        if (typeof lockBodyScroll === 'function') lockBodyScroll();
+    }
+}
+
+function saveSettings() {
+    const select = document.getElementById('theme') || document.getElementById('themeSelect');
+    if (select) {
+        const theme = select.value;
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('sarvstore_theme', theme);
+    }
+    toggleSettings();
+}
+
 // Main Initialization
 document.addEventListener('DOMContentLoaded', async () => {
     await loadDataFromJSON();
