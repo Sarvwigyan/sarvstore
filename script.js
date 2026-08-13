@@ -325,11 +325,11 @@ function showNoMoreItems(section) {
 // NEW: Get section name for loading messages
 function getSectionName(section) {
     switch (section) {
-        case 'all': return 'resources';
-        case 'books': return 'books';
-        case 'journals': return 'journals';
-        case 'recent': return 'recent items';
-        default: return 'items';
+        case 'all': return 'संसाधन';
+        case 'books': return 'ग्रंथ';
+        case 'journals': return 'शोध-पत्रिकाएँ';
+        case 'recent': return 'हाल ही में देखे गए ग्रंथ';
+        default: return 'मद';
     }
 }
 
@@ -359,14 +359,14 @@ function appendCards(items, gridId) {
     items.forEach(item => {
         // Check if this item has reading progress
         const progress = loadReadingProgress(item.id);
-        const progressBadge = progress ? ' <span class="progress-badge" title="Continue reading from where you left off">📖</span>' : '';
+        const progressBadge = progress ? ' <span class="progress-badge" title="अंतिम स्थान से अध्ययन जारी रखें">📖</span>' : '';
 
         const cardHtml = `
             <div class="card" data-item-id="${item.id}" role="button" tabindex="0">
-                <img src="${item.logo}" alt="${item.title} logo" class="card-logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'80\' height=\'80\' viewBox=\'0 0 80 80\'><rect width=\'80\' height=\'80\' fill=\'%231e2a44\'/><text x=\'50%\' y=\'55%\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%2300b4d8\' font-family=\'sans-serif\' font-size=\'28\'>📚</text></svg>'">
+                <img src="${item.logo}" alt="${item.title} प्रतीक" class="card-logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'80\' height=\'80\' viewBox=\'0 0 80 80\'><rect width=\'80\' height=\'80\' fill=\'%231e2a44\'/><text x=\'50%\' y=\'55%\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%2300b4d8\' font-family=\'sans-serif\' font-size=\'28\'>📚</text></svg>'">
                 <div class="card-title">${item.title}${progressBadge}</div>
-                <div class="card-type">${item.type}${item.verified ? ' <i class="fas fa-check-circle" style="color: #4caf50;"></i> Verified' : ''}</div>
-                <button class="card-download" onclick="handleDownloadClick(event, '${item.file || item.downloadUrl || ''}', '${item.id}')">Read</button>
+                <div class="card-type">${item.type}${item.verified ? ' <i class="fas fa-check-circle" style="color: #4caf50;"></i> प्रमाणित' : ''}</div>
+                <button class="card-download" onclick="handleDownloadClick(event, '${item.file || item.downloadUrl || ''}', '${item.id}')">अध्ययन करें</button>
             </div>
         `;
         grid.innerHTML += cardHtml;
@@ -424,14 +424,14 @@ function renderCards(items, gridId, reset = true) {
         grid.innerHTML = '';
         paginatedItems.forEach(item => {
             const progress = loadReadingProgress(item.id);
-            const progressBadge = progress ? ' <span class="progress-badge" title="Continue reading from where you left off">📖</span>' : '';
+            const progressBadge = progress ? ' <span class="progress-badge" title="अंतिम स्थान से अध्ययन जारी रखें">📖</span>' : '';
 
             const cardHtml = `
                 <div class="card" data-item-id="${item.id}" role="button" tabindex="0">
-                    <img src="${item.logo}" alt="${item.title} logo" class="card-logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'80\' height=\'80\' viewBox=\'0 0 80 80\'><rect width=\'80\' height=\'80\' fill=\'%231e2a44\'/><text x=\'50%\' y=\'55%\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%2300b4d8\' font-family=\'sans-serif\' font-size=\'28\'>📚</text></svg>'">
+                    <img src="${item.logo}" alt="${item.title} प्रतीक" class="card-logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'80\' height=\'80\' viewBox=\'0 0 80 80\'><rect width=\'80\' height=\'80\' fill=\'%231e2a44\'/><text x=\'50%\' y=\'55%\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%2300b4d8\' font-family=\'sans-serif\' font-size=\'28\'>📚</text></svg>'">
                     <div class="card-title">${item.title}${progressBadge}</div>
-                    <div class="card-type">${item.type}${item.verified ? ' <i class="fas fa-check-circle" style="color: #4caf50;"></i> Verified' : ''}</div>
-                    <button class="card-download" onclick="handleDownloadClick(event, '${item.file || item.downloadUrl || ''}', '${item.id}')">Read</button>
+                    <div class="card-type">${item.type}${item.verified ? ' <i class="fas fa-check-circle" style="color: #4caf50;"></i> प्रमाणित' : ''}</div>
+                    <button class="card-download" onclick="handleDownloadClick(event, '${item.file || item.downloadUrl || ''}', '${item.id}')">अध्ययन करें</button>
                 </div>
             `;
             grid.innerHTML += cardHtml;

@@ -465,7 +465,7 @@
 <body>
     <div class="calculator">
         <div class="header">
-            <span><img src="Resources/SarvCalc.png" style="width: 24px; height: 24px;"> Sarv Calculator</span>
+            <span><img src="Resources/SarvCalc.png" style="width: 24px; height: 24px;"> सर्व-विज्ञान गणक</span>
             <span class="hamburger" onclick="toggleSidebar()">☰</span>
         </div>
         <div class="main">
@@ -529,28 +529,28 @@
             <div class="tab-content" id="ai-tab"></div>
         </div>
         <div class="sidebar" id="sidebar">
-            <h4>Menu</h4>
-            <div class="sidebar-item active" style="display: flex; align-items: center; gap: 5px;" onclick="switchTab('calc')"><img src="Resources/standardcal.png" style="width: 24px; height: 24px;"> Standard</div>
+            <h4>कार्य विकल्प</h4>
+            <div class="sidebar-item active" style="display: flex; align-items: center; gap: 5px;" onclick="switchTab('calc')"><img src="Resources/standardcal.png" style="width: 24px; height: 24px;"> मानक गणक</div>
             <div class="scientific-toggle">
                 <input type="checkbox" id="scientific-check" class="scientific-checkbox" onchange="toggleScientific()">
-                <label style="display: flex; align-items: center; gap: 5px;" for="scientific-check"><img src="Resources/mathematics.png" style="width: 24px; height: 24px;"> Mathematics</label>
+                <label style="display: flex; align-items: center; gap: 5px;" for="scientific-check"><img src="Resources/mathematics.png" style="width: 24px; height: 24px;"> उच्च गणित (वैज्ञानिक)</label>
             </div>
             <hr>
-            <div class="sidebar-item" style="display: flex; align-items: center; gap: 5px;" onclick="switchTab('unit')">⚖️ Unit Converter</div>
-            <div class="sidebar-item" style="display: flex; align-items: center; gap: 5px;" onclick="switchTab('currency')"><img src="Resources/currency.png" style="width: 20px; height: 20px;"> Currency</div>
-            <div class="sidebar-item" style="display: flex; align-items: center; gap: 5px;" onclick="switchTab('ai')"><img src="Resources/ai.png" style="width: 16px; height: 16px;"> Asq AI</div>
+            <div class="sidebar-item" style="display: flex; align-items: center; gap: 5px;" onclick="switchTab('unit')">⚖️ माप-तौल रूपांतरक</div>
+            <div class="sidebar-item" style="display: flex; align-items: center; gap: 5px;" onclick="switchTab('currency')"><img src="Resources/currency.png" style="width: 20px; height: 20px;"> मुद्रा रूपांतरक</div>
+            <div class="sidebar-item" style="display: flex; align-items: center; gap: 5px;" onclick="switchTab('ai')"><img src="Resources/ai.png" style="width: 16px; height: 16px;"> सर्व-एआई सहायक</div>
         </div>
         <div class="sidebar-mobile" id="sidebar-mobile">
-            <h4>Menu</h4>
-            <div class="sidebar-item active" style="display: flex; align-items: center; gap: 5px;" onclick="switchTab('calc')"><img src="Resources/standardcal.png" style="width: 24px; height: 24px;"> Standard</div>
+            <h4>कार्य विकल्प</h4>
+            <div class="sidebar-item active" style="display: flex; align-items: center; gap: 5px;" onclick="switchTab('calc')"><img src="Resources/standardcal.png" style="width: 24px; height: 24px;"> मानक गणक</div>
             <div class="scientific-toggle">
                 <input type="checkbox" id="scientific-check-mobile" class="scientific-checkbox" onchange="toggleScientific()">
-                <label for="scientific-check-mobile" style="display: flex; align-items: center; gap: 5px;"><img src="Resources/mathematics.png" style="width: 16px; height: 16px;"> Mathematics</label>
+                <label for="scientific-check-mobile" style="display: flex; align-items: center; gap: 5px;"><img src="Resources/mathematics.png" style="width: 16px; height: 16px;"> उच्च गणित (वैज्ञानिक)</label>
             </div>
             <hr>
-            <div class="sidebar-item" style="display: flex; align-items: center; gap: 5px;" onclick="switchTab('unit')">⚖️ Unit Converter</div>
-            <div class="sidebar-item" style="display: flex; align-items: center; gap: 5px;" onclick="switchTab('currency')"><img src="Resources/currency.png" style="width: 20px; height: 20px;"> Currency</div>
-            <div class="sidebar-item" style="display: flex; align-items: center; gap: 5px;" onclick="switchTab('ai')"><img src="Resources/ai.png" style="width: 20px; height: 20px;"> Asq AI</div>
+            <div class="sidebar-item" style="display: flex; align-items: center; gap: 5px;" onclick="switchTab('unit')">⚖️ माप-तौल रूपांतरक</div>
+            <div class="sidebar-item" style="display: flex; align-items: center; gap: 5px;" onclick="switchTab('currency')"><img src="Resources/currency.png" style="width: 20px; height: 20px;"> मुद्रा रूपांतरक</div>
+            <div class="sidebar-item" style="display: flex; align-items: center; gap: 5px;" onclick="switchTab('ai')"><img src="Resources/ai.png" style="width: 20px; height: 20px;"> सर्व-एआई सहायक</div>
         </div>
     </div>
     <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
@@ -559,15 +559,15 @@
     <template id="unit-template">
         <div class="converter-grid">
             <select id="unit-type" onchange="updateUnitOptions()">
-                <option value="length">Length</option>
-                <option value="weight">Weight/Mass</option>
-                <option value="volume">Volume</option>
-                <option value="area">Area</option>
-                <option value="speed">Speed</option>
-                <option value="time">Time</option>
-                <option value="energy">Energy</option>
-                <option value="pressure">Pressure</option>
-                <option value="power">Power</option>
+                <option value="length">लंबाई (दूरी)</option>
+                <option value="weight">द्रव्यमान / भार</option>
+                <option value="volume">आयतन</option>
+                <option value="area">क्षेत्रफल</option>
+                <option value="speed">चाल / गति</option>
+                <option value="time">समय</option>
+                <option value="energy">ऊर्जा</option>
+                <option value="pressure">दाब</option>
+                <option value="power">शक्ति</option>
             </select>
             <div class="converter-row">
                 <input type="number" id="unit-input" value="0" oninput="convertUnit()">

@@ -66,22 +66,22 @@
     <!-- Main Header: Logo, Search Bar, Settings Gear -->
     <div class="header">
         <div class="header-logo">
-            <img src="https://sarvwigyan.github.io/resources/Sarvstore.png" style="width: auto; height: 1.5em;" alt="Sarv Store logo">
-            <h1 style="font-size: larger;">Sarvstore</h1>
+            <img src="https://sarvwigyan.github.io/resources/Sarvstore.png" style="width: auto; height: 1.5em;" alt="सर्व-भंडार प्रतीक">
+            <h1 style="font-size: larger;">सर्व-भंडार</h1>
         </div>
         <div class="search-bar">
-            <input type="text" placeholder="Search books & journals..." id="searchInput" aria-label="Search books and journals">
+            <input type="text" placeholder="ग्रंथों, पुस्तकों एवं शोध-पत्रिकाओं की खोज करें... (Ctrl + K)" id="searchInput" aria-label="ग्रंथों व पत्रिकाओं की खोज करें">
         </div>
-        <div class="settings-icon" id="settingsIcon" role="button" aria-label="Open settings"><span class="gear-icon">⚙️</span></div>
+        <div class="settings-icon" id="settingsIcon" role="button" aria-label="विन्यास खोलें"><span class="gear-icon">⚙️</span></div>
     </div>
 
     <!-- Navigation Tabs -->
     <div class="tabs" role="tablist">
         <div class="tab-list">
-            <div class="tab active" data-tab="all" role="tab" aria-selected="true" tabindex="0">All</div>
-            <div class="tab" data-tab="books" role="tab" aria-selected="false" tabindex="0">Books</div>
-            <div class="tab" data-tab="journals" role="tab" aria-selected="false" tabindex="0">Journals</div>
-            <div class="tab" data-tab="recent" role="tab" aria-selected="false" tabindex="0">Recently Viewed</div>
+            <div class="tab active" data-tab="all" role="tab" aria-selected="true" tabindex="0">समस्त</div>
+            <div class="tab" data-tab="books" role="tab" aria-selected="false" tabindex="0">ग्रंथ व पुस्तकें</div>
+            <div class="tab" data-tab="journals" role="tab" aria-selected="false" tabindex="0">शोध-पत्रिकाएँ</div>
+            <div class="tab" data-tab="recent" role="tab" aria-selected="false" tabindex="0">हाल ही में देखे गए</div>
         </div>
     </div>
 
@@ -89,35 +89,35 @@
     <div class="content">
         <!-- All Section (Active by Default) -->
         <div class="section active" id="all" role="tabpanel" aria-labelledby="all-tab">
-            <h2 class="section-title">All Resources</h2>
+            <h2 class="section-title">समस्त शैक्षणिक संसाधन</h2>
             <div class="card-grid" id="allGrid"></div>
-            <div class="no-results" id="allNoResults">No results found</div>
+            <div class="no-results" id="allNoResults">कोई परिणाम नहीं मिला</div>
         </div>
 
         <!-- Books Section (With Filter Bar) -->
         <div class="section" id="books" role="tabpanel" aria-labelledby="books-tab">
-            <h2 class="section-title">Books</h2>
+            <h2 class="section-title">ग्रंथ व पुस्तकें</h2>
             <div class="books-filter-bar">
-                <label for="booksFilter" class="filter-label">📚 Filter:</label>
+                <label for="booksFilter" class="filter-label">📚 वर्गीकरण:</label>
                 <div class="custom-select-wrapper">
-                    <select id="booksFilter" onchange="handleMainFilterChange()" aria-label="Filter books">
-                        <option value="">All Categories</option>
-                        <option value="language">Language</option>
-                        <option value="genre">Genre</option>
-                        <option value="author">Author</option>
+                    <select id="booksFilter" onchange="handleMainFilterChange()" aria-label="ग्रंथ वर्गीकृत करें">
+                        <option value="">समस्त श्रेणियाँ</option>
+                        <option value="language">भाषा आधार</option>
+                        <option value="genre">विषय / वर्ग</option>
+                        <option value="author">लेखक / रचनाकार</option>
                     </select>
                     <i class="fas fa-chevron-down filter-dropdown-icon" id="mainFilterArrow" aria-hidden="true"></i>
                 </div>
                 <div class="custom-select-wrapper" id="languageFilterWrapper" style="display: none;">
                     <div class="multi-select-trigger" onclick="toggleLanguageDropdown()">
-                        <span id="selectedLanguagesLabel">Select Language</span>
+                        <span id="selectedLanguagesLabel">भाषा चुनें</span>
                         <i class="fas fa-chevron-down filter-dropdown-icon rotate-on-open" id="langDropdownArrow"></i>
                     </div>
                     <div class="multi-select-dropdown" id="languageCheckboxes">
-                        <label><input type="checkbox" id="selectAllLanguages" onchange="toggleAllLanguages(this)"> Select All Languages</label>
-                        <label><input type="checkbox" class="lang-checkbox" value="english"> English</label>
-                        <label><input type="checkbox" class="lang-checkbox" value="hindi"> Hindi</label>
-                        <label><input type="checkbox" class="lang-checkbox" value="sanskrit"> Sanskrit</label>
+                        <label><input type="checkbox" id="selectAllLanguages" onchange="toggleAllLanguages(this)"> समस्त भाषाएँ चुनें</label>
+                        <label><input type="checkbox" class="lang-checkbox" value="english"> अंग्रेज़ी</label>
+                        <label><input type="checkbox" class="lang-checkbox" value="hindi"> हिंदी</label>
+                        <label><input type="checkbox" class="lang-checkbox" value="sanskrit"> संस्कृत</label>
                     </div>
                 </div>
             </div>
@@ -125,37 +125,37 @@
             <!-- UPDATED: Loading indicator for lazy loading -->
             <div class="loading-indicator" id="loadingIndicator">
                 <div class="loading-spinner"></div>
-                <div>Loading more books...</div>
+                <div>ग्रंथ लोड किए जा रहे हैं...</div>
             </div>
-            <div class="no-results" id="booksNoResults">No results found</div>
+            <div class="no-results" id="booksNoResults">कोई परिणाम नहीं मिला</div>
         </div>
 
         <!-- Journals Section -->
         <div class="section" id="journals" role="tabpanel" aria-labelledby="journals-tab">
-            <h2 class="section-title">Research Journals</h2>
+            <h2 class="section-title">समीक्षित शोध-पत्रिकाएँ</h2>
             <div class="card-grid" id="journalsGrid"></div>
-            <div class="no-results" id="journalsNoResults">No results found</div>
+            <div class="no-results" id="journalsNoResults">कोई परिणाम नहीं मिला</div>
         </div>
 
         <!-- Recently Viewed Section -->
         <div class="section" id="recent" role="tabpanel" aria-labelledby="recent-tab">
-            <h2 class="section-title">Recently Viewed</h2>
+            <h2 class="section-title">हाल ही में देखे गए ग्रंथ</h2>
             <div class="card-grid" id="recentGrid"></div>
-            <div class="no-results" id="recentNoResults">No recently viewed items</div>
+            <div class="no-results" id="recentNoResults">हाल ही में कोई ग्रंथ नहीं देखा गया</div>
         </div>
     </div>
 
     <!-- Detail View Modal (For Item Details) -->
     <div class="detail-view" id="detailView" role="dialog" aria-modal="true">
-        <button class="close-btn" id="closeBtn" aria-label="Close details">×</button>
+        <button class="close-btn" id="closeBtn" aria-label="विवरण बंद करें">×</button>
         <div class="detail-container">
             <div class="detail-header">
-                <img class="detail-logo" id="detailLogo" src="" alt="Selected resource logo">
+                <img class="detail-logo" id="detailLogo" src="" alt="चयनित संसाधन प्रतीक">
                 <div class="detail-info">
                     <div class="detail-title" id="detailTitle"></div>
                     <div class="detail-type" id="detailType"></div>
                     <div class="detail-verified" id="detailVerified"></div>
-                    <button class="detail-download" id="detailDownload">Read</button>
+                    <button class="detail-download" id="detailDownload">अध्ययन करें</button>
                 </div>
             </div>
             <div class="detail-description">
@@ -170,16 +170,16 @@
     <div class="book-modal" id="bookModal" role="dialog" aria-modal="true">
         <div class="book-modal-content">
             <div class="reader-toolbar">
-                <span class="reader-title" id="readerBookTitle">📖 Digital Reader</span>
+                <span class="reader-title" id="readerBookTitle">📖 डिजिटल ग्रंथ वाचक</span>
                 <div class="reader-controls">
-                    <button class="reader-btn" id="readerZoomOut" title="Zoom Out" aria-label="Zoom out"><i class="fas fa-search-minus"></i></button>
-                    <button class="reader-btn" id="readerZoomReset" title="Reset Zoom" aria-label="Reset zoom"><i class="fas fa-undo"></i></button>
-                    <button class="reader-btn" id="readerZoomIn" title="Zoom In" aria-label="Zoom in"><i class="fas fa-search-plus"></i></button>
-                    <button class="reader-btn" id="readerFullscreen" title="Toggle Fullscreen" aria-label="Toggle fullscreen"><i class="fas fa-expand"></i></button>
-                    <button class="book-modal-close" id="bookModalClose" aria-label="Close book viewer">×</button>
+                    <button class="reader-btn" id="readerZoomOut" title="छोटा करें" aria-label="छोटा करें"><i class="fas fa-search-minus"></i></button>
+                    <button class="reader-btn" id="readerZoomReset" title="सामान्य आकार" aria-label="सामान्य आकार"><i class="fas fa-undo"></i></button>
+                    <button class="reader-btn" id="readerZoomIn" title="बड़ा करें" aria-label="बड़ा करें"><i class="fas fa-search-plus"></i></button>
+                    <button class="reader-btn" id="readerFullscreen" title="पूर्ण स्क्रीन" aria-label="पूर्ण स्क्रीन"><i class="fas fa-expand"></i></button>
+                    <button class="book-modal-close" id="bookModalClose" aria-label="वाचक बंद करें">×</button>
                 </div>
             </div>
-            <iframe id="bookIframe" class="book-iframe" title="Book viewer"></iframe>
+            <iframe id="bookIframe" class="book-iframe" title="ग्रंथ वाचक"></iframe>
         </div>
     </div>
 
@@ -189,40 +189,39 @@
     <!-- Settings Modal -->
     <div class="settings-window" id="settingsWindow" role="dialog" aria-modal="true">
         <div class="settings-header">
-            <h3><i class="fas fa-palette"></i> Store Appearance & Settings</h3>
-            <button class="settings-close-btn" onclick="toggleSettings()" aria-label="Close settings">×</button>
+            <h3><i class="fas fa-palette"></i> भंडार विन्यास एवं दृश्य रूप</h3>
+            <button class="settings-close-btn" onclick="toggleSettings()" aria-label="विन्यास बंद करें">×</button>
         </div>
         <div class="settings-body">
             <div class="settings-option">
-                <label for="theme"><i class="fas fa-moon"></i> Interface Theme</label>
-                <select id="theme" class="settings-select" aria-label="Select theme">
-                    <option value="light">🎓 Academic Light (Default)</option>
-                    <option value="dark">🌙 Dark Mode / Indigo Slate</option>
-                    <option value="pure">✨ Pure White Minimalist</option>
+                <label for="theme"><i class="fas fa-moon"></i> मंच दृश्य शैली</label>
+                <select id="theme" class="settings-select" aria-label="शैली चुनें">
+                    <option value="light">🎓 अकादमिक प्रकाश (मूल शैली)</option>
+                    <option value="dark">🌙 गहरा नील / स्लेट शैली</option>
+                    <option value="pure">✨ शुद्ध श्वेत शैली</option>
                 </select>
             </div>
             <div class="settings-option">
-                <label><i class="fas fa-history"></i> Reading Progress</label>
+                <label><i class="fas fa-history"></i> पठन प्रगति रिकॉर्ड</label>
                 <button class="clear-progress-btn" onclick="clearAllReadingProgress()">
-                    <i class="fas fa-trash-alt"></i> Clear All Saved Reading Progress
+                    <i class="fas fa-trash-alt"></i> समस्त सहेजी गई पठन प्रगति साफ़ करें
                 </button>
             </div>
         </div>
         <div class="settings-footer">
-            <button id="saveSettings" class="save-settings-btn"><i class="fas fa-check"></i> Save & Apply Settings</button>
+            <button id="saveSettings" class="save-settings-btn"><i class="fas fa-check"></i> विन्यास सहेजें एवं लागू करें</button>
         </div>
     </div>
 
     <!-- Footer -->
     <footer>
-        <p>© 2023 Sarv Store. All rights reserved.</p>
+        <p>© २०२६ सर्व-भंडार। सर्वाधिकार सुरक्षित।</p>
         <nav>
-            <a href="https://sarvwigyan.github.io/">Visit Sarvwigyan</a>
-            <a href="https://sarvwigyan.github.io/sarvstore/about.html">About</a>
-            <a href="https://sarvwigyan.github.io/feedback.html">Contact</a>
-            <a href="https://sarvwigyan.github.io/privacy-policy.html">Privacy Policy</a>
-            <a href="https://sarvwigyan.github.io/Community/community.html">Community</a>
-        </nav>
+            <a href="https://sarvwigyan.github.io/">सर्वविज्ञान मुख्य पृष्ठ</a>
+            <a href="https://sarvwigyan.github.io/sarvstore/about.html">हमारे विषय में</a>
+            <a href="https://sarvwigyan.github.io/feedback.html">प्रतिक्रिया एवं संदेश</a>
+            <a href="https://sarvwigyan.github.io/privacy-policy.html">गोपनीयता नीति</a>
+            <a href="https://sarvwigyan.github.io/Community/community.html">शिक्षार्थी संघ</a>
     </footer>
 
     <!-- Load Main Script -->
