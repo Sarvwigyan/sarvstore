@@ -1,1042 +1,1057 @@
-// Global Data Object (Now only Books and Journals)
-const storeData = {
-    books: [], // Populated from books.json
-    journals: [] // Populated from journals.json
-};
+/* =================================================================
+   कोष (Kosh) — v3.5
+   Fixed: master/displayed data split (search no longer corrupts state),
+          inline onerror → JS event delegation, faster image fallback.
+   All original features preserved.
+   ================================================================= */
+(function () {
+    'use strict';
 
-// NEW: Lazy Loading Variables
-let currentPage = {
-    all: 0,
-    books: 0,
-    journals: 0,
-    recent: 0
-};
-const CARDS_PER_PAGE = 20;
-let isLoading = false;
-let hasMoreItems = {
-    all: true,
-    books: true,
-    journals: true,
-    recent: true
-};
+    /* ---------- tiny DOM helpers ---------- */
+    const $  = (s, c) => (c || document).querySelector(s);
+    const $$ = (s, c) => Array.prototype.slice.call((c || document).querySelectorAll(s));
 
-// Store all items for each section
-let allItems = {
-    all: [],
-    books: [],
-    journals: [],
-    recent: []
-};
+    /* ---------- fallback image (inline SVG, works offline) ---------- */
+    const FALLBACK_IMG = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(
+        '<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80">' +
+        '<rect width="80" height="80" rx="8" fill="#FBF6EC"/>' +
+        '<text x="50%" y="56%" dominant-baseline="middle" text-anchor="middle" ' +
+        'fill="#C5442C" font-family="serif" font-size="38" font-weight="bold">\u0950</text>' +
+        '</svg>'
+    );
 
-// FIXED: Improved Scroll Lock Management
-let activeModals = [];
+    /* =============================================================
+       1. THEME
+       ============================================================= */
+    const THEME_KEY = 'sarvwigyan-theme';
+    const VALID_THEMES = ['light', 'dark', 'pure'];
 
-// NEW: Track current book for progress saving
-let currentBookId = null;
-
-// NEW: Permanent Reading Progress Functions
-function saveReadingProgress(bookId, scrollPosition) {
-    try {
-        const progress = {
-            scrollY: scrollPosition,
-            timestamp: Date.now(),
-            lastRead: new Date().toISOString()
-        };
-        localStorage.setItem(`readingProgress_${bookId}`, JSON.stringify(progress));
-        console.log(`Progress saved for ${bookId}:`, scrollPosition);
-    } catch (error) {
-        console.error('Error saving reading progress:', error);
-    }
-}
-
-function loadReadingProgress(bookId) {
-    try {
-        const saved = localStorage.getItem(`readingProgress_${bookId}`);
-        return saved ? JSON.parse(saved) : null;
-    } catch (error) {
-        console.error('Error loading reading progress:', error);
-        return null;
-    }
-}
-
-function clearReadingProgress(bookId) {
-    try {
-        localStorage.removeItem(`readingProgress_${bookId}`);
-        console.log(`Progress cleared for ${bookId}`);
-    } catch (error) {
-        console.error('Error clearing reading progress:', error);
-    }
-}
-
-// NEW: Function to restore scroll position in iframe
-function restoreScrollPosition(iframe, bookId) {
-    const savedProgress = loadReadingProgress(bookId);
-    if (savedProgress && savedProgress.scrollY > 0) {
-        console.log(`Restoring scroll position for ${bookId}:`, savedProgress.scrollY);
-
-        // Try multiple methods to ensure scroll restoration
-        const restoreScroll = () => {
-            try {
-                // Method 1: Direct scroll
-                if (iframe.contentWindow && iframe.contentDocument) {
-                    iframe.contentWindow.scrollTo(0, savedProgress.scrollY);
-                }
-
-                // Method 2: Wait a bit and try again (for slow loading content)
-                setTimeout(() => {
-                    if (iframe.contentWindow) {
-                        iframe.contentWindow.scrollTo(0, savedProgress.scrollY);
-                    }
-                }, 500);
-
-                // Method 3: One more try after content is fully loaded
-                setTimeout(() => {
-                    if (iframe.contentWindow) {
-                        iframe.contentWindow.scrollTo(0, savedProgress.scrollY);
-                    }
-                }, 1000);
-            } catch (error) {
-                console.warn('Could not restore scroll position:', error);
-            }
-        };
-
-        // Set up scroll restoration
-        if (iframe.contentDocument && iframe.contentDocument.readyState === 'complete') {
-            restoreScroll();
-        } else {
-            iframe.onload = restoreScroll;
-        }
-    }
-}
-
-// NEW: Function to setup scroll tracking for iframe
-function setupScrollTracking(iframe, bookId) {
-    let scrollTimeout;
-
-    const trackScroll = () => {
+    function readTheme() {
         try {
-            if (iframe.contentWindow) {
-                const scrollY = iframe.contentWindow.scrollY || iframe.contentDocument.documentElement.scrollTop;
+            const t = localStorage.getItem(THEME_KEY);
+            if (VALID_THEMES.indexOf(t) !== -1) return t;
+        } catch (_) {}
+        return 'light';
+    }
 
-                // Only save if user has scrolled significantly
-                if (scrollY > 100) {
-                    clearTimeout(scrollTimeout);
-                    scrollTimeout = setTimeout(() => {
-                        saveReadingProgress(bookId, scrollY);
-                    }, 1000); // Debounce: save 1 second after user stops scrolling
-                }
-            }
-        } catch (error) {
-            // Cross-origin limitations - we'll handle this gracefully
-            console.warn('Cannot track scroll position due to cross-origin restrictions');
-        }
-    };
+    function applyTheme(theme) {
+        if (VALID_THEMES.indexOf(theme) === -1) theme = 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+        try { localStorage.setItem(THEME_KEY, theme); } catch (_) {}
+        const sel = document.getElementById('theme');
+        if (sel) sel.value = theme;
+    }
 
-    // Try to set up scroll listener
-    try {
-        if (iframe.contentWindow) {
-            iframe.contentWindow.addEventListener('scroll', trackScroll);
+    applyTheme(readTheme());
 
-            // Also track on iframe load
-            iframe.onload = function () {
-                restoreScrollPosition(iframe, bookId);
-                iframe.contentWindow.addEventListener('scroll', trackScroll);
+    /* =============================================================
+       2. STATE
+       ============================================================= */
+    const storeData = { books: [], journals: [] };
+
+    /* Master list — never mutated by search/render */
+    const allItems = { all: [], books: [], journals: [], recent: [] };
+
+    /* What is currently rendered in the DOM (may be filtered/searched) */
+    const displayedItems = { all: [], books: [], journals: [], recent: [] };
+
+    const CARDS_PER_PAGE = 20;
+    const currentPage  = { all: 0, books: 0, journals: 0, recent: 0 };
+    const hasMoreItems = { all: true, books: true, journals: true, recent: true };
+
+    let isLoading = false;
+    let activeModals = [];
+    let currentBookId = null;
+    let readerScale = 1.0;
+
+    /* =============================================================
+       3. READING PROGRESS
+       ============================================================= */
+    const SarvwigyanProgress = (function () {
+        const syncEndpoint = null;   // set a URL to enable remote sync
+
+        function keyFor(id) { return 'readingProgress_' + id; }
+
+        function save(bookId, data) {
+            const payload = {
+                scrollY: Math.max(0, data.scrollY || 0),
+                percent: Math.max(0, Math.min(100, Math.round(data.percent || 0))),
+                timestamp: Date.now(),
+                lastRead: new Date().toISOString()
             };
-        }
-    } catch (error) {
-        console.warn('Cannot setup scroll tracking due to cross-origin restrictions');
-        // Fallback: Save progress when closing
-        setupFallbackProgressSaving(iframe, bookId);
-    }
-}
+            try { localStorage.setItem(keyFor(bookId), JSON.stringify(payload)); } catch (_) {}
 
-// NEW: Fallback for cross-origin restrictions
-function setupFallbackProgressSaving(iframe, bookId) {
-    // Save current position when modal closes
-    const originalCloseBookModal = closeBookModal;
-    closeBookModal = function () {
+            if (syncEndpoint) {
+                fetch(syncEndpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(Object.assign({ bookId: bookId }, payload)),
+                    keepalive: true
+                }).catch(function () {});
+            }
+        }
+
+        function load(bookId) {
+            try {
+                const raw = localStorage.getItem(keyFor(bookId));
+                return raw ? JSON.parse(raw) : null;
+            } catch (_) { return null; }
+        }
+
+        function clear(bookId) {
+            try { localStorage.removeItem(keyFor(bookId)); } catch (_) {}
+        }
+
+        function clearAll() {
+            const remove = [];
+            for (let i = 0; i < localStorage.length; i++) {
+                const k = localStorage.key(i);
+                if (k && k.indexOf('readingProgress_') === 0) remove.push(k);
+            }
+            remove.forEach(function (k) { localStorage.removeItem(k); });
+        }
+
+        function estimatePercent(p) {
+            if (!p) return 0;
+            if (typeof p.percent === 'number') return p.percent;
+            return Math.min(100, Math.round(((p.scrollY || 0) / 8000) * 100));
+        }
+
+        return { save: save, load: load, clear: clear, clearAll: clearAll, estimatePercent: estimatePercent };
+    })();
+
+    /* =============================================================
+       4. IFRAME SCROLL TRACKING
+       ============================================================= */
+    function restoreScrollPosition(iframe, bookId) {
+        const p = SarvwigyanProgress.load(bookId);
+        if (!p || p.scrollY <= 0) return;
+
+        function restore() {
+            try {
+                if (iframe.contentWindow) iframe.contentWindow.scrollTo(0, p.scrollY);
+            } catch (_) {}
+            setTimeout(function () {
+                try { if (iframe.contentWindow) iframe.contentWindow.scrollTo(0, p.scrollY); } catch (_) {}
+            }, 500);
+            setTimeout(function () {
+                try { if (iframe.contentWindow) iframe.contentWindow.scrollTo(0, p.scrollY); } catch (_) {}
+            }, 1200);
+        }
+
+        try {
+            if (iframe.contentDocument && iframe.contentDocument.readyState === 'complete') restore();
+            else iframe.onload = restore;
+        } catch (_) {}
+    }
+
+    function setupScrollTracking(iframe, bookId) {
+        let debounceTimer;
+
+        function track() {
+            try {
+                if (!iframe.contentWindow) return;
+                const win = iframe.contentWindow;
+                const doc = iframe.contentDocument;
+                const y = win.scrollY || doc.documentElement.scrollTop;
+                const docH = Math.max(doc.documentElement.scrollHeight, (doc.body && doc.body.scrollHeight) || 0);
+                const viewport = win.innerHeight || 800;
+                const total = Math.max(1, docH - viewport);
+                const percent = Math.min(100, Math.round((y / total) * 100));
+
+                if (y > 100) {
+                    clearTimeout(debounceTimer);
+                    debounceTimer = setTimeout(function () {
+                        SarvwigyanProgress.save(bookId, { scrollY: y, percent: percent });
+                    }, 900);
+                }
+            } catch (_) {}
+        }
+
         try {
             if (iframe.contentWindow) {
-                const scrollY = iframe.contentWindow.scrollY || iframe.contentDocument.documentElement.scrollTop;
-                if (scrollY > 100) {
-                    saveReadingProgress(bookId, scrollY);
-                }
+                iframe.contentWindow.addEventListener('scroll', track, { passive: true });
+                iframe.onload = function () {
+                    restoreScrollPosition(iframe, bookId);
+                    try {
+                        iframe.contentWindow.addEventListener('scroll', track, { passive: true });
+                    } catch (_) {}
+                };
             }
-        } catch (error) {
-            console.warn('Could not save scroll position on close');
-        }
-        originalCloseBookModal();
-    };
-}
+        } catch (_) {}
+    }
 
-// FIXED: Function to Add Item to Recently Viewed
-function addToRecentItems(item) {
-    let recentItems = JSON.parse(localStorage.getItem('recentItems') || '[]');
+    /* =============================================================
+       5. RECENT ITEMS
+       ============================================================= */
+    function addToRecentItems(item) {
+        if (!item || !item.id) return;
 
-    // Remove if already exists (to avoid duplicates)
-    recentItems = recentItems.filter(recentItem => recentItem.id !== item.id);
+        let recentItems = [];
+        try { recentItems = JSON.parse(localStorage.getItem('recentItems') || '[]'); } catch (_) {}
 
-    // Add to beginning of array (most recent first)
-    recentItems.unshift(item);
+        recentItems = recentItems.filter(function (r) { return r.id !== item.id; });
+        recentItems.unshift(item);
+        recentItems = recentItems.slice(0, 10);
 
-    // Keep only last 10 items
-    recentItems = recentItems.slice(0, 10);
+        try { localStorage.setItem('recentItems', JSON.stringify(recentItems)); } catch (_) {}
 
-    // Save back to localStorage
-    localStorage.setItem('recentItems', JSON.stringify(recentItems));
-
-    // Update recent grid if we're on the recent tab
-    if (document.getElementById('recent').classList.contains('active')) {
         allItems.recent = recentItems;
-        renderCards(recentItems, 'recentGrid', true);
-    }
-}
 
-// FIXED: Improved Scroll Lock Management
-function lockBodyScroll() {
-    if (activeModals.length === 0) {
-        document.body.classList.add('modal-open');
-    }
-    activeModals.push('lock');
-}
-
-function unlockBodyScroll() {
-    activeModals.pop();
-    if (activeModals.length === 0) {
-        document.body.classList.remove('modal-open');
-    }
-}
-
-// FIXED: Function to close all modals properly
-function closeAllModals() {
-    const modals = ['bookModal', 'detailView', 'settingsWindow'];
-    let closedAny = false;
-
-    modals.forEach(modalId => {
-        const modal = document.getElementById(modalId);
-        if (modal.classList.contains('active')) {
-            modal.classList.remove('active');
-            closedAny = true;
+        const recentEl = document.getElementById('recent');
+        if (recentEl && recentEl.classList.contains('active')) {
+            renderCards(recentItems, 'recentGrid', true);
         }
-    });
-
-    // Close overlay only if we closed any modal
-    if (closedAny) {
-        document.getElementById('overlay').classList.remove('active');
-        // Reset scroll locks
-        activeModals = [];
-        document.body.classList.remove('modal-open');
-        // Clear current book tracking
-        currentBookId = null;
-        // Clear history state
-        history.replaceState(null, '', window.location.pathname);
-    }
-}
-
-// CORRECTED: Function to get paginated items
-function getPaginatedItems(items, section, reset = false) {
-    if (reset) {
-        currentPage[section] = 0;
-        hasMoreItems[section] = items.length > 0;
     }
 
-    const startIndex = currentPage[section] * CARDS_PER_PAGE;
-    const endIndex = startIndex + CARDS_PER_PAGE;
-    const paginatedItems = items.slice(startIndex, endIndex);
-
-    // Check if there are more items to load
-    hasMoreItems[section] = endIndex < items.length;
-
-    return paginatedItems;
-}
-
-// CORRECTED: Function to load more items
-function loadMoreItems(section) {
-    if (isLoading || !hasMoreItems[section]) return;
-
-    isLoading = true;
-    showLoadingIndicator(section);
-
-    // Simulate loading delay for better UX
-    setTimeout(() => {
-        currentPage[section]++;
-
-        const items = allItems[section];
-        const paginatedItems = getPaginatedItems(items, section, false);
-
-        // Append new cards to existing ones
-        appendCards(paginatedItems, section + 'Grid');
-
-        isLoading = false;
-        hideLoadingIndicator(section);
-
-        // Hide loading indicator if no more items
-        if (!hasMoreItems[section]) {
-            hideLoadingIndicator(section);
-            showNoMoreItems(section);
-        }
-    }, 800); // Increased delay for better loading animation
-}
-
-// NEW: Show loading indicator with animation
-function showLoadingIndicator(section) {
-    const loadingIndicator = document.getElementById('loadingIndicator');
-    if (loadingIndicator) {
-        loadingIndicator.style.display = 'block';
-        loadingIndicator.innerHTML = `
-            <div class="loading-spinner"></div>
-            <div class="loading-text">Loading more ${getSectionName(section)}...</div>
-            <div class="loading-dots">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        `;
+    /* =============================================================
+       6. SCROLL LOCK
+       ============================================================= */
+    function lockBodyScroll() {
+        if (activeModals.length === 0) document.body.classList.add('modal-open');
+        activeModals.push('lock');
     }
-}
 
-// NEW: Hide loading indicator
-function hideLoadingIndicator(section) {
-    const loadingIndicator = document.getElementById('loadingIndicator');
-    if (loadingIndicator) {
-        loadingIndicator.style.display = 'none';
+    function unlockBodyScroll() {
+        activeModals.pop();
+        if (activeModals.length === 0) document.body.classList.remove('modal-open');
     }
-}
 
-// NEW: Show "no more items" message
-function showNoMoreItems(section) {
-    const loadingIndicator = document.getElementById('loadingIndicator');
-    if (loadingIndicator) {
-        loadingIndicator.style.display = 'block';
-        loadingIndicator.innerHTML = `
-            <div class="no-more-items">
-                <i class="fas fa-check-circle"></i>
-                <div>All ${getSectionName(section)} loaded</div>
-            </div>
-        `;
-
-        // Hide after 3 seconds
-        setTimeout(() => {
-            loadingIndicator.style.display = 'none';
-        }, 3000);
-    }
-}
-
-// NEW: Get section name for loading messages
-function getSectionName(section) {
-    switch (section) {
-        case 'all': return 'संसाधन';
-        case 'books': return 'ग्रंथ';
-        case 'journals': return 'शोध-पत्रिकाएँ';
-        case 'recent': return 'हाल ही में देखे गए ग्रंथ';
-        default: return 'मद';
-    }
-}
-
-// NEW: Function to check if user has scrolled to bottom
-function isScrolledToBottom() {
-    const scrollTop = window.scrollY || document.documentElement.scrollTop;
-    const scrollHeight = document.documentElement.scrollHeight;
-    const clientHeight = document.documentElement.clientHeight;
-
-    return scrollTop + clientHeight >= scrollHeight - 200; // 200px buffer for better UX
-}
-
-// NEW: Scroll event handler for lazy loading
-function handleScroll() {
-    const activeSection = document.querySelector('.section.active').id;
-
-    if (isScrolledToBottom() && hasMoreItems[activeSection] && !isLoading) {
-        loadMoreItems(activeSection);
-    }
-}
-
-// NEW: Function to append cards (for lazy loading)
-function appendCards(items, gridId) {
-    const grid = document.getElementById(gridId);
-    const section = gridId.replace('Grid', '');
-
-    items.forEach(item => {
-        // Check if this item has reading progress
-        const progress = loadReadingProgress(item.id);
-        const progressBadge = progress ? ' <span class="progress-badge" title="अंतिम स्थान से अध्ययन जारी रखें">📖</span>' : '';
-
-        const cardHtml = `
-            <div class="card" data-item-id="${item.id}" role="button" tabindex="0">
-                <img src="${item.logo}" alt="${item.title} प्रतीक" class="card-logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'80\' height=\'80\' viewBox=\'0 0 80 80\'><rect width=\'80\' height=\'80\' fill=\'%231e2a44\'/><text x=\'50%\' y=\'55%\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%2300b4d8\' font-family=\'sans-serif\' font-size=\'28\'>📚</text></svg>'">
-                <div class="card-title">${item.title}${progressBadge}</div>
-                <div class="card-type">${item.type}${item.verified ? ' <i class="fas fa-check-circle" style="color: #4caf50;"></i> प्रमाणित' : ''}</div>
-                <button class="card-download" onclick="handleDownloadClick(event, '${item.file || item.downloadUrl || ''}', '${item.id}')">अध्ययन करें</button>
-            </div>
-        `;
-        grid.innerHTML += cardHtml;
-    });
-
-    // Add click listeners to new cards for detail view
-    const newCards = grid.querySelectorAll('.card:not([data-event-bound])');
-    newCards.forEach(card => {
-        card.setAttribute('data-event-bound', 'true');
-        card.addEventListener('click', (e) => {
-            if (!e.target.closest('.card-download')) {
-                const itemId = card.dataset.itemId;
-                const item = [...storeData.books, ...storeData.journals].find(i => i.id == itemId);
-                if (item) openDetail(item);
+    function closeAllModals() {
+        const ids = ['bookModal', 'detailView', 'settingsWindow'];
+        let closedAny = false;
+        ids.forEach(function (id) {
+            const m = document.getElementById(id);
+            if (m && m.classList.contains('active')) {
+                m.classList.remove('active');
+                closedAny = true;
             }
         });
-    });
-}
-
-// CORRECTED: Function to Render Cards in a Grid with Lazy Loading Support
-function renderCards(items, gridId, reset = true) {
-    const grid = document.getElementById(gridId);
-    const noResults = document.getElementById(gridId.replace('Grid', 'NoResults')) || null;
-    const section = gridId.replace('Grid', '');
-
-    // Store items for this section
-    allItems[section] = items;
-
-    // Hide loading indicator initially
-    const loadingIndicator = document.getElementById('loadingIndicator');
-    if (loadingIndicator) {
-        loadingIndicator.style.display = 'none';
-    }
-
-    // Clear grid only on reset
-    if (reset) {
-        grid.innerHTML = '';
-        currentPage[section] = 0;
-        hasMoreItems[section] = items.length > 0;
-    }
-
-    if (items.length === 0) {
-        if (noResults) noResults.style.display = 'block';
-        if (loadingIndicator) loadingIndicator.style.display = 'none';
-        return;
-    }
-
-    if (noResults) noResults.style.display = 'none';
-
-    // Get paginated items for initial load
-    const paginatedItems = getPaginatedItems(items, section, reset);
-
-    // Clear and render initial cards on reset, or append on lazy load
-    if (reset) {
-        grid.innerHTML = '';
-        paginatedItems.forEach(item => {
-            const progress = loadReadingProgress(item.id);
-            const progressBadge = progress ? ' <span class="progress-badge" title="अंतिम स्थान से अध्ययन जारी रखें">📖</span>' : '';
-
-            const cardHtml = `
-                <div class="card" data-item-id="${item.id}" role="button" tabindex="0">
-                    <img src="${item.logo}" alt="${item.title} प्रतीक" class="card-logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'80\' height=\'80\' viewBox=\'0 0 80 80\'><rect width=\'80\' height=\'80\' fill=\'%231e2a44\'/><text x=\'50%\' y=\'55%\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%2300b4d8\' font-family=\'sans-serif\' font-size=\'28\'>📚</text></svg>'">
-                    <div class="card-title">${item.title}${progressBadge}</div>
-                    <div class="card-type">${item.type}${item.verified ? ' <i class="fas fa-check-circle" style="color: #4caf50;"></i> प्रमाणित' : ''}</div>
-                    <button class="card-download" onclick="handleDownloadClick(event, '${item.file || item.downloadUrl || ''}', '${item.id}')">अध्ययन करें</button>
-                </div>
-            `;
-            grid.innerHTML += cardHtml;
-        });
-    } else {
-        appendCards(paginatedItems, gridId);
-    }
-
-    // Add click listeners to all cards for detail view
-    document.querySelectorAll(`#${gridId} .card`).forEach(card => {
-        if (!card.hasAttribute('data-event-bound')) {
-            card.setAttribute('data-event-bound', 'true');
-            card.addEventListener('click', (e) => {
-                if (!e.target.closest('.card-download')) {
-                    const itemId = card.dataset.itemId;
-                    const item = [...storeData.books, ...storeData.journals].find(i => i.id == itemId);
-                    if (item) openDetail(item);
-                }
-            });
+        if (closedAny) {
+            const ov = document.getElementById('overlay');
+            if (ov) ov.classList.remove('active');
+            activeModals = [];
+            document.body.classList.remove('modal-open');
+            currentBookId = null;
+            try { history.replaceState(null, '', window.location.pathname); } catch (_) {}
         }
-    });
+    }
 
-    // Show loading indicator if there are more items to load
-    if (loadingIndicator && hasMoreItems[section] && items.length > CARDS_PER_PAGE) {
-        loadingIndicator.style.display = 'block';
-        loadingIndicator.innerHTML = `
-            <div class="scroll-hint">
-                <i class="fas fa-arrow-down"></i>
-                <div>Scroll down to load more ${getSectionName(section)}</div>
-            </div>
-        `;
+    /* =============================================================
+       7. SKELETONS
+       ============================================================= */
+    function renderSkeletons(gridId, count) {
+        const grid = document.getElementById(gridId);
+        if (!grid) return;
+        count = count || 12;
+        let html = '';
+        for (let i = 0; i < count; i++) {
+            html += '<div class="skeleton-card" aria-hidden="true">' +
+                '<div class="skeleton-block skeleton-logo"></div>' +
+                '<div class="skeleton-block skeleton-title"></div>' +
+                '<div class="skeleton-block skeleton-title-2"></div>' +
+                '<div class="skeleton-block skeleton-type"></div>' +
+                '<div class="skeleton-block skeleton-btn"></div>' +
+            '</div>';
+        }
+        grid.innerHTML = html;
+    }
 
-        // Hide scroll hint after 5 seconds
-        setTimeout(() => {
-            if (loadingIndicator && loadingIndicator.querySelector('.scroll-hint')) {
-                loadingIndicator.style.display = 'none';
+    /* =============================================================
+       8. PAGINATION
+       ============================================================= */
+    function getPaginatedItems(items, section, reset) {
+        if (reset) {
+            currentPage[section] = 0;
+            hasMoreItems[section] = items.length > 0;
+        }
+        const startIndex = currentPage[section] * CARDS_PER_PAGE;
+        const endIndex = startIndex + CARDS_PER_PAGE;
+        const slice = items.slice(startIndex, endIndex);
+        hasMoreItems[section] = endIndex < items.length;
+        return slice;
+    }
+
+    function loadMoreItems(section) {
+        if (isLoading || !hasMoreItems[section]) return;
+        isLoading = true;
+        showLoadingIndicator(section);
+
+        setTimeout(function () {
+            currentPage[section]++;
+            // FIXED: paginate from what's actually shown, not from master
+            const items = displayedItems[section] || [];
+            const paginated = getPaginatedItems(items, section, false);
+            appendCards(paginated, section + 'Grid');
+
+            isLoading = false;
+            hideLoadingIndicator();
+
+            if (!hasMoreItems[section]) showNoMoreItems(section);
+        }, 500);
+    }
+
+    function showLoadingIndicator(section) {
+        const el = document.getElementById('loadingIndicator');
+        if (!el) return;
+        el.style.display = 'block';
+        el.innerHTML =
+            '<div class="diya-loader" aria-hidden="true">' +
+                '<div class="diya-flame"></div>' +
+                '<div class="diya-base"></div>' +
+            '</div>' +
+            '<div class="loading-text">' + getLoadingMessage(section) + '</div>';
+    }
+
+    function hideLoadingIndicator() {
+        const el = document.getElementById('loadingIndicator');
+        if (el) el.style.display = 'none';
+    }
+
+    function showNoMoreItems(section) {
+        const el = document.getElementById('loadingIndicator');
+        if (!el) return;
+        el.style.display = 'block';
+        el.innerHTML =
+            '<div class="no-more-items">' +
+                '<i class="fas fa-circle-check"></i>' +
+                '<div>' + getCompleteMessage(section) + '</div>' +
+            '</div>';
+        setTimeout(function () { el.style.display = 'none'; }, 2800);
+    }
+
+    function getLoadingMessage(section) {
+        switch (section) {
+            case 'all':      return 'ज्ञान का दीप जल रहा है...';
+            case 'books':    return 'ग्रंथों का संग्रह खुल रहा है...';
+            case 'journals': return 'शोध-पत्रिकाएँ आ रही हैं...';
+            case 'recent':   return 'आपका पठन इतिहास लोड हो रहा है...';
+            default:         return 'लोड हो रहा है...';
+        }
+    }
+
+    function getCompleteMessage(section) {
+        switch (section) {
+            case 'all':      return 'समस्त संसाधन पूर्ण हुए';
+            case 'books':    return 'समस्त ग्रंथ पूर्ण हुए';
+            case 'journals': return 'समस्त शोध-पत्रिकाएँ पूर्ण हुईं';
+            case 'recent':   return 'आपका पठन इतिहास पूर्ण हुआ';
+            default:         return 'सब कुछ लोड हो गया';
+        }
+    }
+
+    function isScrolledToBottom() {
+        const st = window.scrollY || document.documentElement.scrollTop;
+        const sh = document.documentElement.scrollHeight;
+        const ch = document.documentElement.clientHeight;
+        return st + ch >= sh - 250;
+    }
+
+    let scrollRafPending = false;
+    function handleScroll() {
+        if (scrollRafPending) return;
+        scrollRafPending = true;
+        requestAnimationFrame(function () {
+            const active = document.querySelector('.section.active');
+            if (active && isScrolledToBottom() && hasMoreItems[active.id] && !isLoading) {
+                loadMoreItems(active.id);
             }
-        }, 5000);
-    }
-}
-
-// Tab Switching Function (Updated: Refresh Recent Tab when switching to it)
-function switchTab(tabId) {
-    document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
-    document.querySelectorAll('.tab').forEach(tab => {
-        tab.classList.remove('active');
-        tab.setAttribute('aria-selected', 'false');
-    });
-
-    const section = document.getElementById(tabId);
-    if (section) section.classList.add('active');
-
-    const tab = document.querySelector(`[data-tab="${tabId}"]`);
-    if (tab) {
-        tab.classList.add('active');
-        tab.setAttribute('aria-selected', 'true');
-    }
-
-    // Refresh recent items when switching to recent tab
-    if (tabId === 'recent') {
-        const recentItems = JSON.parse(localStorage.getItem('recentItems') || '[]');
-        allItems.recent = recentItems;
-        renderCards(recentItems, 'recentGrid', true);
-    }
-}
-
-// Initialize Tabs
-function initTabs() {
-    document.querySelectorAll('.tab').forEach(tab => {
-        tab.addEventListener('click', (e) => {
-            e.preventDefault();
-            switchTab(tab.dataset.tab);
-        });
-        tab.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                switchTab(tab.dataset.tab);
-            }
-        });
-    });
-}
-
-// Search Initialization (Updated for new sections)
-function initSearch() {
-    const searchInput = document.getElementById('searchInput');
-    searchInput.addEventListener('input', () => {
-        const query = searchInput.value.toLowerCase().trim();
-        const activeSectionId = document.querySelector('.section.active').id;
-        let items = [];
-
-        // Get items based on active tab
-        switch (activeSectionId) {
-            case 'all': items = [...storeData.books, ...storeData.journals]; break;
-            case 'books': items = storeData.books; break;
-            case 'journals': items = storeData.journals; break;
-            case 'recent': items = JSON.parse(localStorage.getItem('recentItems') || '[]'); break;
-        }
-
-        // Filter by query
-        const filtered = items.filter(item =>
-            item.title.toLowerCase().includes(query) ||
-            (item.shortDesc && item.shortDesc.toLowerCase().includes(query)) ||
-            item.type.toLowerCase().includes(query)
-        );
-
-        // Re-render filtered with reset
-        const gridId = activeSectionId + 'Grid';
-        allItems[activeSectionId] = filtered;
-        renderCards(filtered, gridId, true);
-    });
-}
-
-// Settings Initialization
-function initSettings() {
-    const theme = localStorage.getItem('theme') || 'dark';
-    document.body.dataset.theme = theme;
-    document.getElementById('theme').value = theme;
-}
-
-// Toggle Settings Modal
-function toggleSettings() {
-    const settingsWindow = document.getElementById('settingsWindow');
-    const overlay = document.getElementById('overlay');
-    const wasOpen = settingsWindow.classList.contains('active');
-
-    // FIXED: Close all modals first to avoid conflicts
-    if (!wasOpen) {
-        closeAllModals();
-    }
-
-    settingsWindow.classList.toggle('active');
-    overlay.classList.toggle('active');
-
-    if (!wasOpen) {
-        lockBodyScroll();
-        history.pushState({ modal: 'settings' }, '', '#settings');
-    } else {
-        unlockBodyScroll();
-        history.replaceState(null, '', window.location.pathname);
-    }
-}
-
-// Save Settings
-function saveSettings() {
-    const theme = document.getElementById('theme').value;
-
-    localStorage.setItem('theme', theme);
-    document.body.dataset.theme = theme;
-
-    toggleSettings();
-}
-
-// FIXED: Open Detail Modal with proper modal management
-function openDetail(item) {
-    addToRecentItems(item);
-
-    document.getElementById('detailLogo').src = item.logo;
-    document.getElementById('detailLogo').alt = `${item.title} logo`;
-    document.getElementById('detailTitle').textContent = item.title;
-    document.getElementById('detailType').textContent = item.type;
-    document.getElementById('detailVerified').innerHTML = item.verified ? '<i class="fas fa-check-circle" style="color: #4caf50;"></i> Verified' : '';
-    document.getElementById('detailShortDesc').textContent = item.shortDesc || '';
-    document.getElementById('detailLongDesc').textContent = item.longDesc || '';
-
-    // NEW: Show reading progress in detail view if available
-    const progress = loadReadingProgress(item.id);
-    if (progress) {
-        const progressInfo = document.createElement('div');
-        progressInfo.className = 'detail-progress';
-        progressInfo.innerHTML = `<span style="color: var(--highlight); font-size: 0.9rem;">📖 You have reading progress - will continue from where you left off</span>`;
-        document.getElementById('detailVerified').appendChild(progressInfo);
-    }
-
-    // Images
-    const imagesDiv = document.getElementById('detailImages');
-    imagesDiv.innerHTML = '';
-    if (item.images && item.images.length > 0) {
-        item.images.forEach((src, idx) => {
-            const img = document.createElement('img');
-            img.src = src;
-            img.alt = item.imageAlts ? (item.imageAlts[idx] || `${item.title} image ${idx + 1}`) : `${item.title} image ${idx + 1}`;
-            img.style.cursor = 'pointer';
-            img.onclick = () => window.open(src, '_blank');
-            imagesDiv.appendChild(img);
+            scrollRafPending = false;
         });
     }
 
-    // UPDATED: Always show "Read" button for detail view
-    const detailButton = document.getElementById('detailDownload');
-    detailButton.textContent = progress ? 'Continue Reading' : 'Read';
-
-    // Read button
-    detailButton.onclick = () => handleDownloadClick(null, item.file || item.downloadUrl || '', item.id);
-
-    // FIXED: Close any existing modals first
-    closeAllModals();
-
-    // Show modal + Lock scroll + Push history state
-    document.getElementById('detailView').classList.add('active');
-    document.getElementById('overlay').classList.add('active');
-    lockBodyScroll();
-    history.pushState({ modal: 'detail' }, '', '#detail');
-}
-
-// FIXED: Close Detail Modal properly
-function closeDetail() {
-    document.getElementById('detailView').classList.remove('active');
-    document.getElementById('overlay').classList.remove('active');
-    unlockBodyScroll();
-    history.replaceState(null, '', window.location.pathname);
-}
-
-// FIXED: Handle Download Click with proper modal management AND progress tracking
-function handleDownloadClick(event, url, itemId) {
-    if (event) {
-        event.stopPropagation();
-        event.preventDefault();
-    }
-
-    // Set current book for progress tracking
-    currentBookId = itemId;
-
-    // Add to recent items
-    if (event) {
-        const card = event.target.closest('.card');
-        if (card) {
-            const cardItemId = card.dataset.itemId;
-            const item = [...storeData.books, ...storeData.journals].find(i => i.id == cardItemId);
-            if (item) {
-                addToRecentItems(item);
-            }
-        }
-    }
-
-    if (!url) {
-        alert('Content not available yet.');
-        return;
-    }
-
-    // FIXED: Close any existing modals first
-    closeAllModals();
-
-    // Open content in modal iframe (for PDFs and archive.org content)
-    const iframe = document.getElementById('bookIframe');
-    iframe.src = url;
-    iframe.style.transform = 'scale(1)';
-    readerScale = 1.0;
-
-    const currentItem = [...storeData.books, ...storeData.journals].find(i => i.id == itemId);
-    const readerBookTitle = document.getElementById('readerBookTitle');
-    if (readerBookTitle) {
-        readerBookTitle.textContent = currentItem ? `📖 ${currentItem.title}` : '📖 Digital Reader';
-    }
-
-    document.getElementById('bookModal').classList.add('active');
-    document.getElementById('overlay').classList.add('active');
-    lockBodyScroll();
-    history.pushState({ modal: 'book' }, '', '#book');
-
-    // NEW: Setup progress tracking for this book
-    setTimeout(() => {
-        setupScrollTracking(iframe, itemId);
-    }, 1000);
-}
-
-// FIXED: Close Book Modal properly WITH progress saving
-function closeBookModal() {
-    // NEW: Save progress before closing if we have a current book
-    if (currentBookId) {
-        try {
-            const iframe = document.getElementById('bookIframe');
-            if (iframe.contentWindow) {
-                const scrollY = iframe.contentWindow.scrollY || iframe.contentDocument.documentElement.scrollTop;
-                if (scrollY > 100) {
-                    saveReadingProgress(currentBookId, scrollY);
-                }
-            }
-        } catch (error) {
-            console.warn('Could not save scroll position on close');
-        }
-    }
-
-    document.getElementById('bookModal').classList.remove('active');
-    document.getElementById('bookIframe').src = '';
-    document.getElementById('overlay').classList.remove('active');
-    unlockBodyScroll();
-    history.replaceState(null, '', window.location.pathname);
-
-    // Reset current book tracking
-    currentBookId = null;
-}
-
-// Books Filter Functions
-function toggleLanguageDropdown() {
-    const dropdown = document.getElementById('languageCheckboxes');
-    const arrow = document.getElementById('langDropdownArrow');
-    dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-    arrow.classList.toggle('rotate');
-}
-
-function toggleAllLanguages(checkbox) {
-    document.querySelectorAll('.lang-checkbox').forEach(cb => cb.checked = checkbox.checked);
-    updateSelectedLanguagesLabel();
-    filterBooksByLanguage();
-}
-
-function updateSelectedLanguagesLabel() {
-    const checked = document.querySelectorAll('.lang-checkbox:checked');
-    const labels = Array.from(checked).map(cb => cb.value.charAt(0).toUpperCase() + cb.value.slice(1)).join(', ');
-    document.getElementById('selectedLanguagesLabel').textContent = labels || 'Select Language';
-}
-
-function filterBooksByLanguage() {
-    const selected = Array.from(document.querySelectorAll('.lang-checkbox:checked')).map(cb => cb.value.toLowerCase());
-    let filtered = storeData.books;
-    if (selected.length > 0) {
-        filtered = storeData.books.filter(book => selected.includes((book.language || '').toLowerCase()));
-    }
-    allItems.books = filtered;
-    renderCards(filtered, 'booksGrid', true);
-}
-
-function handleMainFilterChange() {
-    const value = document.getElementById('booksFilter').value;
-    const wrapper = document.getElementById('languageFilterWrapper');
-    const arrow = document.getElementById('mainFilterArrow');
-    arrow.classList.toggle('rotate', value !== '');
-
-    if (value === 'language') {
-        wrapper.style.display = 'block';
-        filterBooksByLanguage();
-    } else {
-        wrapper.style.display = 'none';
-        allItems.books = storeData.books;
-        renderCards(storeData.books, 'booksGrid', true);
-    }
-}
-
-// Async Data Loader (Updated for Journals)
-async function loadDataFromJSON() {
-    try {
-        const [booksRes, journalsRes] = await Promise.all([
-            fetch('books.json').then(r => r.json()),
-            fetch('journals.json').then(r => r.json())
-        ]);
-        storeData.books = booksRes;
-        storeData.journals = journalsRes;
-
-        // Initialize allItems
-        allItems.all = [...storeData.books, ...storeData.journals];
-        allItems.books = storeData.books;
-        allItems.journals = storeData.journals;
-        allItems.recent = JSON.parse(localStorage.getItem('recentItems') || '[]');
-
-        console.log('Data loaded from JSONs! Total items:', storeData.books.length + storeData.journals.length);
-    } catch (err) {
-        console.error('JSON load error (check files exist):', err);
-    }
-}
-
-// FIXED: Improved overlay click handler
-function handleOverlayClick(e) {
-    if (e.target === document.getElementById('overlay')) {
-        // FIXED: Close only the top-most modal
-        if (document.getElementById('bookModal').classList.contains('active')) {
-            closeBookModal();
-        } else if (document.getElementById('detailView').classList.contains('active')) {
-            closeDetail();
-        } else if (document.getElementById('settingsWindow').classList.contains('active')) {
-            toggleSettings();
-        }
-    }
-}
-
-// FIXED: Improved browser back/forward handling
-function handlePopState(event) {
-    // FIXED: Close only the top-most modal
-    if (document.getElementById('bookModal').classList.contains('active')) {
-        closeBookModal();
-    } else if (document.getElementById('detailView').classList.contains('active')) {
-        closeDetail();
-    } else if (document.getElementById('settingsWindow').classList.contains('active')) {
-        toggleSettings();
-    }
-}
-
-// FIXED: Improved escape key handler
-function handleEscapeKey(e) {
-    if (e.key === 'Escape') {
-        // FIXED: Close only the top-most modal
-        if (document.getElementById('bookModal').classList.contains('active')) {
-            closeBookModal();
-        } else if (document.getElementById('detailView').classList.contains('active')) {
-            closeDetail();
-        } else if (document.getElementById('settingsWindow').classList.contains('active')) {
-            toggleSettings();
-        } else if (document.getElementById('languageCheckboxes').style.display === 'block') {
-            toggleLanguageDropdown();
-        }
-    }
-}
-
-// NEW: Function to clear all reading progress (optional feature)
-function clearAllReadingProgress() {
-    const keysToRemove = [];
-    for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        if (key.startsWith('readingProgress_')) {
-            keysToRemove.push(key);
-        }
-    }
-
-    keysToRemove.forEach(key => localStorage.removeItem(key));
-    console.log('Cleared all reading progress');
-    // Refresh the view to update progress badges
-    renderCards([...storeData.books, ...storeData.journals], 'allGrid', true);
-    renderCards(storeData.books, 'booksGrid', true);
-    renderCards(storeData.journals, 'journalsGrid', true);
-}
-
-let readerScale = 1.0;
-function initReaderToolbar() {
-    const zoomIn = document.getElementById('readerZoomIn');
-    const zoomOut = document.getElementById('readerZoomOut');
-    const zoomReset = document.getElementById('readerZoomReset');
-    const fullscreenBtn = document.getElementById('readerFullscreen');
-    const iframe = document.getElementById('bookIframe');
-    const bookModal = document.getElementById('bookModal');
-
-    if (zoomIn) {
-        zoomIn.addEventListener('click', () => {
-            readerScale += 0.15;
-            iframe.style.transform = `scale(${readerScale})`;
-            iframe.style.transformOrigin = 'top center';
+    /* =============================================================
+       9. CARD RENDERING
+       ============================================================= */
+    function escapeAttr(s) {
+        return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+            return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
         });
     }
 
-    if (zoomOut) {
-        zoomOut.addEventListener('click', () => {
-            if (readerScale > 0.4) {
-                readerScale -= 0.15;
-                iframe.style.transform = `scale(${readerScale})`;
-                iframe.style.transformOrigin = 'top center';
-            }
+    function buildProgressRing(percent) {
+        if (!percent || percent <= 0) return '';
+        const clamped = Math.max(0, Math.min(100, percent));
+        const r = 14;
+        const c = 2 * Math.PI * r;
+        const offset = c - (clamped / 100) * c;
+        return '<div class="progress-ring-wrap" title="पढ़ना जारी रखें — ' + clamped + '%">' +
+            '<svg class="progress-ring" viewBox="0 0 34 34">' +
+                '<circle class="progress-ring-bg" cx="17" cy="17" r="' + r + '"></circle>' +
+                '<circle class="progress-ring-fg" cx="17" cy="17" r="' + r + '" ' +
+                    'stroke-dasharray="' + c.toFixed(2) + '" ' +
+                    'stroke-dashoffset="' + offset.toFixed(2) + '"></circle>' +
+            '</svg>' +
+            '<span class="progress-ring-text">' + clamped + '</span>' +
+        '</div>';
+    }
+
+    function buildCardHtml(item) {
+        const progress = SarvwigyanProgress.load(item.id);
+        const percent = progress ? SarvwigyanProgress.estimatePercent(progress) : 0;
+        const ring = buildProgressRing(percent);
+        const fileUrl = item.file || item.downloadUrl || '';
+        const verified = item.verified ? ' <i class="fas fa-circle-check"></i>' : '';
+
+        return '<div class="card" data-item-id="' + escapeAttr(item.id) + '" role="button" tabindex="0">' +
+            ring +
+            '<img src="' + escapeAttr(item.logo) + '" alt="' + escapeAttr(item.title) + '" ' +
+                'class="card-logo" loading="lazy">' +
+            '<div class="card-title">' + escapeAttr(item.title) + '</div>' +
+            '<div class="card-type">' + escapeAttr(item.type) + verified + '</div>' +
+            '<button type="button" class="card-download" ' +
+                'data-url="' + escapeAttr(fileUrl) + '" ' +
+                'data-id="' + escapeAttr(item.id) + '">' +
+                '<i class="fas fa-book-open-reader"></i> अध्ययन करें' +
+            '</button>' +
+        '</div>';
+    }
+
+    /* FIXED: attach image fallback via JS — no inline onerror */
+    function attachImageFallbacks(grid) {
+        grid.querySelectorAll('img.card-logo:not([data-fallback-bound])').forEach(function (img) {
+            img.setAttribute('data-fallback-bound', '1');
+            img.addEventListener('error', function () {
+                if (this.src !== FALLBACK_IMG) this.src = FALLBACK_IMG;
+            }, { once: true });
         });
     }
 
-    if (zoomReset) {
-        zoomReset.addEventListener('click', () => {
-            readerScale = 1.0;
-            iframe.style.transform = 'scale(1)';
-        });
+    function appendCards(items, gridId) {
+        const grid = document.getElementById(gridId);
+        if (!grid) return;
+        grid.insertAdjacentHTML('beforeend', items.map(buildCardHtml).join(''));
+        attachImageFallbacks(grid);
+        bindCardsInGrid(grid);
     }
 
-    if (fullscreenBtn) {
-        fullscreenBtn.addEventListener('click', () => {
-            if (!document.fullscreenElement) {
-                bookModal.requestFullscreen().catch(err => console.warn(err));
-            } else {
-                document.exitFullscreen().catch(err => console.warn(err));
-            }
-        });
-    }
-}
+    function renderCards(items, gridId, reset) {
+        const grid = document.getElementById(gridId);
+        if (!grid) return;
 
-// Tab Switching Functions
-function initTabs() {
-    const tabs = document.querySelectorAll('.tab');
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            const target = tab.getAttribute('data-tab');
-            switchTab(target);
-        });
-    });
-}
+        const noResults = document.getElementById(gridId.replace('Grid', 'NoResults'));
+        const section = gridId.replace('Grid', '');
 
-function switchTab(tabId) {
-    const tabs = document.querySelectorAll('.tab');
-    const sections = document.querySelectorAll('.section');
-    
-    tabs.forEach(t => {
-        if (t.getAttribute('data-tab') === tabId) {
-            t.classList.add('active');
-            t.setAttribute('aria-selected', 'true');
-        } else {
-            t.classList.remove('active');
-            t.setAttribute('aria-selected', 'false');
+        // FIXED: only track what's DISPLAYED, never overwrite master
+        displayedItems[section] = items;
+
+        const indicator = document.getElementById('loadingIndicator');
+        if (indicator && (gridId === 'booksGrid' || reset)) {
+            indicator.style.display = 'none';
         }
-    });
 
-    sections.forEach(sec => {
-        if (sec.id === tabId) {
-            sec.classList.add('active');
-        } else {
-            sec.classList.remove('active');
+        if (reset) {
+            currentPage[section] = 0;
+            hasMoreItems[section] = items.length > 0;
         }
-    });
-}
 
-// Search Functionality
-function initSearch() {
-    const searchInput = document.getElementById('searchInput');
-    if (!searchInput) return;
-
-    searchInput.addEventListener('input', () => {
-        const query = searchInput.value.toLowerCase().trim();
-        if (!query) {
-            renderCards(allItems.all, 'allGrid', true);
-            renderCards(allItems.books, 'booksGrid', true);
-            renderCards(allItems.journals, 'journalsGrid', true);
+        if (items.length === 0) {
+            grid.innerHTML = '';
+            if (noResults) noResults.style.display = 'block';
             return;
         }
 
-        const filteredAll = allItems.all.filter(i => 
-            (i.title || '').toLowerCase().includes(query) ||
-            (i.author || '').toLowerCase().includes(query) ||
-            (i.category || i.genre || '').toLowerCase().includes(query)
-        );
-        renderCards(filteredAll, 'allGrid', true);
-    });
-}
+        if (noResults) noResults.style.display = 'none';
 
-// Settings & Theme Management
-function initSettings() {
-    const savedTheme = localStorage.getItem('sarvstore_theme') || 'light';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    const select = document.getElementById('theme') || document.getElementById('themeSelect');
-    if (select) {
-        select.value = savedTheme;
+        const paginated = getPaginatedItems(items, section, reset);
+
+        if (reset) {
+            grid.innerHTML = paginated.map(buildCardHtml).join('');
+            attachImageFallbacks(grid);
+            bindCardsInGrid(grid);
+        } else {
+            appendCards(paginated, gridId);
+        }
+
+        if (indicator && hasMoreItems[section] && items.length > CARDS_PER_PAGE && reset) {
+            indicator.style.display = 'block';
+            indicator.innerHTML =
+                '<div class="scroll-hint">' +
+                    '<i class="fas fa-hand-pointer"></i>' +
+                    '<div>और देखने के लिए नीचे स्क्रॉल करें</div>' +
+                '</div>';
+            setTimeout(function () {
+                if (indicator && indicator.querySelector('.scroll-hint')) {
+                    indicator.style.display = 'none';
+                }
+            }, 4500);
+        }
     }
-}
 
-function toggleSettings() {
-    const modal = document.getElementById('settingsWindow');
-    const overlay = document.getElementById('overlay');
-    if (!modal) return;
-    const isActive = modal.classList.contains('active');
-    if (isActive) {
-        modal.classList.remove('active');
-        if (overlay) overlay.classList.remove('active');
-        if (typeof unlockBodyScroll === 'function') unlockBodyScroll();
-    } else {
-        modal.classList.add('active');
-        if (overlay) overlay.classList.add('active');
-        if (typeof lockBodyScroll === 'function') lockBodyScroll();
-    }
-}
+    function bindCardsInGrid(grid) {
+        if (grid.dataset.delegated === 'true') return;
+        grid.dataset.delegated = 'true';
 
-function saveSettings() {
-    const select = document.getElementById('theme') || document.getElementById('themeSelect');
-    if (select) {
-        const theme = select.value;
-        document.documentElement.setAttribute('data-theme', theme);
-        localStorage.setItem('sarvstore_theme', theme);
-    }
-    toggleSettings();
-}
-
-// Main Initialization
-document.addEventListener('DOMContentLoaded', async () => {
-    await loadDataFromJSON();
-
-    // Render all sections with lazy loading
-    renderCards(allItems.all, 'allGrid', true);
-    renderCards(allItems.books, 'booksGrid', true);
-    renderCards(allItems.journals, 'journalsGrid', true);
-    renderCards(allItems.recent, 'recentGrid', true);
-
-    // Original inits
-    initTabs();
-    initSearch();
-    initSettings();
-    initReaderToolbar();
-
-    // NEW: Add scroll event listener for lazy loading
-    window.addEventListener('scroll', handleScroll);
-
-    // Event listeners
-    document.getElementById('closeBtn').addEventListener('click', closeDetail);
-    document.getElementById('bookModalClose').addEventListener('click', closeBookModal);
-    document.getElementById('settingsIcon').addEventListener('click', toggleSettings);
-    document.getElementById('saveSettings').addEventListener('click', saveSettings);
-
-    // FIXED: Use the improved overlay click handler
-    document.getElementById('overlay').addEventListener('click', handleOverlayClick);
-
-    // Language checkboxes
-    document.querySelectorAll('.lang-checkbox').forEach(cb => {
-        cb.addEventListener('change', () => {
-            const selectAll = document.getElementById('selectAllLanguages');
-            selectAll.checked = document.querySelectorAll('.lang-checkbox').length ===
-                document.querySelectorAll('.lang-checkbox:checked').length;
-            updateSelectedLanguagesLabel();
-            filterBooksByLanguage();
+        grid.addEventListener('click', function (e) {
+            const dl = e.target.closest('.card-download');
+            if (dl) {
+                e.stopPropagation();
+                handleDownloadClick(e, dl.getAttribute('data-url'), dl.getAttribute('data-id'));
+                return;
+            }
+            const card = e.target.closest('.card');
+            if (card) {
+                const item = findItemById(card.getAttribute('data-item-id'));
+                if (item) openDetail(item);
+            }
         });
-    });
 
-    // FIXED: Use improved browser back/forward handler
-    window.addEventListener('popstate', handlePopState);
+        grid.addEventListener('keydown', function (e) {
+            if ((e.key === 'Enter' || e.key === ' ') && e.target.classList.contains('card')) {
+                e.preventDefault();
+                const item = findItemById(e.target.getAttribute('data-item-id'));
+                if (item) openDetail(item);
+            }
+        });
+    }
 
-    // FIXED: Use improved escape key handler
-    document.addEventListener('keydown', handleEscapeKey);
+    function findItemById(id) {
+        const all = storeData.books.concat(storeData.journals);
+        for (let i = 0; i < all.length; i++) {
+            if (all[i].id == id) return all[i];
+        }
+        return null;
+    }
 
-    // Default to "All" tab
-    switchTab('all');
+    /* =============================================================
+       10. TABS
+       ============================================================= */
+    function switchTab(tabId) {
+        $$('.section').forEach(function (s) { s.classList.remove('active'); });
+        $$('.tab').forEach(function (t) {
+            t.classList.remove('active');
+            t.setAttribute('aria-selected', 'false');
+        });
 
-    console.log('Sarvstore ready! Fixed lazy loading with multiple loads and animations implemented.');
-});
+        const section = document.getElementById(tabId);
+        if (section) section.classList.add('active');
+
+        const tab = document.querySelector('[data-tab="' + tabId + '"]');
+        if (tab) {
+            tab.classList.add('active');
+            tab.setAttribute('aria-selected', 'true');
+        }
+
+        // Clear search box when switching tabs
+        const search = document.getElementById('searchInput');
+        if (search && search.value) {
+            search.value = '';
+        }
+
+        if (tabId === 'recent') {
+            let recent = [];
+            try { recent = JSON.parse(localStorage.getItem('recentItems') || '[]'); } catch (_) {}
+            allItems.recent = recent;
+            renderCards(recent, 'recentGrid', true);
+        }
+    }
+
+    function initTabs() {
+        $$('.tab').forEach(function (tab) {
+            tab.addEventListener('click', function (e) {
+                e.preventDefault();
+                switchTab(tab.getAttribute('data-tab'));
+            });
+            tab.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    switchTab(tab.getAttribute('data-tab'));
+                }
+            });
+        });
+    }
+
+    /* =============================================================
+       11. SEARCH (FIXED — no longer corrupts master data)
+       ============================================================= */
+    function initSearch() {
+        const input = document.getElementById('searchInput');
+        if (!input) return;
+
+        let timer;
+        input.addEventListener('input', function () {
+            clearTimeout(timer);
+            timer = setTimeout(function () {
+                const query = input.value.toLowerCase().trim();
+                const active = document.querySelector('.section.active');
+                if (!active) return;
+                const sectionId = active.id;
+
+                // FIXED: always filter from the MASTER list
+                let source = [];
+                switch (sectionId) {
+                    case 'all':      source = allItems.all; break;
+                    case 'books':    source = allItems.books; break;
+                    case 'journals': source = allItems.journals; break;
+                    case 'recent':   source = allItems.recent; break;
+                }
+
+                if (!query) {
+                    renderCards(source, sectionId + 'Grid', true);
+                    return;
+                }
+
+                const filtered = source.filter(function (i) {
+                    return (i.title || '').toLowerCase().indexOf(query) !== -1 ||
+                        (i.shortDesc && i.shortDesc.toLowerCase().indexOf(query) !== -1) ||
+                        (i.longDesc && i.longDesc.toLowerCase().indexOf(query) !== -1) ||
+                        (i.type || '').toLowerCase().indexOf(query) !== -1;
+                });
+                renderCards(filtered, sectionId + 'Grid', true);
+            }, 180);
+        });
+
+        document.addEventListener('keydown', function (e) {
+            const isMac = (navigator.platform || '').toUpperCase().indexOf('MAC') !== -1;
+            const mod = isMac ? e.metaKey : e.ctrlKey;
+            if (mod && e.key.toLowerCase() === 'k') {
+                e.preventDefault();
+                input.focus();
+                input.select();
+            }
+            if (e.key === 'Escape' && document.activeElement === input) {
+                input.value = '';
+                input.dispatchEvent(new Event('input'));
+                input.blur();
+            }
+        });
+    }
+
+    /* =============================================================
+       12. SETTINGS
+       ============================================================= */
+    function initSettings() {
+        applyTheme(readTheme());
+    }
+
+    function toggleSettings() {
+        const sw = document.getElementById('settingsWindow');
+        const ov = document.getElementById('overlay');
+        if (!sw || !ov) return;
+
+        const wasOpen = sw.classList.contains('active');
+        if (!wasOpen) closeAllModals();
+
+        sw.classList.toggle('active');
+        ov.classList.toggle('active');
+
+        if (!wasOpen) {
+            lockBodyScroll();
+            try { history.pushState({ modal: 'settings' }, '', '#settings'); } catch (_) {}
+        } else {
+            unlockBodyScroll();
+            try { history.replaceState(null, '', window.location.pathname); } catch (_) {}
+        }
+    }
+
+    function saveSettings() {
+        const sel = document.getElementById('theme');
+        if (sel) applyTheme(sel.value);
+        toggleSettings();
+    }
+
+    /* =============================================================
+       13. DETAIL VIEW
+       ============================================================= */
+    function openDetail(item) {
+        addToRecentItems(item);
+
+        const logoEl = document.getElementById('detailLogo');
+        if (logoEl) { logoEl.src = item.logo; logoEl.alt = item.title + ' logo'; }
+
+        const titleEl = document.getElementById('detailTitle');
+        if (titleEl) titleEl.textContent = item.title;
+
+        const typeEl = document.getElementById('detailType');
+        if (typeEl) typeEl.textContent = item.type;
+
+        const verifiedEl = document.getElementById('detailVerified');
+        if (verifiedEl) {
+            verifiedEl.innerHTML = item.verified
+                ? '<i class="fas fa-circle-check" style="color:var(--success)"></i> प्रमाणित'
+                : '';
+            const progress = SarvwigyanProgress.load(item.id);
+            if (progress) {
+                const pct = SarvwigyanProgress.estimatePercent(progress);
+                const info = document.createElement('div');
+                info.className = 'detail-progress';
+                info.innerHTML = '<i class="fas fa-bookmark"></i> ' + pct + '% पूर्ण — जहाँ छोड़ा था वहीं से जारी रखें';
+                verifiedEl.appendChild(info);
+            }
+        }
+
+        const shortEl = document.getElementById('detailShortDesc');
+        if (shortEl) shortEl.textContent = item.shortDesc || '';
+
+        const longEl = document.getElementById('detailLongDesc');
+        if (longEl) longEl.textContent = item.longDesc || '';
+
+        const imagesDiv = document.getElementById('detailImages');
+        if (imagesDiv) {
+            imagesDiv.innerHTML = '';
+            if (item.images && item.images.length) {
+                item.images.forEach(function (src, idx) {
+                    const img = document.createElement('img');
+                    img.src = src;
+                    img.alt = (item.imageAlts && item.imageAlts[idx]) || (item.title + ' image ' + (idx + 1));
+                    img.style.cursor = 'pointer';
+                    img.loading = 'lazy';
+                    img.onerror = function () { this.src = FALLBACK_IMG; };
+                    img.onclick = function () { window.open(src, '_blank', 'noopener,noreferrer'); };
+                    imagesDiv.appendChild(img);
+                });
+            }
+        }
+
+        const btn = document.getElementById('detailDownload');
+        if (btn) {
+            const progress = SarvwigyanProgress.load(item.id);
+            const span = btn.querySelector('span');
+            if (span) span.textContent = progress ? 'जारी रखें' : 'अध्ययन करें';
+            btn.onclick = function () {
+                handleDownloadClick(null, item.file || item.downloadUrl || '', item.id);
+            };
+        }
+
+        closeAllModals();
+
+        const detail = document.getElementById('detailView');
+        const ov = document.getElementById('overlay');
+        if (detail) detail.classList.add('active');
+        if (ov) ov.classList.add('active');
+        lockBodyScroll();
+        try { history.pushState({ modal: 'detail' }, '', '#detail'); } catch (_) {}
+    }
+
+    function closeDetail() {
+        const el = document.getElementById('detailView');
+        const ov = document.getElementById('overlay');
+        if (el) el.classList.remove('active');
+        if (ov) ov.classList.remove('active');
+        unlockBodyScroll();
+        try { history.replaceState(null, '', window.location.pathname); } catch (_) {}
+    }
+
+    /* =============================================================
+       14. BOOK MODAL
+       ============================================================= */
+    function handleDownloadClick(event, url, itemId) {
+        if (event) {
+            event.stopPropagation();
+            event.preventDefault();
+        }
+
+        currentBookId = itemId;
+
+        if (event) {
+            const card = event.target.closest('.card');
+            if (card) {
+                const item = findItemById(card.getAttribute('data-item-id'));
+                if (item) addToRecentItems(item);
+            }
+        }
+
+        if (!url) {
+            alert('यह सामग्री अभी उपलब्ध नहीं है।');
+            return;
+        }
+
+        closeAllModals();
+
+        const iframe = document.getElementById('bookIframe');
+        const modal = document.getElementById('bookModal');
+        const ov = document.getElementById('overlay');
+
+        if (iframe) {
+            iframe.src = url;
+            iframe.style.transform = 'scale(1)';
+            readerScale = 1.0;
+        }
+
+        const currentItem = findItemById(itemId);
+        const titleEl = document.getElementById('readerBookTitle');
+        if (titleEl) {
+            titleEl.innerHTML = '<i class="fas fa-book-open"></i> ' +
+                (currentItem ? currentItem.title : 'डिजिटल ग्रंथ वाचक');
+        }
+
+        if (modal) modal.classList.add('active');
+        if (ov) ov.classList.add('active');
+        lockBodyScroll();
+        try { history.pushState({ modal: 'book' }, '', '#book'); } catch (_) {}
+
+        setTimeout(function () {
+            if (iframe) setupScrollTracking(iframe, itemId);
+        }, 1000);
+    }
+
+    function closeBookModal() {
+        if (currentBookId) {
+            try {
+                const iframe = document.getElementById('bookIframe');
+                if (iframe && iframe.contentWindow) {
+                    const y = iframe.contentWindow.scrollY || iframe.contentDocument.documentElement.scrollTop;
+                    if (y > 100) {
+                        const doc = iframe.contentDocument;
+                        const docH = Math.max(doc.documentElement.scrollHeight, (doc.body && doc.body.scrollHeight) || 0);
+                        const viewport = iframe.contentWindow.innerHeight || 800;
+                        const total = Math.max(1, docH - viewport);
+                        const pct = Math.min(100, Math.round((y / total) * 100));
+                        SarvwigyanProgress.save(currentBookId, { scrollY: y, percent: pct });
+                    }
+                }
+            } catch (_) {}
+        }
+
+        const modal = document.getElementById('bookModal');
+        const iframe = document.getElementById('bookIframe');
+        const ov = document.getElementById('overlay');
+
+        if (modal) modal.classList.remove('active');
+        if (iframe) iframe.src = '';
+        if (ov) ov.classList.remove('active');
+        unlockBodyScroll();
+        try { history.replaceState(null, '', window.location.pathname); } catch (_) {}
+        currentBookId = null;
+    }
+
+    function initReaderToolbar() {
+        const zoomIn = document.getElementById('readerZoomIn');
+        const zoomOut = document.getElementById('readerZoomOut');
+        const zoomReset = document.getElementById('readerZoomReset');
+        const fullscreenBtn = document.getElementById('readerFullscreen');
+        const iframe = document.getElementById('bookIframe');
+        const modal = document.getElementById('bookModal');
+        if (!iframe) return;
+
+        if (zoomIn) {
+            zoomIn.addEventListener('click', function () {
+                readerScale = Math.min(readerScale + 0.15, 2.5);
+                iframe.style.transform = 'scale(' + readerScale + ')';
+            });
+        }
+        if (zoomOut) {
+            zoomOut.addEventListener('click', function () {
+                readerScale = Math.max(readerScale - 0.15, 0.4);
+                iframe.style.transform = 'scale(' + readerScale + ')';
+            });
+        }
+        if (zoomReset) {
+            zoomReset.addEventListener('click', function () {
+                readerScale = 1.0;
+                iframe.style.transform = 'scale(1)';
+            });
+        }
+        if (fullscreenBtn && modal) {
+            fullscreenBtn.addEventListener('click', function () {
+                if (!document.fullscreenElement) {
+                    if (modal.requestFullscreen) modal.requestFullscreen().catch(function () {});
+                } else {
+                    document.exitFullscreen().catch(function () {});
+                }
+            });
+        }
+    }
+
+    /* =============================================================
+       15. FILTERS
+       ============================================================= */
+    function toggleLanguageDropdown() {
+        const dd = document.getElementById('languageCheckboxes');
+        const arrow = document.getElementById('langDropdownArrow');
+        if (!dd || !arrow) return;
+        const open = dd.classList.contains('active') || dd.style.display === 'block';
+        dd.classList.toggle('active', !open);
+        dd.style.display = open ? 'none' : 'block';
+        arrow.classList.toggle('rotate', !open);
+    }
+
+    function toggleAllLanguages(cb) {
+        $$('.lang-checkbox').forEach(function (c) { c.checked = cb.checked; });
+        updateSelectedLanguagesLabel();
+        filterBooksByLanguage();
+    }
+
+    function updateSelectedLanguagesLabel() {
+        const checked = $$('.lang-checkbox:checked');
+        const labels = checked.map(function (cb) {
+            return cb.value.charAt(0).toUpperCase() + cb.value.slice(1);
+        }).join(', ');
+        const el = document.getElementById('selectedLanguagesLabel');
+        if (el) el.textContent = labels || 'भाषा चुनें';
+    }
+
+    function filterBooksByLanguage() {
+        const sel = $$('.lang-checkbox:checked').map(function (cb) { return cb.value.toLowerCase(); });
+        let filtered = storeData.books;
+        if (sel.length) {
+            filtered = filtered.filter(function (b) {
+                return sel.indexOf((b.language || '').toLowerCase()) !== -1;
+            });
+        }
+        // Update master for books tab
+        allItems.books = filtered;
+        renderCards(filtered, 'booksGrid', true);
+    }
+
+    function handleMainFilterChange() {
+        const f = document.getElementById('booksFilter');
+        if (!f) return;
+        const v = f.value;
+        const wrapper = document.getElementById('languageFilterWrapper');
+        const arrow = document.getElementById('mainFilterArrow');
+        if (arrow) arrow.classList.toggle('rotate', v !== '');
+
+        if (v === 'language') {
+            if (wrapper) wrapper.style.display = 'block';
+            filterBooksByLanguage();
+        } else {
+            if (wrapper) wrapper.style.display = 'none';
+            allItems.books = storeData.books;
+            renderCards(storeData.books, 'booksGrid', true);
+        }
+    }
+
+    /* =============================================================
+       16. DATA LOADER
+       ============================================================= */
+    async function loadDataFromJSON() {
+        renderSkeletons('allGrid', 12);
+        renderSkeletons('booksGrid', 12);
+        renderSkeletons('journalsGrid', 8);
+
+        function fetchJson(url) {
+            return fetch(url).then(function (r) { return r.ok ? r.json() : []; }).catch(function () { return []; });
+        }
+
+        try {
+            const results = await Promise.all([
+                fetchJson('books.json'),
+                fetchJson('journals.json')
+            ]);
+            storeData.books = results[0] || [];
+            storeData.journals = results[1] || [];
+
+            allItems.all = storeData.books.concat(storeData.journals);
+            allItems.books = storeData.books;
+            allItems.journals = storeData.journals;
+            try { allItems.recent = JSON.parse(localStorage.getItem('recentItems') || '[]'); } catch (_) { allItems.recent = []; }
+        } catch (err) {
+            console.error('Data load error:', err);
+        }
+    }
+
+    /* =============================================================
+       17. GLOBAL HANDLERS
+       ============================================================= */
+    function handleOverlayClick(e) {
+        const ov = document.getElementById('overlay');
+        if (e.target !== ov) return;
+        if (document.getElementById('bookModal').classList.contains('active')) closeBookModal();
+        else if (document.getElementById('detailView').classList.contains('active')) closeDetail();
+        else if (document.getElementById('settingsWindow').classList.contains('active')) toggleSettings();
+    }
+
+    function handlePopState() {
+        if (document.getElementById('bookModal').classList.contains('active')) closeBookModal();
+        else if (document.getElementById('detailView').classList.contains('active')) closeDetail();
+        else if (document.getElementById('settingsWindow').classList.contains('active')) toggleSettings();
+    }
+
+    function handleEscapeKey(e) {
+        if (e.key !== 'Escape') return;
+        if (document.getElementById('bookModal').classList.contains('active')) closeBookModal();
+        else if (document.getElementById('detailView').classList.contains('active')) closeDetail();
+        else if (document.getElementById('settingsWindow').classList.contains('active')) toggleSettings();
+        else {
+            const langBox = document.getElementById('languageCheckboxes');
+            if (langBox && (langBox.classList.contains('active') || langBox.style.display === 'block')) {
+                toggleLanguageDropdown();
+            }
+        }
+    }
+
+    function clearAllReadingProgress() {
+        SarvwigyanProgress.clearAll();
+        renderCards(allItems.all, 'allGrid', true);
+        renderCards(allItems.books, 'booksGrid', true);
+        renderCards(allItems.journals, 'journalsGrid', true);
+        if (allItems.recent.length) renderCards(allItems.recent, 'recentGrid', true);
+    }
+
+    function initThemeToggle() {
+        const btn = document.getElementById('themeToggle');
+        if (!btn) return;
+        btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            const current = document.documentElement.getAttribute('data-theme') || 'light';
+            applyTheme(current === 'dark' ? 'light' : 'dark');
+        });
+    }
+
+    /* =============================================================
+       18. BOOT
+       ============================================================= */
+    async function boot() {
+        initSettings();
+
+        await loadDataFromJSON();
+
+        renderCards(allItems.all, 'allGrid', true);
+        renderCards(allItems.books, 'booksGrid', true);
+        renderCards(allItems.journals, 'journalsGrid', true);
+        renderCards(allItems.recent, 'recentGrid', true);
+
+        initTabs();
+        initSearch();
+        initReaderToolbar();
+        initThemeToggle();
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+
+        const bind = function (id, fn) {
+            const el = document.getElementById(id);
+            if (el) el.addEventListener('click', fn);
+        };
+
+        bind('closeBtn', closeDetail);
+        bind('bookModalClose', closeBookModal);
+        bind('settingsIcon', toggleSettings);
+        bind('saveSettings', saveSettings);
+
+        const overlay = document.getElementById('overlay');
+        if (overlay) overlay.addEventListener('click', handleOverlayClick);
+
+        $$('.lang-checkbox').forEach(function (cb) {
+            cb.addEventListener('change', function () {
+                const all = document.getElementById('selectAllLanguages');
+                if (all) {
+                    all.checked = $$('.lang-checkbox').length === $$('.lang-checkbox:checked').length;
+                }
+                updateSelectedLanguagesLabel();
+                filterBooksByLanguage();
+            });
+        });
+
+        window.addEventListener('popstate', handlePopState);
+        document.addEventListener('keydown', handleEscapeKey);
+
+        switchTab('all');
+
+        console.log('%cकोष तैयार है ✨', 'color:#C5442C;font-weight:bold;font-size:14px');
+    }
+
+    // Expose handlers used by inline HTML attributes
+    window.toggleSettings = toggleSettings;
+    window.saveSettings = saveSettings;
+    window.clearAllReadingProgress = clearAllReadingProgress;
+    window.handleMainFilterChange = handleMainFilterChange;
+    window.toggleLanguageDropdown = toggleLanguageDropdown;
+    window.toggleAllLanguages = toggleAllLanguages;
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', boot);
+    } else {
+        boot();
+    }
+})();

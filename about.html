@@ -1,563 +1,365 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About - Sarvstore</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>हमारे विषय में — कोष</title>
+    <meta name="description" content="कोष के विषय में — ज्ञान का भंडार, सर्वविज्ञान की एक पहल।">
+    <link rel="icon" type="image/png" href="https://sarvwigyan.github.io/resources/Sarvstore.png" sizes="32x32">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700;800&family=Mukta:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
     <style>
-        /* Import your existing CSS variables and base styles */
         :root {
-            /* Colors */
-            --background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
-            --card-bg: rgba(255, 255, 255, 0.25);
-            --text: #e0e0e0;
-            --secondary-text: rgba(224, 224, 224, 0.8);
-            --primary: #1a73e8;
-            --highlight: #00ffcc;
-            --shadow: rgba(0, 0, 0, 0.3);
-            
-            /* Spacing & Timing */
-            --spacing-unit: 1rem;
-            --transition-speed: 0.3s;
-            
-            /* Effects */
-            --blur: blur(10px);
-            --border: 1px solid rgba(255, 255, 255, 0.18);
-            
-            /* Z-index System */
-            --z-base: 1;
-            --z-header: 100;
-            --z-tabs: 90;
-            --z-dropdown: 200;
-            --z-overlay: 300;
-            --z-modal: 400;
-            --z-max: 999;
+            --bg: #FBF6EC;
+            --surface: #FFFFFF;
+            --surface-2: #FAF4E8;
+            --text: #1A1614;
+            --text-strong: #0A0806;
+            --text-muted: #6B5E4A;
+            --text-subtle: #9C8F79;
+            --border: #E8DDC4;
+            --border-strong: #D6C4A0;
+            --brand: #C5442C;
+            --brand-hover: #D65843;
+            --brand-shadow: #8B2A18;
+            --brand-soft: #FCEFE8;
+            --gold: #E8890C;
+            --gold-hover: #F59E0B;
+            --gold-shadow: #A85E00;
+            --gold-soft: #FEF3D5;
+            --success: #4A7C59;
+            --success-hover: #5A8F6B;
+            --success-shadow: #2C4E36;
+            --success-soft: #E6F0E8;
+            --shadow-sm: 0 2px 8px rgba(26,22,20,0.06);
+            --shadow-md: 0 8px 22px rgba(26,22,20,0.09);
+            --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+            --font-display: 'Fraunces', 'Mukta', Georgia, serif;
+            --font-body: 'Inter', 'Mukta', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-hindi: 'Mukta', 'Inter', sans-serif;
         }
-
-        [data-theme="light"] {
-            --background: linear-gradient(135deg, #f0f0f0 0%, #e3f2fd 50%, #bbdefb 100%);
-            --card-bg: rgba(255, 255, 255, 0.85);
-            --text: #222222;
-            --secondary-text: rgba(34, 34, 34, 0.8);
-            --primary: #1a73e8;
-            --highlight: #00aa88;
-            --shadow: rgba(0, 0, 0, 0.3);
-            --border: 1px solid rgba(255, 255, 255, 0.4);
+        [data-theme="dark"] {
+            --bg: #1A1614; --surface: #262019; --surface-2: #2E2721;
+            --text: #F5EFE3; --text-strong: #FFFFFF;
+            --text-muted: #A89982; --text-subtle: #7A6B58;
+            --border: #38302A; --border-strong: #4A3F36;
+            --brand: #E8890C; --brand-hover: #F59E0B; --brand-shadow: #A85E00; --brand-soft: #2A1F13;
+            --gold: #FBBF24; --gold-hover: #FCD34D; --gold-shadow: #92400E; --gold-soft: #2A2010;
+            --success: #5A8F6B; --success-hover: #6FA37F; --success-shadow: #2C4E36; --success-soft: #14241A;
         }
-
         [data-theme="pure"] {
-            --background: linear-gradient(135deg, #fff6e6 0%, #ffeccc 50%, #ffdd99 100%);
-            --card-bg: rgba(255, 240, 204, 0.85);
-            --text: #3a1400;
-            --secondary-text: rgba(58, 20, 0, 0.9);
-            --primary: #cc3300;
-            --highlight: #e67300;
-            --shadow: rgba(204, 102, 0, 0.3);
-            --border: 1px solid rgba(255, 153, 0, 0.3);
+            --bg: #FFFFFF; --surface: #FFFFFF; --surface-2: #FAFAFA;
+            --text: #0F0F0F; --text-strong: #000;
+            --text-muted: #5C5C5C; --text-subtle: #888;
+            --border: #E5E5E5; --border-strong: #CFCFCF;
         }
 
-        /* Reset & Base Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Roboto', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html { scroll-behavior: smooth; }
         body {
-            background: var(--background);
-            color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden;
-            transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
-            -webkit-user-select: none;
-            user-select: none;
-            min-height: 100vh;
+            font-family: var(--font-body);
+            background: var(--bg); color: var(--text);
+            line-height: 1.6; min-height: 100vh; overflow-x: hidden;
+            transition: background 0.35s ease, color 0.35s ease;
+            -webkit-font-smoothing: antialiased;
         }
-
-        /* Apple-style glass background */
         body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.08) 0%, transparent 50%);
-            pointer-events: none;
-            z-index: -1;
+            content: ''; position: fixed; inset: 0;
+            background:
+                radial-gradient(circle at 15% 12%, rgba(232,137,12,0.05), transparent 40%),
+                radial-gradient(circle at 85% 88%, rgba(197,68,44,0.04), transparent 40%);
+            pointer-events: none; z-index: -1;
         }
+        img { max-width: 100%; display: block; }
+        a { color: inherit; }
+        :focus-visible { outline: 2px solid var(--brand); outline-offset: 3px; border-radius: 8px; }
 
-        /* Scrollbar */
-        body::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        body::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, var(--primary), var(--highlight));
-            border-radius: 3px;
-        }
-
-        body::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        /* Header Styles */
         .header {
-            padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 2);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: var(--card-bg);
-            backdrop-filter: var(--blur);
-            -webkit-backdrop-filter: var(--blur);
-            border-bottom: var(--border);
-            box-shadow: 
-                0 4px 16px rgba(0, 0, 0, 0.12),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: var(--z-header);
-            gap: var(--spacing-unit);
-            min-height: 80px;
+            padding: 1rem 1.75rem; display: flex; align-items: center; justify-content: space-between;
+            background: rgba(251,246,236,0.9);
+            backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
+            position: sticky; top: 0; z-index: 100; min-height: 74px; gap: 1rem;
         }
+        [data-theme="dark"] .header { background: rgba(26,22,20,0.9); }
+        [data-theme="pure"] .header { background: rgba(255,255,255,0.92); }
 
-        .header-logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--primary), var(--highlight));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            flex-shrink: 0;
-            min-width: 0;
-        }
-
+        .header-logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: inherit; flex-shrink: 0; }
         .header-logo img {
-            height: 2rem;
-            flex-shrink: 0;
+            height: 2.4rem; width: 2.4rem; border-radius: 10px;
+            background: var(--brand-soft); padding: 5px;
+            border: 1px solid rgba(197,68,44,0.15); object-fit: contain;
         }
+        .header-logo-text { display: flex; flex-direction: column; line-height: 1.1; }
+        .header-logo-text h1 { font-family: var(--font-hindi); font-size: 1.3rem; font-weight: 800; color: var(--brand); margin: 0; }
+        .header-logo-text span { font-size: 0.7rem; color: var(--text-muted); font-weight: 600; letter-spacing: 0.05em; font-family: var(--font-hindi); }
 
-        .header-logo h1 {
-            font-size: inherit;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            margin: 0;
-            line-height: 1;
+        .back-btn {
+            display: inline-flex; align-items: center; gap: 0.55rem;
+            padding: 0.6rem 1.1rem;
+            background: var(--surface-2); border: 1px solid var(--border);
+            border-radius: 9999px; color: var(--text); text-decoration: none;
+            font-weight: 700; font-size: 0.85rem; font-family: var(--font-hindi);
+            cursor: pointer; transition: all 0.2s var(--ease-out); flex-shrink: 0;
         }
-
-        .back-button {
-            font-size: 1.5rem;
-            color: var(--primary);
-            cursor: pointer;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: var(--blur);
-            -webkit-backdrop-filter: var(--blur);
-            border-radius: 50%;
-            width: 3rem;
-            height: 3rem;
-            transition: transform var(--transition-speed) ease, background-color var(--transition-speed) ease;
-            border: var(--border);
+        .back-btn:hover {
+            background: var(--brand); color: #fff; border-color: var(--brand);
+            transform: translateY(-2px); box-shadow: 0 4px 0 var(--brand-shadow);
         }
+        .back-btn:active { transform: translateY(2px); box-shadow: none; }
 
-        .back-button:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: scale(1.05);
+        .content { max-width: 1100px; margin: 0 auto; padding: 3rem 1.5rem 4rem; }
+        .page-title { text-align: center; margin-bottom: 3rem; }
+        .page-eyebrow {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: var(--brand-soft); color: var(--brand);
+            border: 1px solid rgba(197,68,44,0.18);
+            padding: 0.35rem 0.9rem; border-radius: 9999px;
+            font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
+            text-transform: uppercase; margin-bottom: 1rem;
         }
-
-        /* Main Content */
-        .content {
-            padding: calc(var(--spacing-unit) * 2);
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
-        }
-
-        /* Page Title */
-        .page-title {
-            text-align: center;
-            margin-bottom: calc(var(--spacing-unit) * 2);
-        }
-
         .page-title h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: calc(var(--spacing-unit) * 0.5);
-            background: linear-gradient(135deg, var(--primary), var(--highlight));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            font-family: var(--font-hindi);
+            font-size: clamp(2rem, 4vw, 3rem); font-weight: 800;
+            color: var(--text-strong); margin-bottom: 0.5rem; letter-spacing: -0.02em;
         }
-
-        .page-title p {
-            color: var(--secondary-text);
-            font-size: 1.1rem;
+        .page-title h1 .highlight {
+            background: linear-gradient(135deg, var(--brand), var(--gold));
+            -webkit-background-clip: text; background-clip: text; color: transparent;
         }
+        .page-title p { color: var(--text-muted); font-size: 1.05rem; font-family: var(--font-hindi); }
 
-        /* About Sections */
-        .about-section {
-            background: var(--card-bg);
-            backdrop-filter: var(--blur);
-            -webkit-backdrop-filter: var(--blur);
-            border-radius: 16px;
-            padding: calc(var(--spacing-unit) * 2);
-            margin-bottom: calc(var(--spacing-unit) * 1.5);
-            box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.12),
-                inset 0 1px 0 rgba(255, 255, 255, 0.07);
-            border: var(--border);
+        .section {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 20px; padding: 2.25rem; margin-bottom: 1.75rem;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
         }
-
+        .section:hover { box-shadow: var(--shadow-md); }
         .section-title {
-            font-size: 1.75rem;
-            font-weight: 600;
-            margin-bottom: calc(var(--spacing-unit) * 1.5);
-            color: var(--text);
-            background: linear-gradient(135deg, var(--primary), var(--highlight));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            font-family: var(--font-hindi); font-size: 1.5rem; font-weight: 800;
+            color: var(--text-strong); margin-bottom: 1.5rem;
+            padding-bottom: 0.85rem; border-bottom: 2px solid var(--border); position: relative;
         }
-
-        /* Mission Section */
-        .mission-content {
-            display: flex;
-            flex-direction: column;
-            gap: calc(var(--spacing-unit) * 1.5);
+        .section-title::after {
+            content: ''; position: absolute; bottom: -2px; left: 0; width: 60px; height: 2px;
+            background: linear-gradient(90deg, var(--brand), var(--gold));
         }
-
-        .mission-text {
-            flex: 1;
+        .section-title i { color: var(--gold); margin-right: 0.5rem; }
+        .section p {
+            color: var(--text-muted); font-family: var(--font-hindi);
+            font-size: 1rem; line-height: 1.8; margin-bottom: 1rem;
         }
+        .section p:last-child { margin-bottom: 0; }
 
-        .mission-image {
-            flex: 1;
-            border-radius: 12px;
-            overflow: hidden;
-            height: 250px;
-            background: rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--secondary-text);
-            font-style: italic;
+        .mission-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin-top: 1.25rem; }
+        .mission-item {
+            padding: 1.5rem; background: var(--surface-2); border-radius: 16px;
+            border-left: 4px solid var(--brand);
+            transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
         }
-
-        /* Stats Section */
-        .stats-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: calc(var(--spacing-unit) * 1.5);
-            text-align: center;
+        .mission-item:nth-child(2) { border-left-color: var(--gold); }
+        .mission-item:nth-child(3) { border-left-color: var(--success); }
+        .mission-item:nth-child(4) { border-left-color: var(--brand); }
+        .mission-item:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(26,22,20,0.08); }
+        .mission-icon {
+            width: 3rem; height: 3rem; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.35rem; margin-bottom: 0.85rem; color: #fff;
         }
+        .mi-brand { background: linear-gradient(135deg, var(--brand), var(--brand-hover)); box-shadow: 0 4px 0 var(--brand-shadow); }
+        .mi-gold  { background: linear-gradient(135deg, var(--gold), var(--gold-hover));   box-shadow: 0 4px 0 var(--gold-shadow); }
+        .mi-green { background: linear-gradient(135deg, var(--success), var(--success-hover)); box-shadow: 0 4px 0 var(--success-shadow); }
+        .mission-item h3 {
+            font-family: var(--font-hindi); font-size: 1.1rem; font-weight: 800;
+            color: var(--text-strong); margin-bottom: 0.5rem;
+        }
+        .mission-item p { font-size: 0.92rem; margin: 0; line-height: 1.7; }
 
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin-top: 1rem; }
         .stat-item {
-            padding: calc(var(--spacing-unit) * 1.5);
+            text-align: center; padding: 1.5rem 1rem;
+            background: var(--surface-2); border-radius: 16px;
+            border: 1px solid var(--border);
+            transition: transform 0.25s var(--ease-out);
         }
-
+        .stat-item:hover { transform: translateY(-3px); }
         .stat-number {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
+            font-family: var(--font-display); font-size: 2.25rem; font-weight: 800;
+            background: linear-gradient(135deg, var(--brand), var(--gold));
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+            line-height: 1; margin-bottom: 0.4rem;
         }
+        .stat-label { font-size: 0.85rem; color: var(--text-muted); font-family: var(--font-hindi); font-weight: 600; }
 
-        .stat-label {
-            color: var(--secondary-text);
-            font-size: 0.9rem;
-        }
-
-        /* Values Section */
-        .values-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: calc(var(--spacing-unit) * 1.5);
-        }
-
-        .value-item {
-            padding: calc(var(--spacing-unit) * 1.5);
-            border-left: 4px solid var(--primary);
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 0 12px 12px 0;
-        }
-
-        .value-title {
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-            color: var(--text);
-        }
-
-        /* Content Section */
-        .content-section {
-            margin-bottom: calc(var(--spacing-unit) * 2);
-        }
-
-        .content-section h3 {
-            font-size: 1.4rem;
-            margin-bottom: calc(var(--spacing-unit) * 1);
-            color: var(--highlight);
-        }
-
-        .content-section p {
-            margin-bottom: calc(var(--spacing-unit) * 1);
-        }
-
-        /* Footer */
         footer {
-            background: var(--card-bg);
-            backdrop-filter: var(--blur);
-            -webkit-backdrop-filter: var(--blur);
-            padding: calc(var(--spacing-unit) * 2);
-            text-align: center;
-            color: var(--secondary-text);
-            font-size: 0.875rem;
-            margin-top: calc(var(--spacing-unit) * 2);
-            border-top: var(--border);
+            background: #1A1614; color: #A89982; padding: 2rem 1.5rem;
+            text-align: center; margin-top: 3rem; position: relative; overflow: hidden;
         }
-
-        footer nav {
-            margin-top: 0.5rem;
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            flex-wrap: wrap;
+        footer::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, #FF9933, #FBBF24, #C5442C, #4A7C59, #E8890C);
+            opacity: 0.9;
         }
-
+        footer p { font-family: var(--font-hindi); font-size: 0.9rem; margin-bottom: 1rem; }
+        footer nav { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
         footer a {
-            color: var(--primary);
-            text-decoration: none;
-            transition: color var(--transition-speed) ease;
-            padding: 0.5rem 1rem;
-            border-radius: 16px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: var(--blur);
-            -webkit-backdrop-filter: var(--blur);
+            color: #A89982; text-decoration: none; font-size: 0.85rem;
+            font-family: var(--font-hindi); padding: 0.4rem 0.85rem;
+            border-radius: 9999px; transition: all 0.2s ease; border: 1px solid transparent;
         }
-
         footer a:hover {
-            color: var(--highlight);
-            background: rgba(255, 255, 255, 0.15);
+            color: var(--gold); background: rgba(232,137,12,0.08);
+            border-color: rgba(232,137,12,0.2);
         }
 
-        /* Responsive Styles */
-        @media (min-width: 768px) {
-            .mission-content {
-                flex-direction: row;
-                align-items: center;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .header {
-                padding: var(--spacing-unit);
-                gap: 0.75rem;
-                min-height: 70px;
-            }
-            
-            .header-logo {
-                font-size: 1.3rem;
-            }
-            
-            .header-logo img {
-                height: 1.75rem;
-            }
-            
-            .content {
-                padding: 1rem;
-            }
-            
-            .page-title h1 {
-                font-size: 2rem;
-            }
-            
-            .about-section {
-                padding: 1.5rem;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .page-title h1 {
-                font-size: 1.8rem;
-            }
-            
-            .about-section {
-                padding: 1rem;
-            }
-            
-            .stats-container {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 480px) {
-            .header-logo h1 {
-                max-width: 80px;
-                font-size: 1rem;
-            }
-            
-            .page-title h1 {
-                font-size: 1.6rem;
-            }
-            
-            .stats-container {
-                grid-template-columns: 1fr;
-            }
+        @media (max-width: 640px) {
+            .header { padding: 0.7rem 0.9rem; }
+            .header-logo-text h1 { font-size: 1.1rem; }
+            .header-logo-text span { display: none; }
+            .back-btn { padding: 0.5rem 0.85rem; font-size: 0.78rem; }
+            .back-btn span { display: none; }
+            .content { padding: 1.5rem 1rem 3rem; }
+            .section { padding: 1.5rem; }
+            .section-title { font-size: 1.25rem; }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <div class="header">
+
+    <header class="header">
         <a href="index.html" class="header-logo">
-            <img src="https://sarvwigyan.github.io/resources/Sarvstore.png" style="width: auto; height: 1.5em;" alt="Sarvstore logo">
-            <h1 style="font-size: larger;">Sarvstore</h1>
+            <img src="https://sarvwigyan.github.io/resources/Sarvstore.png" alt="कोष प्रतीक">
+            <div class="header-logo-text">
+                <h1>कोष</h1>
+                <span>ज्ञान का भंडार</span>
+            </div>
         </a>
-        <div class="back-button" onclick="window.history.back()" role="button" aria-label="Go back">
-            <i class="fas fa-arrow-left"></i>
-        </div>
-    </div>
+        <a href="index.html" class="back-btn" aria-label="वापस जाएँ">
+            <i class="fas fa-arrow-left"></i> <span>वापस</span>
+        </a>
+    </header>
 
-    <!-- Main Content -->
-    <div class="content">
+    <main class="content">
         <div class="page-title">
-            <h1>About Sarvstore</h1>
-            <p>Your gateway to knowledge and wisdom</p>
+            <span class="page-eyebrow"><i class="fas fa-om"></i> हमारे विषय में</span>
+            <h1>कोष — <span class="highlight">ज्ञान का भंडार</span></h1>
+            <p>प्राचीन ज्ञान और आधुनिक विज्ञान का संगम</p>
         </div>
 
-        <!-- Mission Section -->
-        <section class="about-section">
-            <h2 class="section-title">Our Mission</h2>
-            <div class="mission-content">
-                <div class="mission-text">
-                    <p>Sarvstore is an educational platform dedicated to providing free access to knowledge, books, and research materials. Our mission is to democratize education and make learning resources accessible to everyone, regardless of their background or location.</p>
-                    <p>We believe that knowledge should be free, open, and collaborative. Our platform brings together educational content from various domains, making it easy for learners, researchers, and enthusiasts to discover and access valuable resources.</p>
-                    <p>Through our carefully curated collection of books, research journals, and educational materials, we aim to support lifelong learning and intellectual growth for people around the world.</p>
+        <section class="section">
+            <h2 class="section-title"><i class="fas fa-bullseye"></i> हमारा ध्येय</h2>
+            <p>कोष एक शैक्षिक मंच है जो ज्ञान, पुस्तकों और शोध-सामग्री तक निःशुल्क पहुँच प्रदान करने के लिए समर्पित है। हमारा ध्येय शिक्षा का लोकतंत्रीकरण है — ताकि ज्ञान हर उस व्यक्ति तक पहुँचे जो इसे प्राप्त करना चाहता है, चाहे उसकी पृष्ठभूमि या स्थान कोई भी हो।</p>
+            <p>हम मानते हैं कि ज्ञान मुक्त, खुला और सहयोगी होना चाहिए। यह मंच विभिन्न क्षेत्रों की शैक्षिक सामग्री को एक स्थान पर एकत्रित करता है, जिससे शिक्षार्थियों, शोधकर्ताओं और उत्साही पाठकों के लिए मूल्यवान संसाधनों की खोज और उपयोग सरल हो जाता है।</p>
+            <p>हमारे सावधानीपूर्वक संकलित संग्रह में पुस्तकें, शोध-पत्रिकाएँ और शैक्षिक सामग्री शामिल हैं — जो आजीवन शिक्षा और बौद्धिक विकास का समर्थन करती हैं।</p>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title"><i class="fas fa-gift"></i> हम क्या प्रदान करते हैं</h2>
+            <div class="mission-grid">
+                <div class="mission-item">
+                    <div class="mission-icon mi-brand"><i class="fas fa-book"></i></div>
+                    <h3>व्यापक ग्रंथ संग्रह</h3>
+                    <p>विज्ञान, साहित्य, दर्शन और आध्यात्मिक ग्रंथों सहित विविध विषयों की पुस्तकें। शास्त्रीय कृतियाँ और समकालीन प्रकाशन — दोनों।</p>
                 </div>
-                <div class="mission-image">
-                    <i class="fas fa-book-open" style="font-size: 4rem;"></i>
+                <div class="mission-item">
+                    <div class="mission-icon mi-gold"><i class="fas fa-scroll"></i></div>
+                    <h3>शोध-पत्रिकाएँ</h3>
+                    <p>विभिन्न क्षेत्रों के शैक्षणिक पत्र और शोध-पत्रिकाएँ। विद्यार्थियों, शोधकर्ताओं और पेशेवरों के लिए मूल्यवान वैज्ञानिक संसाधन।</p>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-icon mi-green"><i class="fas fa-language"></i></div>
+                    <h3>बहुभाषी सामग्री</h3>
+                    <p>अंग्रेज़ी, हिंदी और संस्कृत में सामग्री — ज्ञान को विविध पृष्ठभूमियों के पाठकों तक पहुँचाने के लिए।</p>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-icon mi-brand"><i class="fas fa-mobile-screen"></i></div>
+                    <h3>सुलभ अंतरापृष्ठ</h3>
+                    <p>प्रतिक्रियाशील डिज़ाइन के साथ निर्बाध अनुभव — डेस्कटॉप और मोबाइल दोनों पर उत्तम।</p>
                 </div>
             </div>
         </section>
 
-        <!-- What We Offer Section -->
-        <section class="about-section">
-            <h2 class="section-title">What We Offer</h2>
-            <div class="content-section">
-                <h3>📚 Extensive Book Collection</h3>
-                <p>Access a wide range of books covering various subjects including science, literature, philosophy, and spiritual texts. Our collection includes both classic works and contemporary publications.</p>
-            </div>
-            
-            <div class="content-section">
-                <h3>🔬 Research Journals</h3>
-                <p>Explore academic papers and research journals from different fields. We provide access to valuable scientific and academic resources for students, researchers, and professionals.</p>
-            </div>
-            
-            <div class="content-section">
-                <h3>🌐 Multi-language Content</h3>
-                <p>Our platform features content in multiple languages including English, Hindi, and Sanskrit, making knowledge accessible to diverse audiences.</p>
-            </div>
-            
-            <div class="content-section">
-                <h3>📱 User-Friendly Interface</h3>
-                <p>Enjoy a seamless browsing experience with our responsive design that works perfectly on both desktop and mobile devices.</p>
-            </div>
-        </section>
-
-        <!-- Stats Section -->
-        <section class="about-section">
-            <h2 class="section-title">By The Numbers</h2>
-            <div class="stats-container">
+        <section class="section">
+            <h2 class="section-title"><i class="fas fa-chart-line"></i> संख्याओं में</h2>
+            <div class="stats-grid">
                 <div class="stat-item">
-                    <div class="stat-number">100+</div>
-                    <div class="stat-label">Books & Journals</div>
+                    <div class="stat-number">१००+</div>
+                    <div class="stat-label">ग्रंथ व पत्रिकाएँ</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number">3+</div>
-                    <div class="stat-label">Languages</div>
+                    <div class="stat-number">३</div>
+                    <div class="stat-label">भाषाएँ</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number">24/7</div>
-                    <div class="stat-label">Accessibility</div>
+                    <div class="stat-number">२४/७</div>
+                    <div class="stat-label">सुलभता</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number">Free</div>
-                    <div class="stat-label">Always Free</div>
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">सदैव निःशुल्क</div>
                 </div>
             </div>
         </section>
 
-        <!-- Values Section -->
-        <section class="about-section">
-            <h2 class="section-title">Our Values</h2>
-            <div class="values-grid">
-                <div class="value-item">
-                    <div class="value-title">Accessibility</div>
-                    <p>We believe knowledge should be available to everyone, everywhere, without barriers.</p>
+        <section class="section">
+            <h2 class="section-title"><i class="fas fa-heart"></i> हमारे मूल्य</h2>
+            <div class="mission-grid">
+                <div class="mission-item">
+                    <div class="mission-icon mi-brand"><i class="fas fa-hand-holding-heart"></i></div>
+                    <h3>सुलभता</h3>
+                    <p>हम मानते हैं कि ज्ञान हर किसी के लिए, हर जगह, बिना किसी बाधा के उपलब्ध होना चाहिए।</p>
                 </div>
-                <div class="value-item">
-                    <div class="value-title">Quality</div>
-                    <p>We curate and verify content to ensure high-quality, reliable educational resources.</p>
+                <div class="mission-item">
+                    <div class="mission-icon mi-gold"><i class="fas fa-certificate"></i></div>
+                    <h3>गुणवत्ता</h3>
+                    <p>हम सामग्री का चयन और सत्यापन करते हैं ताकि उच्च-गुणवत्ता, विश्वसनीय शैक्षिक संसाधन सुनिश्चित हों।</p>
                 </div>
-                <div class="value-item">
-                    <div class="value-title">Innovation</div>
-                    <p>We continuously improve our platform to provide the best user experience.</p>
+                <div class="mission-item">
+                    <div class="mission-icon mi-green"><i class="fas fa-lightbulb"></i></div>
+                    <h3>नवाचार</h3>
+                    <p>हम सर्वोत्तम उपयोगकर्ता अनुभव प्रदान करने के लिए निरंतर सुधार करते हैं।</p>
                 </div>
-                <div class="value-item">
-                    <div class="value-title">Community</div>
-                    <p>We foster a community of learners, educators, and knowledge seekers.</p>
+                <div class="mission-item">
+                    <div class="mission-icon mi-brand"><i class="fas fa-people-group"></i></div>
+                    <h3>समुदाय</h3>
+                    <p>हम शिक्षार्थियों, शिक्षकों और ज्ञान-अन्वेषकों के समुदाय को बढ़ावा देते हैं।</p>
                 </div>
             </div>
         </section>
 
-        <!-- About Sarvwigyan Section -->
-        <section class="about-section">
-            <h2 class="section-title">About Sarvwigyan</h2>
-            <div class="mission-content">
-                <div class="mission-text">
-                    <p>Sarvstore is part of the Sarvwigyan initiative, dedicated to spreading knowledge and wisdom through accessible digital platforms. Our name "Sarvwigyan" translates to "All Knowledge" in Sanskrit, reflecting our commitment to comprehensive learning.</p>
-                    <p>We are passionate about preserving traditional knowledge while embracing modern educational approaches. Our collection includes ancient texts alongside contemporary research, creating a bridge between traditional wisdom and modern science.</p>
-                    <p>Through Sarvstore and other initiatives, we aim to contribute to the global knowledge ecosystem and support the intellectual growth of individuals worldwide.</p>
-                </div>
-                <div class="mission-image">
-                    <i class="fas fa-graduation-cap" style="font-size: 4rem;"></i>
-                </div>
-            </div>
+        <section class="section">
+            <h2 class="section-title"><i class="fas fa-om"></i> सर्वविज्ञान के विषय में</h2>
+            <p>कोष, सर्वविज्ञान पहल का एक अंग है — जो सुलभ डिजिटल मंचों के माध्यम से ज्ञान और विवेक का प्रसार करने के लिए समर्पित है। "सर्वविज्ञान" का अर्थ है "समस्त ज्ञान", जो व्यापक शिक्षा के प्रति हमारी प्रतिबद्धता को दर्शाता है।</p>
+            <p>हम पारंपरिक ज्ञान के संरक्षण और आधुनिक शैक्षिक दृष्टिकोणों को अपनाने के प्रति समर्पित हैं। हमारे संग्रह में प्राचीन ग्रंथों के साथ-साथ समकालीन शोध भी शामिल हैं — पारंपरिक विवेक और आधुनिक विज्ञान के बीच एक सेतु बनाते हुए।</p>
+            <p>कोष और अन्य पहलों के माध्यम से, हम वैश्विक ज्ञान पारितंत्र में योगदान देने और दुनिया भर के व्यक्तियों के बौद्धिक विकास का समर्थन करने का लक्ष्य रखते हैं।</p>
         </section>
-    </div>
+    </main>
 
-    <!-- Footer -->
     <footer>
-        <p>© 2023 Sarvstore. All rights reserved.</p>
+        <p>© २०२६ कोष · सर्वविज्ञान</p>
         <nav>
-            <a href="https://sarvwigyan.github.io/sarvstore">Home</a>
-            <a href="https://sarvwigyan.github.io/sarvstore/about.html">About</a>
-            <a href="https://sarvwigyan.github.io/feedback.html">Contact</a>
-            <a href="https://sarvwigyan.github.io/privacy-policy.html">Privacy Policy</a>
-            <a href="https://sarvwigyan.github.io/Community/community.html">Community</a>
+            <a href="index.html">मुख्य पृष्ठ</a>
+            <a href="about.html">हमारे विषय में</a>
+            <a href="https://sarvwigyan.github.io/feedback.html">प्रतिक्रिया</a>
+            <a href="https://sarvwigyan.github.io/privacy-policy.html">गोपनीयता</a>
+            <a href="https://sarvwigyan.github.io/Community/community.html">संघ</a>
         </nav>
     </footer>
 
     <script>
-        // Initialize theme from localStorage
-        document.addEventListener('DOMContentLoaded', function() {
-            const theme = localStorage.getItem('theme') || 'dark';
-            document.body.dataset.theme = theme;
-        });
+        (function () {
+            try {
+                const stored = localStorage.getItem('sarvwigyan-theme');
+                if (stored === 'dark' || stored === 'light' || stored === 'pure') {
+                    document.documentElement.setAttribute('data-theme', stored);
+                }
+            } catch (_) {}
+        })();
     </script>
 </body>
 </html>
